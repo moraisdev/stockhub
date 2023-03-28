@@ -1,0 +1,23 @@
+{
+
+    "client_id": "Client_Id_d0238c4fc4dca371a4bb3b6707ab38ee7616f8db",
+    "client_secret": "Client_Secret_b09c102eb42d5ecdb8953527b53c10ee645b047b",
+     "pix_cert": "../resources/certs/homologacao.pem",
+
+
+     "sandbox": true,
+     "debug": false,
+     "timeout": 30,
+
+
+           "client_id_producao": "Client_Id_41c633d92bee07e7da480bd3e54bd9576d69b950",
+           "client_secret_producao": "Client_Secret_536870a25f7d1c45943990fd7ec153b9c2d57365",
+           "pix_cert_procucao": "../resources/certs/producao.pem",
+
+           "client_id_homologacao": "Client_Id_c9970b3ee7ef6218b8aa536d687e9803590432fb",
+           "client_secret_homologacao": "Client_Secret_c13794ae83bf9590a171e90278f45fe285636dc9",
+           "pix_cert_homologacao": "../resources/certs/homologacao.pem"
+
+
+
+}

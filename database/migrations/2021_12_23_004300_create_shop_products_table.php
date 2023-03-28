@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateShopProductsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('shop_products', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('shop_id');
+            $table->integer('product_id');
+            $table->string('shopify_product_id')->nullable();
+            $table->date('date');
+            $table->boolean('exported')->nullable()->default(false);
+            $table->timestamps();
+            $table->softDeletes();
+            $table->string('cartx_product_id')->nullable()->comment('id do produto adicionado no cartx');
+            $table->unsignedTinyInteger('exported_cartx')->default('0');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('shop_products');
+    }
+}
