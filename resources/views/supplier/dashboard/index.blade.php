@@ -173,7 +173,7 @@
                                                     @endphp
 
                                                     @if($variant)
-                                                        O produto <b>{{$variant->title }}</b> não está mais disponível
+                                                    {{ trans('supplier.o_produto') }} <b>{{$variant->title }}</b> {{ trans('supplier.nao_esta_disponivel') }}
                                                     @endif
                                                     
                                                 @endif
@@ -182,7 +182,7 @@
                                     </td>
                                     <td>R$ {{ \App\Http\Controllers\Supplier\FunctionsController::supplierOrderAmount($order) }}</td>
                                     <td>
-                                        <a href="{{ route('supplier.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
+                                        <a href="{{ route('supplier.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
                                             <i class="fas fa-fw fa-eye"></i>
                                         </a>
                                     </td>

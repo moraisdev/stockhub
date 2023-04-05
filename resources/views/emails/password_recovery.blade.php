@@ -3,7 +3,7 @@
 <p><b>Seu email:</b> {{ $user->email }}</p>
 
 <div style="margin:20px 0px;">
-	<a href="{{ $url }}" style="background-color:#1447EF; border-radius:0px; border:1px solid #1141dd; padding:10px 12px; color:white; text-decoration:none">Recuperar Senha</a>
+	<a href="{{ $url }}" style="background-color:#1447EF; border-radius:0px; border:1px solid #1141dd; padding:10px 12px; color:white; text-decoration:none">{{ trans('supplier.text_password_recovery_button') }}</a>
 </div>
 
 <p>Caso você não tenha feito a requisição, ignore este e-mail.</p>

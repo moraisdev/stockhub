@@ -1,6 +1,6 @@
 @extends('supplier.layout.default')
 
-@section('title', 'Pedidos')
+@section('title', __('supplier.pedidos_title'))
 
 @section('content')
 <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Dash data</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.dash_data') }}</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -30,7 +30,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Dash data</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.dash_data') }}</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -47,7 +47,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Dash data</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.dash_data') }}</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -64,7 +64,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Dash data</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.dash_data') }}</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -87,14 +87,14 @@
     			<div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">Pedidos entregues</h2>
+                            <h2 class="mb-0">{{ trans('supplier.text_pedidos_entregues') }}</h2>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="d-flex flex-wrap align-items-center">
                         <p>
-                            Listagem de pedidos entregues.
+                        {{ trans('supplier.text_listagem_pedidos_entregues') }}
                             {{-- Listing orders with pending shipping. You can update the order shipping through the "Update Shipping" button.<br> --}}
                         </p>
                     </div>
@@ -103,13 +103,13 @@
                     <table class="table table-flush align-items-center">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>ID lojista</th>
-                                <th>Cliente</th>
-                                <th>Data</th>
-                                <th>Produtos</th>
-                                <th>Valor total</th>
-                                <th class="actions-th">Ações</th>
+                                <th>{{ trans('supplier.text_id') }}</th>
+                                <th>{{ trans('supplier.text_id_lojista') }}</th>
+                                <th>{{ trans('supplier.text_client') }}</th>
+                                <th>{{ trans('supplier.date') }}</th>
+                                <th>{{ trans('supplier.products') }}</th>
+                                <th>{{ trans('supplier.total_price') }}</th>
+                                <th class="actions-th">{{ trans('supplier.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -135,24 +135,24 @@
                                                     @php
                                                      $variant = \App\Models\ProductVariants::withTrashed()->find($item->product_variant_id);
                                                     @endphp
-                                                O produto <b>{{$variant->title }}</b> não está mais disponível
+                                                    {{ trans('supplier.o_produto') }} <b>{{$variant->title }}</b> {{ trans('supplier.nao_esta_disponivel') }}
                                                 @endif
                                             @endforeach
                                         </div>
                                     </td>
                                     <td>R$ {{ \App\Http\Controllers\Supplier\FunctionsController::supplierOrderAmount($order) }}</td>
                                     <td>
-                                        <a href="#!" class="btn btn-info btn-sm" data-toggle="modal" data-target="#upload-receipt-modal" onclick="uploadReceipt('{{ $receipt_route }}', {{ $order->id }})" tooltip="true" title="Upload de Nota Fiscal">
+                                        <a href="#!" class="btn btn-info btn-sm" data-toggle="modal" data-target="#upload-receipt-modal" onclick="uploadReceipt('{{ $receipt_route }}', {{ $order->id }})" tooltip="true" title="{{ trans('supplier.upload_nota_fiscal') }}">
                                             <i class="fas fa-fw fa-receipt"></i>
                                         </a>
-                                        <a href="{{ route('supplier.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
+                                        <a href="{{ route('supplier.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
                                             <i class="fas fa-fw fa-eye"></i>
                                         </a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4">Não há nenhum pedido pendente para envio.</td>
+                                    <td colspan="4">{{ trans('supplier.text_nao_ha_pedidos_pendentes') }}</td>
                                 </tr>
                             @endforelse
                         </tbody>

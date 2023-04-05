@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{config('app.name')}} - Tag do pedido #{{ $supplier_order->display_id }}</title>
+	<title>{{config('app.name')}} - {{ trans('supplier.tag_pedido') }} #{{ $supplier_order->display_id }}</title>
 
 	<style type="text/css">
 		body{
@@ -219,7 +219,7 @@
 			<div class="row" style="margin-top: 5px">
 				<div class="w-100 small">
 					{{--Nota fiscal: 12345678910<br>--}}
-					Pedido: #{{ $order_id }} <br>
+					{{ trans('supplier.pedido') }}: #{{ $order_id }} <br>
 					PLP: 
 				</div>
 				<div class="w-160 small">
@@ -239,15 +239,15 @@
 			</div>
 			<div class="row" style="margin-top: 20px">
 				<div class="small">
-                    <span style="display: block; margin-bottom: 10px;">Recebedor: _________________________________________________________________</span>
-                    <span style="display: block">Assinatura: ______________________________ Documento: ______________</span>
+                    <span style="display: block; margin-bottom: 10px;">{{ trans('supplier.recebedor') }}: _________________________________________________________________</span>
+                    <span style="display: block">{{ trans('supplier.assinatura_title') }}: ______________________________ {{ trans('supplier.documento') }}: ______________</span>
 				</div>
 			</div>
 		</div>
        
 		<div class="tag-destinatario">
                 <div class="dest-block-2">
-                <span style="display: block; margin-bottom: 10px; background-color: black; padding: 2px 10px; color: white; font-weight: bold; width: 85px; position: absolute"> Destinatário </span>
+                <span style="display: block; margin-bottom: 10px; background-color: black; padding: 2px 10px; color: white; font-weight: bold; width: 85px; position: absolute"> {{ trans('supplier.destinatario') }} </span>
                 </div>
                 <div class="dest-block-2">
                
@@ -278,7 +278,7 @@
 		<div class="third-block">
 			<div class="row medium">
                 <div>
-                Remetente:
+                {{ trans('supplier.remetente') }}:
                     <span>{{ $supplier_order->order->shop->name }}</span> <br>
                     @if($authenticated_user->use_shipment_address && $authenticated_user->shipment_address && $authenticated_user->shipment_address->street != null)
                         <span>{{ $authenticated_user->shipment_address->street }}, {{ $authenticated_user->shipment_address->number }}</span> <br>
@@ -299,13 +299,13 @@
   <div class = "container" style="width: 378px;">
           
 	<h2 style="text-align: right;" > 	<?php echo DNS1D::getBarcodeSVG("$order_id", 'C128', 1, 45, 0, false); ?>  </h2>
-	<h3 style="text-align: center; text-size=15px;">Declaração de Conteúdo</h3>
+	<h3 style="text-align: center; text-size=15px;">{{ trans('supplier.declaracao_conteudo') }}</h3>
 		 
 
  
-          <h3 style="text-align: center;">Nº Pedido: {{$order_id}} </h3>
+          <h3 style="text-align: center;">{{ trans('supplier.numero_pedido') }}: {{$order_id}} </h3>
           <div class="medium">
-		  <h4 style="text-align: left;">Remetente </h4>
+		  <h4 style="text-align: left;">{{ trans('supplier.remetente') }}</h4>
 		  
                     <span>{{ $supplier_order->order->shop->name }}</span> <br>
                     @if($authenticated_user->use_shipment_address && $authenticated_user->shipment_address && $authenticated_user->shipment_address->street != null)
@@ -320,7 +320,7 @@
                         <span><b style="margin-right: 10px">{{ $supplier_order->order->shop->address->zipcode }}</b></span> <br>
                     @endif
 			</div>
-		  <h4 style="text-align: left;">Destinatario</h4>
+		  <h4 style="text-align: left;">{{ trans('supplier.destinatario') }}</h4>
 		  <div class="medium">
 		  <span>{{ $supplier_order->order->customer->address->name }}</span> <br>
 					<span>{{ $supplier_order->order->customer->address->address1 }},{{ $supplier_order->order->customer->address->number }} </span> <br>
@@ -334,9 +334,9 @@
                 <table class="table" >
                   <thead >
                     <tr >
-                      <th >SKU</th>
-                      <th >Produto</th>
-                      <th>Qtd</th>                    
+                      <th >{{ trans('supplier.sku') }}</th>
+                      <th >{{ trans('supplier.product') }}</th>
+                      <th>{{ trans('supplier.quantidade') }}</th>                    
                     </tr>
                   </thead>
                   <tbody >

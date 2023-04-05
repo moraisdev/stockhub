@@ -91,8 +91,7 @@
                         <!-- <div class="text-center text-muted mb-4">
                                 <small>Ou entre com suas credenciais</small>
                             </div> -->
-                        <div class="text-muted text-center mb-3"><small class='text-login-bold-white'>Login</small></div>
-
+                        <div class="text-muted text-center mb-3"><small class='text-login-bold-white'>{{ trans('supplier.text_login') }}</small></div>
                         <form role="form" method="POST" action="{{ route('supplier.login.authenticate') }}">
                             {{ csrf_field() }}
                             <input type="hidden" name="redirect_url" value="{{ $redirect_url }}">
@@ -101,7 +100,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="Email" type="email" name="email"
+                                    <input class="form-control" placeholder="{{ trans('supplier.text_email') }}" type="email" name="email"
                                         value="{{ old('email') }}" readonly>
                                 </div>
                             </div>
@@ -110,7 +109,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="Senha" type="password" name="password"
+                                    <input class="form-control" placeholder="{{ trans('supplier.text_password') }}" type="password" name="password"
                                         readonly>
                                 </div>
                             </div>
@@ -118,12 +117,11 @@
                                 <input class="custom-control-input" id=" customCheckLogin" type="checkbox" value="1"
                                     name="keep_user_connected" {{ old('keep_user_connected') == 1 ? 'checked' : '' }}>
                                 <label class="custom-control-label" for=" customCheckLogin">
-                                    <span class="text-muted text-login-bold-white text-login-bold-white">Manter-me
-                                        conectado</span>
+                                    <span class="text-muted text-login-bold-white text-login-bold-white">{{ trans('supplier.text_check_connection') }}</span>
                                 </label>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4 btn-login-custom">Login</button>
+                                <button type="submit" class="btn btn-primary my-4 btn-login-custom">{{ trans('supplier.text_login_entrar') }}</button>
                             </div>
                         </form>
                     </div>
@@ -131,14 +129,13 @@
                 <div class="row mt-3">
                     <div class="col-6">
                         <a href="{{ route('supplier.login.forgot_password') }}" class="text-light"><small
-                                class='text-login-bold-white'>Esqueci minha senha</small></a>
+                                class='text-login-bold-white'>{{ trans('supplier.button_fogot_password') }}</small></a>
                     </div>
                    
-                    @if ($admins->cad_supplier == 0)
-                   
+                    @if(isset($admins) && $admins->cad_shop == 0)
                     <div class="col-6 text-right">
                         <a href="{{ route('supplier.login.register') }}" class="text-light"><small
-                                class='text-login-bold-white'>Criar nova conta</small></a>
+                                class='text-login-bold-white'>{{ trans('supplier.button_create_account_nav') }}</small></a>
                     </div>
                     @endif
                 </div>

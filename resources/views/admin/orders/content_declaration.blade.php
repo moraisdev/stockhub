@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{config('app.name')}} - Declaração de Conteúdo do pedido F{{ $supplier_order->id }}</title>
+    <title>{{config('app.name')}} - {{ trans('supplier.text_declaracao_conteudo_pedido') }} {{ $supplier_order->id }}</title>
     <link href="{{ asset('assets/css/argon-dashboard.css?v=1.1.1') }}" rel="stylesheet" />
 
     <style type="text/css">
@@ -31,55 +31,55 @@
     <table class="table table-bordered w-100">
         <thead>
         <tr>
-            <th colspan="4" class="text-center text-uppercase" style="font-size: 18px">Declaração de conteúdo</th>
+            <th colspan="4" class="text-center text-uppercase" style="font-size: 18px">{{ trans('supplier.declaracao_conteudo_pedido') }}</th>
         </tr>
         <tr>
-            <th style="width: 400px" colspan="2" class="text-center text-uppercase">Remetente</th>
-            <th style="width: 400px" colspan="2" class="text-center text-uppercase">Destinatário</th>
+            <th style="width: 400px" colspan="2" class="text-center text-uppercase">{{ trans('supplier.remetente') }}</th>
+            <th style="width: 400px" colspan="2" class="text-center text-uppercase">{{ trans('supplier.destinatario') }}</th>
         </tr>
         </thead>
         <tbody>
         @if($supplier->use_shipment_address && $supplier->shipment_address && $supplier->shipment_address->street != null)
             <tr>
-                <td colspan="2"><b>Nome:</b> {{ $supplier_order->order->shop->name }}</td>
-                <td colspan="2"><b>Nome:</b> {{ $supplier_order->order->customer->address->name }}</td>
+                <td colspan="2"><b>{{ trans('supplier.name') }}:</b> {{ $supplier_order->order->shop->name }}</td>
+                <td colspan="2"><b>{{ trans('supplier.name') }}:</b> {{ $supplier_order->order->customer->address->name }}</td>
             </tr>
             <tr>
-                <td colspan="2"><b>Endereço:</b> {{ $supplier->shipment_address->street }}, {{ $supplier->shipment_address->number }}</td>
-                <td colspan="2"><b>Endereço:</b> {{ $supplier_order->order->customer->address->address1 }}, {{ $supplier_order->order->customer->address->address2 }}</td>
+                <td colspan="2"><b>{{ trans('supplier.adress') }}:</b> {{ $supplier->shipment_address->street }}, {{ $supplier->shipment_address->number }}</td>
+                <td colspan="2"><b>{{ trans('supplier.adress') }}:</b> {{ $supplier_order->order->customer->address->address1 }}, {{ $supplier_order->order->customer->address->address2 }}</td>
             </tr>
             <tr>
-                <td><b>Cidade:</b> {{ $supplier->shipment_address->city }}</td>
-                <td><b>UF:</b> {{ $supplier->shipment_address->state_code }}</td>
-                <td><b>Cidade:</b> {{ $supplier_order->order->customer->address->city }}</td>
-                <td><b>UF:</b> {{ $supplier_order->order->customer->address->province_code }}</td>
+                <td><b>{{ trans('supplier.city') }}:</b> {{ $supplier->shipment_address->city }}</td>
+                <td><b>{{ trans('supplier.uf') }}:</b> {{ $supplier->shipment_address->state_code }}</td>
+                <td><b>{{ trans('supplier.city') }}:</b> {{ $supplier_order->order->customer->address->city }}</td>
+                <td><b>{{ trans('supplier.uf') }}:</b> {{ $supplier_order->order->customer->address->province_code }}</td>
             </tr>
             <tr>
-                <td><b>CEP:</b> {{ $supplier->shipment_address->zipcode }}</td>
-                <td><b>CPF/CNPJ:</b> {{ $supplier->document }}</td>
-                <td><b>CEP:</b> {{ $supplier_order->order->customer->address->zipcode }}</td>
-                <td><b>CPF/CNPJ:</b> {{ $supplier_order->order->customer->address->company ? $supplier_order->order->customer->address->company : 'Não informado' }}</td>
+                <td><b>{{ trans('supplier.postal_code') }}:</b> {{ $supplier->shipment_address->zipcode }}</td>
+                <td><b>{{ trans('supplier.cpf_cnpj') }}</b> {{ $supplier->document }}</td>
+                <td><b>{{ trans('supplier.postal_code') }}:</b> {{ $supplier_order->order->customer->address->zipcode }}</td>
+                <td><b>{{ trans('supplier.cpf_cnpj') }}</b> {{ $supplier_order->order->customer->address->company ? $supplier_order->order->customer->address->company : '{{ trans('supplier.nao_informado') }}' }}</td>
             </tr>
         @else
             <tr>
-                <td colspan="2"><b>Nome:</b> {{ $supplier_order->order->shop->name }}</td>
-                <td colspan="2"><b>Nome:</b> {{ $supplier_order->order->customer->address->name }}</td>
+                <td colspan="2"><b>{{ trans('supplier.name') }}:</b> {{ $supplier_order->order->shop->name }}</td>
+                <td colspan="2"><b>{{ trans('supplier.name') }}:</b> {{ $supplier_order->order->customer->address->name }}</td>
             </tr>
             <tr>
-                <td colspan="2"><b>Endereço:</b> {{ $supplier_order->order->shop->address->street }}, {{ $supplier_order->order->shop->address->number }}</td>
-                <td colspan="2"><b>Endereço:</b> {{ $supplier_order->order->customer->address->address1 }}, {{ $supplier_order->order->customer->address->address2 }}</td>
+                <td colspan="2"><b>{{ trans('supplier.adress') }}:</b> {{ $supplier_order->order->shop->address->street }}, {{ $supplier_order->order->shop->address->number }}</td>
+                <td colspan="2"><b>{{ trans('supplier.adress') }}:</b> {{ $supplier_order->order->customer->address->address1 }}, {{ $supplier_order->order->customer->address->address2 }}</td>
             </tr>
             <tr>
-                <td><b>Cidade:</b> {{ $supplier_order->order->shop->address->city }}</td>
-                <td><b>UF:</b> {{ $supplier_order->order->shop->address->state_code }}</td>
-                <td><b>Cidade:</b> {{ $supplier_order->order->customer->address->city }}</td>
-                <td><b>UF:</b> {{ $supplier_order->order->customer->address->province_code }}</td>
+                <td><b>{{ trans('supplier.city') }}:</b> {{ $supplier_order->order->shop->address->city }}</td>
+                <td><b>{{ trans('supplier.uf') }}</b> {{ $supplier_order->order->shop->address->state_code }}</td>
+                <td><b>{{ trans('supplier.city') }}:</b> {{ $supplier_order->order->customer->address->city }}</td>
+                <td><b>{{ trans('supplier.uf') }}</b> {{ $supplier_order->order->customer->address->province_code }}</td>
             </tr>
             <tr>
-                <td><b>CEP:</b> {{ $supplier_order->order->shop->address->zipcode }}</td>
-                <td><b>CPF/CNPJ:</b> {{ $supplier->document }}</td>
-                <td><b>CEP:</b> {{ $supplier_order->order->customer->address->zipcode }}</td>
-                <td><b>CPF/CNPJ:</b> {{ $supplier_order->order->customer->address->company ? $supplier_order->order->customer->address->company : 'Não informado' }}</td>
+                <td><b>{{ trans('supplier.postal_code') }}:</b> {{ $supplier_order->order->shop->address->zipcode }}</td>
+                <td><b>{{ trans('supplier.cpf_cnpj') }}</b> {{ $supplier->document }}</td>
+                <td><b>{{ trans('supplier.postal_code') }}:</b> {{ $supplier_order->order->customer->address->zipcode }}</td>
+                <td><b>{{ trans('supplier.cpf_cnpj') }}</b> {{ $supplier_order->order->customer->address->company ? $supplier_order->order->customer->address->company : '{{ trans('supplier.nao_informado') }}' }}</td>
             </tr>
         @endif
         </tbody>
@@ -87,13 +87,13 @@
     <table class="table table-bordered w-100">
         <thead>
         <tr>
-            <th colspan="4" class="text-center text-uppercase" style="font-size: 18px">Identificação dos Bens</th>
+            <th colspan="4" class="text-center text-uppercase" style="font-size: 18px">{{ trans('supplier.identificacao_bens') }}</th>
         </tr>
         <tr>
-            <th style="width: 100px">Item</th>
-            <th style="width: 450px">Conteúdo</th>
-            <th style="width: 100px">Quant.</th>
-            <th style="width: 150px">Valor</th>
+            <th style="width: 100px">{{ trans('supplier.item') }}</th>
+            <th style="width: 450px">{{ trans('supplier.conteudo') }}</th>
+            <th style="width: 100px">{{ trans('supplier.quantidade') }}</th>
+            <th style="width: 150px">{{ trans('supplier.price') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -139,7 +139,7 @@
             <td class="text-right py-2">R$ {{ number_format($total_amount,2,',','.') }}</td>
         </tr>
         <tr>
-            <td colspan="3" class="text-right py-2"><b>Peso Total (KG)</b></td>
+            <td colspan="3" class="text-right py-2"><b>{{ trans('supplier.peso_total_kg') }}</b></td>
             <td class="text-right py-2">{{ number_format($total_weight / 1000,2,',','') }}kg</td>
         </tr>
         </tbody>
@@ -147,21 +147,19 @@
     <table class="table table-bordered w-100">
         <thead>
         <tr>
-            <th colspan="4" class="text-center text-uppercase" style="font-size: 18px">Declaração</th>
+            <th colspan="4" class="text-center text-uppercase" style="font-size: 18px">{{ trans('supplier.declaracao') }}</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td colspan="4" style="white-space: normal; text-align: justify;">
-                <p style="font-size: 0.8rem">Declaro que não me enquadro no conceito de contribuinte previsto no art. 4º da Lei Complementar nº 87/1996, uma vez que não realizo,
-                    com habitualidade ou em volume que caracterize intuito comercial, operações de circulação de mercadoria, ainda que se iniciem no exterior,
-                    ou estou dispensado da emissão da nota fiscal por força da legislação tributária vigente, responsabilizando-me, nos termos da lei e a quem de direito, por informações inverídicas. </p>
-                <p style="font-size: 0.8rem">Declaro ainda que não estou postando conteúdo inflamável, explosivo, causador de combustão espontânea, tóxico, corrosivo, gás ou qualquer outro conteúdo que constitua perigo, conforme o art. 13 da Lei Postal nº 6.538/78.</p>
+                <p style="font-size: 0.8rem">{{ trans('supplier.text_declaracao') }}</p>
+                <p style="font-size: 0.8rem">{{ trans('supplier.text_declaracao_2') }}</p>
                 <div class="d-inline float-left" style="margin-top: 20px">
-                    ______________________, ________ de __________________ de ____________
+                    ______________________, ________ {{ trans('supplier.de') }} __________________ {{ trans('supplier.de') }} ____________
                 </div>
                 <div class="d-inline float-right" style="margin-top: 35px">
-                    <span style="border-top: 1px solid black; padding: 2px 20px;">Assinatura do Declarante/Remetente</span>
+                    <span style="border-top: 1px solid black; padding: 2px 20px;">{{ trans('supplier.assinatura_declarante_remetente') }}</span>
                 </div>
             </td>
         </tr>
@@ -170,13 +168,13 @@
     <table class="table table-bordered w-100">
         <thead>
         <tr>
-            <th colspan="4" class="text-uppercase">Observação:</th>
+            <th colspan="4" class="text-uppercase">{{ trans('supplier.observacao') }}:</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td colspan="4" class="py-1" style="white-space: normal; text-align: justify;">
-                <p class="mb-0" style="font-size: 0.7rem">Constitui crime contra a ordem tributária suprimir ou reduzir tributo, ou contribuição social e qualquer acessório (Lei 8.137/90 Art. 1º, V)</p>
+                <p class="mb-0" style="font-size: 0.7rem">{{ trans('supplier.text_declaracao_3') }}</p>
             </td>
         </tr>
         </tbody>

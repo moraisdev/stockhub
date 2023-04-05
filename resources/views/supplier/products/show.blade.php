@@ -70,13 +70,13 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="product_ncm">NCM</label>
-                                        <input type="text" id="product_ncm" class="form-control form-control-alternative" name="ncm" placeholder="Nomenclatura Comum do Mercosul (NCM)" value="{{ old('ncm', $product->ncm) }}" readonly>
+                                        <label class="form-control-label" for="product_ncm">{{ trans('supplier.ncm') }}</label>
+                                        <input type="text" id="product_ncm" class="form-control form-control-alternative" name="ncm" placeholder="{{ trans('supplier.ncm_description') }}" value="{{ old('ncm', $product->ncm) }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="product_ncm">EAN/GTIN</label>
+                                        <label class="form-control-label" for="product_ncm">{{ trans('supplier.ean_gtin') }}</label>
                                         <input type="text" id="product_ncm" class="form-control form-control-alternative" name="ean_gtin" placeholder="SEM GTIN ou EAN" value="{{ old('ean_gtin', $product->ean_gtin) }}" readonly>
                                     </div>
                                 </div>
@@ -102,8 +102,8 @@
                                     <div class="form-group">
                                         <label class="form-control-label">Isento ICMS</label>
                                         <select name="currency" id="icms_exemption" class="form-control" disabled>
-                                            <option value="0" {{ $product->icms_exemption == '0' ? 'selected' : '' }}>Não</option>
-                                            <option value="1" {{ $product->icms_exemption == '1' ? 'selected' : '' }}>Sim</option>
+                                            <option value="0" {{ $product->icms_exemption == '0' ? 'selected' : '' }}>{{ trans('supplier.nao') }}</option>
+                                            <option value="1" {{ $product->icms_exemption == '1' ? 'selected' : '' }}>{{ trans('supplier.sim') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@
                             <div class="table-responsive">
                                 <table class="table table-borderless variant-fields-table">
                                     <thead>
-                                        <th>SKU</th>
+                                        <th>{{ trans('supplier.sku') }}</th>
                                         <th>{{ __('supplier.stock') }}</th>
                                         @foreach($product->options as $option)
                                             <th class="option_{{ $option->id }}_th">{{ $option->name }}</th>
@@ -206,13 +206,13 @@
                                     <tbody>
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" class="form-control form-control-alternative" name="new_variants[0][sku]" placeholder="SKU" value="{{ $variant->sku }}" readonly>
+                                                <input type="text" class="form-control form-control-alternative" name="new_variants[0][sku]" placeholder="{{ trans('supplier.sku') }}" value="{{ $variant->sku }}" readonly>
                                             </div>
                                         </td>
 
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" class="form-control form-control-alternative" name="new_variants[0][stock]" placeholder="Estoque" value="{{ ($variant->stock) ? $variant->stock->quantity : 0 }}" readonly>
+                                                <input type="text" class="form-control form-control-alternative" name="new_variants[0][stock]" placeholder="{{ trans('supplier.stock') }}" value="{{ ($variant->stock) ? $variant->stock->quantity : 0 }}" readonly>
                                             </div>
                                         </td>
 
@@ -377,20 +377,20 @@
                                         <table class='table table-borderless variant-fields-table'>
                                             <thead>
                                                 <tr>
-                                                    <th>Quantidade</th>
-                                                    <th>Desconto(%)</th>
+                                                    <th>{{ trans('supplier.quantidade') }}</th>
+                                                    <th>{{ trans('supplier.discount') }}(%)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>                                            
                                                 <tr>
                                                     <td>
                                                         <div class='form-group'>
-                                                            <input type="number" class='form-control form-control-alternative' name='new_discounts[0][quantity]' placeholder="Quantidade" value='{{$discount->quantity}}' disabled>
+                                                            <input type="number" class='form-control form-control-alternative' name='new_discounts[0][quantity]' placeholder="{{ trans('supplier.quantidade') }}" value='{{$discount->quantity}}' disabled>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class='form-group'>
-                                                            <input type="number" step="0.01" class='form-control form-control-alternative' name='new_discounts[0][value]' placeholder="Desconto" value='{{$discount->value}}' disabled>
+                                                            <input type="number" step="0.01" class='form-control form-control-alternative' name='new_discounts[0][value]' placeholder="{{ trans('supplier.discount') }}" value='{{$discount->value}}' disabled>
                                                         </div>
                                                     </td>
                                                 </tr>

@@ -1,6 +1,6 @@
 @extends('supplier.layout.default')
 
-@section('title', 'Meu perfil')
+@section('title', __('supplier.meu_perfil_title'))
 
 @section('content')
 <div class="header pb-6 pt-4 pt-lg-6 d-flex align-items-center" style="min-height: 400px; background-image: url(https://wallpapertag.com/wallpaper/full/5/9/b/664802-vertical-flat-design-wallpapers-1920x1080.jpg); background-size: cover; background-position: center top;">
@@ -10,7 +10,7 @@
     <div class="container-fluid d-flex align-items-center">
         <div class="row">
             <div class="col-lg-12 col-md-12">
-                <h1 class="display-2 text-white">Bem vindo, {{ $authenticated_user->name }}</h1>
+                <h1 class="display-2 text-white">{{ trans('supplier.bem_vindo') }}, {{ $authenticated_user->name }}</h1>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">Mantenha seus dados atualizados</h3>
+                                <h3 class="mb-0">{{ trans('supplier.mantenha_seus_dados_atualizados') }}</h3>
                             </div>
                         </div>
                     </div>
@@ -33,39 +33,39 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">Nome no {{config('app.name')}}</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Nome da sua empresa" value="{{ $authenticated_user->name }}" required>
+                                    <label class="control-label">{{ trans('supplier.nome_no') }} {{config('app.name')}}</label>
+                                    <input type="text" class="form-control" name="name" placeholder="{{ trans('supplier.nome_empresa') }}" value="{{ $authenticated_user->name }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Email</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Email" value="{{ $authenticated_user->email }}" readonly>
+                                    <label class="control-label">{{ trans('supplier.text_email') }}</label>
+                                    <input type="email" class="form-control" id="email" placeholder="{{ trans('supplier.text_email') }}" value="{{ $authenticated_user->email }}" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Seu nome completo</label>
-                                    <input type="text" class="form-control" name="responsible_name" id="responsible_name" placeholder="Nome completo do responsável da empresa" value="{{ $authenticated_user->responsible_name }}" required>
+                                    <label class="control-label">{{ trans('supplier.seu_nome_completo') }}</label>
+                                    <input type="text" class="form-control" name="responsible_name" id="responsible_name" placeholder="{{ trans('supplier.nome_responsavel_empresa') }}" value="{{ $authenticated_user->responsible_name }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Seu CPF</label>
-                                    <input type="text" class="form-control" name="responsible_document" id="responsible_document" placeholder="CPF do responsável pela empresa" value="{{ $authenticated_user->responsible_document }}" required>
-                                    <small class="field_error text-danger" style="display: none">CPF inválido.</small>
+                                    <label class="control-label">{{ trans('supplier.seu_cpf') }}</label>
+                                    <input type="text" class="form-control" name="responsible_document" id="responsible_document" placeholder="{{ trans('supplier.cpf_responsavel_empresa') }}" value="{{ $authenticated_user->responsible_document }}" required>
+                                    <small class="field_error text-danger" style="display: none">{{ trans('supplier.cpf_invalido') }}</small>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">Nome Fantasia</label>
-                                    <input type="text" class="form-control" name="commercial_name" placeholder="Nome fantasia de sua empresa" value="{{ $authenticated_user->commercial_name }}" required>
+                                    <label class="control-label">{{ trans('supplier.fantasy_name') }}</label>
+                                    <input type="text" class="form-control" name="commercial_name" placeholder="{{ trans('supplier.nome_fantasia_empresa') }}" value="{{ $authenticated_user->commercial_name }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Razão Social</label>
-                                    <input type="text" class="form-control" name="legal_name" placeholder="Razão Social de sua empresa" value="{{ $authenticated_user->legal_name }}" required>
+                                    <label class="control-label">{{ trans('supplier.company_name') }}</label>
+                                    <input type="text" class="form-control" name="legal_name" placeholder="{{ trans('supplier.razao_social') }}" value="{{ $authenticated_user->legal_name }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">CNPJ</label>
-                                    <input type="text" class="form-control" id="document" name="document" placeholder="Número do Documento" value="{{ $authenticated_user->document }}" required>
-                                    <small class="field_error text-danger" style="display: none">CNPJ inválido.</small>
+                                    <label class="control-label">{{ trans('supplier.cnpj') }}</label>
+                                    <input type="text" class="form-control" id="document" name="document" placeholder="{{ trans('supplier.numero_documento') }}" value="{{ $authenticated_user->document }}" required>
+                                    <small class="field_error text-danger" style="display: none">{{ trans('supplier.cnpj_invalido') }}</small>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Telefone</label>
+                                    <label class="control-label">{{ trans('supplier.text_phone') }}</label>
                                     <input type="text" class="form-control phone" name="phone" placeholder="(11) 11111-1111" value="{{ $authenticated_user->phone }}" required>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">Endereço</h3>
+                                <h3 class="mb-0">{{ trans('supplier.adress') }}</h3>
                             </div>
                         </div>
                     </div>
@@ -84,43 +84,43 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">Logradouro</label>
-                                    <input type="text" class="form-control" name="street" placeholder="Logradouro" value="{{ $authenticated_user->address ? $authenticated_user->address->street : '' }}" required>
+                                    <label class="control-label">{{ trans('supplier.logradouro') }}</label>
+                                    <input type="text" class="form-control" name="street" placeholder="{{ trans('supplier.logradouro') }}" value="{{ $authenticated_user->address ? $authenticated_user->address->street : '' }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Número</label>
-                                    <input type="text" class="form-control" name="number" placeholder="Número" value="{{ $authenticated_user->address ? $authenticated_user->address->number : '' }}" required>
+                                    <label class="control-label">{{ trans('supplier.numero') }}</label>
+                                    <input type="text" class="form-control" name="number" placeholder="{{ trans('supplier.numero') }}" value="{{ $authenticated_user->address ? $authenticated_user->address->number : '' }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Bairro</label>
-                                    <input type="text" class="form-control" name="district" placeholder="Bairro" value="{{ $authenticated_user->address ? $authenticated_user->address->district : '' }}" required>
+                                    <label class="control-label">{{ trans('supplier.brotherhood') }}</label>
+                                    <input type="text" class="form-control" name="district" placeholder="{{ trans('supplier.brotherhood') }}" value="{{ $authenticated_user->address ? $authenticated_user->address->district : '' }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Complemento</label>
-                                    <input type="text" class="form-control" name="complement" placeholder="Complemento" value="{{ $authenticated_user->address ? $authenticated_user->address->complement : '' }}">
+                                    <label class="control-label">{{ trans('supplier.complemment') }}</label>
+                                    <input type="text" class="form-control" name="complement" placeholder="{{ trans('supplier.complemment') }}" value="{{ $authenticated_user->address ? $authenticated_user->address->complement : '' }}">
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">CEP</label>
+                                    <label class="control-label">{{ trans('supplier.postal_code') }}</label>
                                     <input type="text" class="form-control cep" name="zipcode" placeholder="11111-111" value="{{ $authenticated_user->address ? $authenticated_user->address->zipcode : '' }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">País</label>
+                                    <label class="control-label">{{ trans('supplier.pais') }}</label>
                                     <select class="form-control" name="country" id="country_select" required>
                                         <option value="Brasil" {{ !$authenticated_user->address || ($authenticated_user->address && $authenticated_user->address->country == 'Brasil') ? 'selected' : '' }}>Brasil</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Estado</label>
+                                    <label class="control-label">{{ trans('supplier.estado') }}</label>
                                     <select class="form-control" name="state_code" id="state_select" state="{{ $authenticated_user->address ? $authenticated_user->address->state_code : '' }}" required>
-                                        <option value="">Selecione o país primeiro</option>
+                                        <option value="">{{ trans('supplier.selecione_pais_primeiro') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Cidade</label>
+                                    <label class="control-label">{{ trans('supplier.city') }}</label>
                                     <select class="form-control" name="city" id="city_select" city="{{ $authenticated_user->address ? $authenticated_user->address->city : '' }}" required>
-                                        <option value="">Selecione o estado primeiro</option>
+                                        <option value="">{{ trans('supplier.selecione_estado_primeiro') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">Endereço de Remessa</h3>
+                                <h3 class="mb-0">{{ trans('supplier.endereco_remessa') }}</h3>
                             </div>
                         </div>
                     </div>
@@ -140,43 +140,43 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">Logradouro</label>
-                                    <input type="text" class="form-control" name="shipment[street]" placeholder="Logradouro" value="{{ $authenticated_user->shipment_address ? $authenticated_user->shipment_address->street : '' }}" required>
+                                    <label class="control-label">{{ trans('supplier.logradouro') }}</label>
+                                    <input type="text" class="form-control" name="shipment[street]" placeholder="{{ trans('supplier.logradouro') }}" value="{{ $authenticated_user->shipment_address ? $authenticated_user->shipment_address->street : '' }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Número</label>
-                                    <input type="text" class="form-control" name="shipment[number]" placeholder="Número" value="{{ $authenticated_user->shipment_address ? $authenticated_user->shipment_address->number : '' }}" required>
+                                    <label class="control-label">{{ trans('supplier.numero') }}</label>
+                                    <input type="text" class="form-control" name="shipment[number]" placeholder="{{ trans('supplier.numero') }}" value="{{ $authenticated_user->shipment_address ? $authenticated_user->shipment_address->number : '' }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Bairro</label>
-                                    <input type="text" class="form-control" name="shipment[district]" placeholder="Bairro" value="{{ $authenticated_user->shipment_address ? $authenticated_user->shipment_address->district : '' }}" required>
+                                    <label class="control-label">{{ trans('supplier.brotherhood') }}</label>
+                                    <input type="text" class="form-control" name="shipment[district]" placeholder="{{ trans('supplier.brotherhood') }}" value="{{ $authenticated_user->shipment_address ? $authenticated_user->shipment_address->district : '' }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Complemento</label>
-                                    <input type="text" class="form-control" name="shipment[complement]" placeholder="Complemento" value="{{ $authenticated_user->shipment_address ? $authenticated_user->shipment_address->complement : '' }}">
+                                    <label class="control-label">{{ trans('supplier.complemment') }}</label>
+                                    <input type="text" class="form-control" name="shipment[complement]" placeholder="{{ trans('supplier.complemment') }}" value="{{ $authenticated_user->shipment_address ? $authenticated_user->shipment_address->complement : '' }}">
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">CEP</label>
+                                    <label class="control-label">{{ trans('supplier.postal_code') }}</label>
                                     <input type="text" class="form-control cep" name="shipment[zipcode]" placeholder="11111-111" value="{{ $authenticated_user->shipment_address ? $authenticated_user->shipment_address->zipcode : '' }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">País</label>
+                                    <label class="control-label">{{ trans('supplier.pais') }}</label>
                                     <select class="form-control" name="shipment[country]" id="shipment_country_select" required>
                                         <option value="Brasil" {{ !$authenticated_user->shipment_address || ($authenticated_user->shipment_address && $authenticated_user->shipment_address->country == 'Brasil') ? 'selected' : '' }}>Brasil</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Estado</label>
+                                    <label class="control-label">{{ trans('supplier.estado') }}</label>
                                     <select class="form-control" name="shipment[state_code]" id="shipment_state_select" state="{{ $authenticated_user->shipment_address ? $authenticated_user->shipment_address->state_code : '' }}" required>
-                                        <option value="">Selecione o país primeiro</option>
+                                        <option value="">{{ trans('supplier.selecione_pais_primeiro') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Cidade</label>
+                                    <label class="control-label">{{ trans('supplier.city') }}</label>
                                     <select class="form-control" name="shipment[city]" id="shipment_city_select" city="{{ $authenticated_user->shipment_address ? $authenticated_user->shipment_address->city : '' }}" required>
-                                        <option value="">Selecione o estado primeiro</option>
+                                        <option value="">{{ trans('supplier.selecione_estado_primeiro') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -185,12 +185,11 @@
                 </div>
                 @endif
 
-                @if($admins->plano_f == 2)
                 <div class="card bg-secondary shadow mt-4">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">Safe2Pay e Conta Bancária</h3>
+                                <h3 class="mb-0">{{ trans('supplier.conta_bancara_safe2pay') }}</h3>
                             </div>
                         </div>
                     </div>
@@ -198,28 +197,28 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">Método de recebimento/pagamento</label>
+                                    <label class="control-label">{{ trans('supplier.metodo_recebimento_pagamento') }}</label>
                                     <select name="payment_method" class="form-control">
-                                        <option value="Safe2Pay">Safe2Pay</option>
+                                        <option value="Safe2Pay">{{ trans('supplier.safe2pay') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Nome do responsável técnico</label>
-                                    <input type="text" class="form-control" name="tech_name" id="tech_name" placeholder="Nome do responsável técnico pela sua conta Safe2Pay" value="{{ $authenticated_user->tech_name }}" required>
+                                    <label class="control-label">{{ trans('supplier.nome_responsavel_tecnico') }}</label>
+                                    <input type="text" class="form-control" name="tech_name" id="tech_name" placeholder="{{ trans('supplier.nome_responsavel_tecnico_safe2pay') }}" value="{{ $authenticated_user->tech_name }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">CPF do responsável técnico</label>
-                                    <input type="text" class="form-control" name="tech_document" id="tech_document" placeholder="Documento do responsável técnico pela sua conta Safe2Pay" value="{{ $authenticated_user->tech_document }}" required>
-                                    <small class="field_error text-danger" style="display: none">CPF inválido.</small>
+                                    <label class="control-label">{{ trans('supplier.cpf_responsavel_tecnico') }}</label>
+                                    <input type="text" class="form-control" name="tech_document" id="tech_document" placeholder="{{ trans('supplier.documento_responsavel_conta_safe2pay') }}" value="{{ $authenticated_user->tech_document }}" required>
+                                    <small class="field_error text-danger" style="display: none">{{ trans('supplier.cpf_invalido') }}</small>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">E-mail do responsável técnico</label>
-                                    <input type="text" class="form-control" name="tech_email" id="tech_email" placeholder="E-mail do responsável técnico pela sua conta Safe2Pay" value="{{ $authenticated_user->tech_email }}" required>
+                                    <label class="control-label">{{ trans('supplier.email_reponsavel_tecnico') }}</label>
+                                    <input type="text" class="form-control" name="tech_email" id="tech_email" placeholder="{{ trans('supplier.email_responsavel_tecnico_safe2pay') }}" value="{{ $authenticated_user->tech_email }}" required>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">Banco</label>
+                                    <label class="control-label">{{ trans('supplier.banco') }}</label>
                                     <select class="form-control" name="bank[code]" id="bank_list" required>
 
                                     </select>
@@ -227,29 +226,29 @@
                                 <div class="form-group">
                                     <label class="control-label">Tipo de Conta</label>
                                     <select class="form-control" name="bank[account_type]" required>
-                                        <option value="cc" {{ $authenticated_user->bank && $authenticated_user->bank->account_type == 'cc' ? 'selected' : '' }}>Conta Corrente</option>
-                                        <option value="pp" {{ $authenticated_user->bank && $authenticated_user->bank->account_type == 'pp' ? 'selected' : '' }}>Conta Poupança</option>
+                                        <option value="cc" {{ $authenticated_user->bank && $authenticated_user->bank->account_type == 'cc' ? 'selected' : '' }}>{{ trans('supplier.conta_corrente') }}</option>
+                                        <option value="pp" {{ $authenticated_user->bank && $authenticated_user->bank->account_type == 'pp' ? 'selected' : '' }}>{{ trans('supplier.conta_poupanca') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Agência</label>
+                                    <label class="control-label">{{ trans('supplier.agencia') }}</label>
                                     <div class="row">
                                         <div class="col-lg-9 col-12">
-                                            <input type="text" class="form-control" name="bank[agency]" placeholder="Agência bancária" value="{{ $authenticated_user->bank ? $authenticated_user->bank->agency : '' }}" required>
+                                            <input type="text" class="form-control" name="bank[agency]" placeholder="{{ trans('supplier.agencia_bancaria') }}" value="{{ $authenticated_user->bank ? $authenticated_user->bank->agency : '' }}" required>
                                         </div>
                                         <div class="col-lg-3 col-12">
-                                            <input type="text" class="form-control" name="bank[agency_digit]" placeholder="Dígito" value="{{ $authenticated_user->bank ? $authenticated_user->bank->agency_digit : '' }}">
+                                            <input type="text" class="form-control" name="bank[agency_digit]" placeholder="{{ trans('supplier.digito') }}" value="{{ $authenticated_user->bank ? $authenticated_user->bank->agency_digit : '' }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Conta</label>
+                                    <label class="control-label">{{ trans('supplier.conta') }}</label>
                                     <div class="row">
                                         <div class="col-lg-9 col-12">
-                                            <input type="text" class="form-control" name="bank[account]" placeholder="Conta bancária" value="{{ $authenticated_user->bank ? $authenticated_user->bank->account : '' }}" required>
+                                            <input type="text" class="form-control" name="bank[account]" placeholder="{{ trans('supplier.conta_bancaria') }}" value="{{ $authenticated_user->bank ? $authenticated_user->bank->account : '' }}" required>
                                         </div>
                                         <div class="col-lg-3 col-12">
-                                            <input type="text" class="form-control" name="bank[account_digit]" placeholder="Dígito" value="{{ $authenticated_user->bank ? $authenticated_user->bank->account_digit : '' }}">
+                                            <input type="text" class="form-control" name="bank[account_digit]" placeholder="{{ trans('supplier.digito') }}" value="{{ $authenticated_user->bank ? $authenticated_user->bank->account_digit : '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -257,14 +256,12 @@
                         </div>
                     </div>
                 </div>
-                @endif
                 
-                @if($admins->plano_f == 1)
                 <div class="card bg-secondary shadow mt-4">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">GerenciaNet</h3>
+                                <h3 class="mb-0">{{ trans('supplier.gerencianet') }}</h3>
                             </div>
                         </div>
                     </div>
@@ -272,28 +269,28 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">Método de recebimento/pagamento</label>
+                                    <label class="control-label">{{ trans('supplier.metodo_recebimento_pagamento') }}</label>
                                     <select name="payment_method" class="form-control">
-                                        <option value="Safe2Pay">GerenciaNet</option>
+                                        <option value="Safe2Pay">{{ trans('supplier.gerencianet') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Cliente ID</label>
+                                    <label class="control-label">{{ trans('supplier.cliente_id') }}</label>
                                     <input type="text" class="form-control" name="geren_cliente_id" id="geren_cliente_id" placeholder="Seu codigo client id" value="{{ $authenticated_user->geren_cliente_id  }}">
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Cliente Secret</label>
+                                    <label class="control-label">{{ trans('supplier.cliente_secret') }}</label>
                                     <input type="text" class="form-control" name="geren_cliente_se" id="geren_cliente_se" placeholder="Seu codigo secret id" value="{{ $authenticated_user->geren_cliente_se }}">
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label class="control-label">Chave PIX</label>
-                                    <input type="text" class="form-control" name="geren_chave" id="geren_chave" placeholder="Sua Chave PIX" value="{{ $authenticated_user->geren_chave }}">
+                                    <label class="control-label">{{ trans('supplier.chave_pix') }}</label>
+                                    <input type="text" class="form-control" name="geren_chave" id="geren_chave" placeholder="{{ trans('supplier.chave_pix') }}" value="{{ $authenticated_user->geren_chave }}">
                                 </div>
                                 
 
                                 <div class="form-group">        
-                                    <label for="files">certficada GerenciaNet </label>
+                                    <label for="files">{{ trans('supplier.certificado_gerencianet') }} </label>
                                     <input type="file" class="form-control" id="geren_pem" name="geren_pem"  />
                                    <output class="row mt-4" id="result" />
                                 </div>
@@ -304,15 +301,14 @@
                         </div>
                     </div>
                 </div>
-                @endif
                 
                 <div class="form-group text-right mt-4">
                     @if($authenticated_user->status == 'active')
-                        <a href="{{ route('supplier.profile.toggle_status') }}" class="btn btn-lg btn-danger" tooltip="true" title="Pausar as atividades de sua conta. Retirando seus produtos do catálogo dos lojistas. Você pode reiniciar suas atividades a qualquer momento.">Pausar atividades</a>
+                        <a href="{{ route('supplier.profile.toggle_status') }}" class="btn btn-lg btn-danger" tooltip="true" title="{{ trans('supplier.text_pausar_atividades') }}">{{ trans('supplier.pausar_atividades') }}</a>
                     @else
-                        <a href="{{ route('supplier.profile.toggle_status') }}" class="btn btn-lg btn-success" tooltip="true" title="Reiniciar as atividades de sua conta. Seus produtos voltarão a aparecer no catálogo dos lojistas.">Reiniciar atividades</a>
+                        <a href="{{ route('supplier.profile.toggle_status') }}" class="btn btn-lg btn-success" tooltip="true" title="{{ trans('supplier.text_reiniciar_atividades') }}">{{ trans('supplier.reiniciar_atividades') }}</a>
                     @endif
-                    <button class="btn btn-lg btn-primary">Atualizar meus dados</button>
+                    <button class="btn btn-lg btn-primary">{{ trans('supplier.atualizar_meus_dados') }}</button>
                 </div>
             </form>
         </div>

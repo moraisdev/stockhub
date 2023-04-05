@@ -77,24 +77,24 @@
                     @csrf
                     <input type="hidden" name="status" value="sent">
                     <div class="modal-header mt-0">
-                        <h5 class="modal-title">Notas Fiscais</h5>
+                        <h5 class="modal-title">{{ trans('supplier.notas_fiscais_title') }}</h5>
                     </div>
                     <div class="modal-body mb-0">
-                        <p>Efetue o upload das notas fiscais deste pedido para disponibilizá-las ao lojista. Estas notas fiscais <b>NÃO</b> serão enviadas por email ao cliente final.</p>
+                        <p>{{ trans('supplier.text_default_blade_01') }} <b>{{ trans('supplier.text_nao') }}</b> {{ trans('supplier.text_default_blade_02') }}</p>
                         <div class="form-group">
-                            <label class="control-label">Nota Fiscal de Remessa</label>
+                            <label class="control-label">{{ trans('supplier.notas_fiscais_remessa_title') }}</label>
                             <span class="d-block" id="shipping-receipt-link"></span>
                             <input type="file" id="shipping-receipt-input" class="form-control" name="shipping_receipt">
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Nota Fiscal de Venda</label>
+                            <label class="control-label">{{ trans('supplier.notas_fiscais_venda_title') }}</label>
                             <span class="d-block" id="order-receipt-link"></span>
                             <input type="file" id="order-receipt-input" class="form-control" name="order_receipt">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button class="btn btn-success" id="upload-receipt-button">Efetuar upload</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
+                        <button class="btn btn-success" id="upload-receipt-button">{{ trans('supplier.efetuar_upload_title') }}</button>
                     </div>
                 </form>
             </div>
@@ -164,11 +164,11 @@
 
                     if(order_receipt){
                         $("#order-receipt-input").hide();
-                        $("#order-receipt-link").html('<a class="btn btn-info btn-sm" href="/supplier/orders/download_receipt/'+ order_receipt.id +'">Download da nota de venda</a>');
+                        $("#order-receipt-link").html('<a class="btn btn-info btn-sm" href="/supplier/orders/download_receipt/'+ order_receipt.id +'">' + download_nota_venda_title + '</a>');
                     }
                     if(shipping_receipt){
                         $("#shipping-receipt-input").hide();
-                        $("#shipping-receipt-link").html('<a class="btn btn-info btn-sm" href="/supplier/orders/download_receipt/'+ shipping_receipt.id +'">Download da nota de remessa</a>');
+                        $("#shipping-receipt-link").html('<a class="btn btn-info btn-sm" href="/supplier/orders/download_receipt/'+ shipping_receipt.id +'">' + download_nota_remessa_title + '</a>');
                     }
                     if(shipping_receipt && order_receipt){
                         $("#upload-receipt-button").hide();
@@ -185,7 +185,7 @@
 
     @if(session('success'))
         <script type="text/javascript">
-            Swal.fire("Sucesso", "{{ session('success') }}", 'success');
+            Swal.fire("{{ trans('supplier.text_success_register') }}", "{{ session('success') }}", 'success');
         </script>
     @endif
     @if(session('error'))
@@ -195,7 +195,7 @@
     @endif
     @if(session('warning'))
         <script type="text/javascript">
-            Swal.fire("Atenção!", "{{ session('warning') }}", 'warning');
+            Swal.fire("{{ trans('supplier.atencao') }}", "{{ session('warning') }}", 'warning');
         </script>
     @endif
     @if(session('info'))
@@ -221,7 +221,7 @@
     @endif
     @if(session('success_notification'))
         <script type="text/javascript">
-            toastr.success("Sucesso", "{{ session('success_notification') }}");
+            toastr.success("{{ trans('supplier.text_success_register') }}", "{{ session('success_notification') }}");
         </script>
     @endif
     @if(session('error_notification'))
@@ -231,7 +231,7 @@
     @endif
     @if(session('warning_notification'))
         <script type="text/javascript">
-            toastr.warning("Atenção!", "{{ session('warning_notification') }}");
+            toastr.warning("{{ trans('supplier.atencao') }}", "{{ session('warning_notification') }}");
         </script>
     @endif
     @if(session('info_notification'))

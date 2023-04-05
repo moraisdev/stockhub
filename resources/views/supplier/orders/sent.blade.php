@@ -1,6 +1,6 @@
 @extends('supplier.layout.default')
 
-@section('title', 'Pedidos')
+@section('title', __('supplier.pedidos_title'))
 
 @section('content')
 <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
@@ -20,14 +20,14 @@
     			<div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">Pedidos enviados</h2>
+                            <h2 class="mb-0">{{ trans('supplier.pedidos_enviados') }}</h2>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="d-flex flex-wrap align-items-center">
                         <p>
-                            Listagem de pedidos enviados. Você pode marcar o pedido como entregue ou atualizar o código de rastreio a qualquer momento.
+                        {{ trans('supplier.text_listagem_pedidos_enviados') }}
                             {{-- Listing orders with pending shipping. You can update the order shipping through the "Update Shipping" button.<br> --}}
                         </p>
                     </div>
@@ -37,63 +37,63 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">                                
-                                    <input class="form-control" type="search" name='query' placeholder='Digite algo para buscar...' id="search-query" value={{isset($query) ? $query : ''}}>
+                                    <input class="form-control" type="search" name='query' placeholder="{{ trans('supplier.digite_para_buscar') }}" id="search-query" value={{isset($query) ? $query : ''}}>
                                 </div> 
                             </div>
                             <div class="col-3">                            
                                 <button class="btn btn-icon btn-primary" type="submit" id='get-search-button'>
                                     <span class="btn-inner--icon"><i class="fas fa-search"></i></span>
-                                    <span class="btn-inner--text">Buscar</span>
+                                    <span class="btn-inner--text">{{ trans('supplier.buscar') }}</span>
                                 </button>
                             </div>
                         </div>                    
                     </div>
                     
                     <div class="col-md-12 mb-4">                        
-                            <p class='small'>Escolha qual campo buscar</p>
+                            <p class='small'>{{ trans('supplier.escolha_qual_campo_buscar') }}</p>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id='filtro-id' value='display_id' name='filter' {{isset($filter) && $filter == 'display_id' ? 'checked' : ''}} {{!isset($filter) ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="filtro-id">ID</label>
+                                <label class="custom-control-label" for="filtro-id">{{ trans('supplier.text_id') }}</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id='filtro-id-lojista' value='order_name' name='filter' {{isset($filter) && $filter == 'order_name' ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="filtro-id-lojista">ID Lojista</label>
+                                <label class="custom-control-label" for="filtro-id-lojista">{{ trans('supplier.text_id_lojista') }}</label>
                             </div>
                             {{-- <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id='filtro-loja' value='shop' name='filter' {{isset($filter) && $filter == 'shop' ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="filtro-loja">Loja</label>
+                                <label class="custom-control-label" for="filtro-loja">{{ trans('supplier.text_loja') }}</label>
                             </div> --}}
                             {{-- <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id='filtro-loja' value='shop' name='filter' {{isset($filter) && $filter == 'shop' ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="filtro-loja">Nome do Cliente</label>
+                                <label class="custom-control-label" for="filtro-loja">{{ trans('supplier.cliente_nome') }}</label>
                             </div> --}}
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id='filtro-data-importacao' value='created_at' name='filter' {{isset($filter) && $filter == 'created_at' ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="filtro-data-importacao">Data Importação</label>
+                                <label class="custom-control-label" for="filtro-data-importacao">{{ trans('supplier.data_importacao') }}</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id='filtro-rastreio' value='tracking_number' name='filter' {{isset($filter) && $filter == 'tracking_number' ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="filtro-rastreio">Rastreio</label>
+                                <label class="custom-control-label" for="filtro-rastreio">{{ trans('supplier.text_rastreio') }}</label>
                             </div>
                     </div>
                 </form>
                 @if(isset($countOrdersSearch))
                     <div class='ml-4'>
-                        <span class='small'>Resultados: <b>{{$orders->total()}}</b></span>
+                        <span class='small'>{{ trans('supplier.resultados') }}: <b>{{$orders->total()}}</b></span>
                     </div>
                 @endif
 				<div class="table-responsive">
                     <table class="table table-flush align-items-center">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>ID lojista</th>
-                                <th>Cliente</th>
-                                <th>Data</th>
-                                <th>Produtos</th>
-                                <th>Valor total</th>
-                                <th>Rastreio</th>
-                                <th class="actions-th">Ações</th>
+                                <th>{{ trans('supplier.text_id') }}</th>
+                                <th>{{ trans('supplier.text_id_lojista') }}</th>
+                                <th>{{ trans('supplier.text_client') }}</th>
+                                <th>{{ trans('supplier.date') }}</th>
+                                <th>{{ trans('supplier.products') }}</th>
+                                <th>{{ trans('supplier.total_price') }}</th>
+                                <th>{{ trans('supplier.text_rastreio') }}</th>
+                                <th class="actions-th">{{ trans('supplier.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -123,7 +123,7 @@
                                                     @php
                                                      $variant = \App\Models\ProductVariants::withTrashed()->find($item->product_variant_id);
                                                     @endphp
-                                                O produto <b>{{$variant->title }}</b> não está mais disponível
+                                                    {{ trans('supplier.o_produto') }} <b>{{$variant->title }}</b> {{ trans('supplier.nao_esta_disponivel') }}
                                                 @endif
                                             @endforeach
                                         </div>
@@ -131,31 +131,31 @@
                                     <td>R$ {{ \App\Http\Controllers\Supplier\FunctionsController::supplierOrderAmount($order) }}</td>
                                     <td>
                                         URL: <a href="{{ $order->shipping->tracking_url }}" target="_blank">{{ $order->shipping->tracking_url }}</a> <br>
-                                        Número: {{ $order->shipping->tracking_number }} <br>
+                                        {{ trans('supplier.numero') }}: {{ $order->shipping->tracking_number }} <br>
                                     </td>
                                     <td>
-                                        <a href="{{ route('supplier.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
+                                        <a href="{{ route('supplier.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
                                             <i class="fas fa-fw fa-eye"></i>
                                         </a>
-                                        <a href="#!" class="btn btn-info btn-sm" data-toggle="modal" data-target="#upload-receipt-modal" onclick="uploadReceipt('{{ $receipt_route }}', {{ $order->id }})" tooltip="true" title="Upload de Nota Fiscal">
+                                        <a href="#!" class="btn btn-info btn-sm" data-toggle="modal" data-target="#upload-receipt-modal" onclick="uploadReceipt('{{ $receipt_route }}', {{ $order->id }})" tooltip="true" title="{{ trans('supplier.upload_nota_fiscal') }}">
                                             <i class="fas fa-fw fa-receipt"></i>
                                         </a>
                                         @if ($authenticated_user->shipping_method == 'melhor_envio' && $order->frete_melhor_envio)
-                                            <a href="{{$order->frete_melhor_envio->tag_url}}" target="_blank" class="btn btn-danger btn-sm" tooltip="true" title="Imprimir Etiqueta">
+                                            <a href="{{$order->frete_melhor_envio->tag_url}}" target="_blank" class="btn btn-danger btn-sm" tooltip="true" title="{{ trans('supplier.imprimir_etiqueta') }}">
                                                 <i class="fas fa-fw fa-tag"></i>
                                             </a>
                                         @else
-                                            <a href="{{ route('supplier.orders.print_tag', $order->id) }}"  class="btn btn-danger btn-sm" tooltip="true" title="Baixar Etiqueta">
+                                            <a href="{{ route('supplier.orders.print_tag', $order->id) }}"  class="btn btn-danger btn-sm" tooltip="true" title="{{ trans('supplier.baixar_etiqueta') }}">
                                                 <i class="fas fa-fw fa-tag"></i>
                                             </a>
                                         @endif
-                                        <a href="#!" class="btn btn-info btn-sm" data-toggle="modal" data-target="#update-shipping-modal" onclick="updateShipping('{{ $get_route }}', '{{ $form_route }}')" tooltip="true" title="Atualizar código de rastreio">
+                                        <a href="#!" class="btn btn-info btn-sm" data-toggle="modal" data-target="#update-shipping-modal" onclick="updateShipping('{{ $get_route }}', '{{ $form_route }}')" tooltip="true" title="{{ trans('supplier.atualizar_codigo_rastreio') }}">
                                             <i class="fas fa-fw fa-truck"></i>
                                         </a>
-                                        <a href="#!" class="btn btn-success btn-sm" data-toggle="modal" data-target="#complete-shipping-modal" onclick="completeShipping('{{ $complete_route }}')" tooltip="true" title="Marcar como entregue">
+                                        <a href="#!" class="btn btn-success btn-sm" data-toggle="modal" data-target="#complete-shipping-modal" onclick="completeShipping('{{ $complete_route }}')" tooltip="true" title="{{ trans('supplier.marcar_como_entregue') }}">
                                             <i class="fas fa-fw fa-dolly"></i>
                                         </a>
-                                        <a href="#!" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#returned-shipping-modal" onclick="returnedShipping('{{ $returned_route }}')" tooltip="true" title="Marcar como Devolvido">
+                                        <a href="#!" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#returned-shipping-modal" onclick="returnedShipping('{{ $returned_route }}')" tooltip="true" title="{{ trans('supplier.marcar_como_devolvido') }}">
                                             <i class="fas fa-undo"></i>
                                         </a>
                                         <a href="#!" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancel-shipping-modal" onclick="cancelShipping('{{ $cancel_route }}')" tooltip="true" title="Cancelar envio">
@@ -165,7 +165,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4">Não há nenhum pedido pendente para envio.</td>
+                                    <td colspan="4">{{ trans('supplier.text_nao_ha_pedidos_pendentes') }}</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -193,21 +193,21 @@
                 <div class="modal-body mb-0">
                     <p>Atualizar dados do frete do pedido. O lojista e o cliente serão notificados quando o código de rastreio for atualizado.</p>
                     <div class="form-group">
-                        <label class="control-label">Nome da Transportadora</label>
+                        <label class="control-label">{{ trans('supplier.nome_transportadora') }}</label>
                         <input type="text" class="form-control" name="company" id="company" placeholder="Nome da transportadora responsável pela entrega." required>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">URL de Rastreio</label>
+                        <label class="control-label">{{ trans('supplier.url_rastreio') }}</label>
                         <input type="text" class="form-control" name="tracking_url" id="tracking_url" placeholder="Link para onde o cliente usará o código de rastreio ou o link direto para a página de rastreio" required>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Código de rastreio</label>
+                        <label class="control-label">{{ trans('supplier.codigo_rastreio') }}</label>
                         <input type="text" class="form-control" name="tracking_number" id="tracking_number" placeholder="Digite aqui o código de rastreio do pedido" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-info">Atualizar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
+                    <button class="btn btn-info">{{ trans('supplier.atualizar') }}</button>
                 </div>
             </form>
         </div>
@@ -221,14 +221,14 @@
                 @csrf
                 <input type="hidden" name="status" value="completed">
                 <div class="modal-header mt-0">
-                    <h5 class="modal-title">Marcar pedido como entregue</h5>
+                    <h5 class="modal-title">{{ trans('supplier.marcar_pedido_como_entregue') }}</h5>
                 </div>
                 <div class="modal-body mb-0">
-                    <p>Marcar o pedido como entregue. O lojista e o cliente serão notificados desta alteração, o pedido será transferido para a página de pedido completos.</p>
+                    <p>{{ trans('supplier.text_marcar_pedido_como_entregue') }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-success">Marcar como entregue</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
+                    <button class="btn btn-success">{{ trans('supplier.marcar_como_entregue') }}</button>
                 </div>
             </form>
         </div>
@@ -244,14 +244,14 @@
                 <input type="hidden" name="tracking_url" value="">
                 <input type="hidden" name="tracking_number" value="">
                 <div class="modal-header mt-0">
-                    <h5 class="modal-title">Cancelar envio do pedido</h5>
+                    <h5 class="modal-title">{{ trans('supplier.cancelar_envio_pedido') }}</h5>
                 </div>
                 <div class="modal-body mb-0">
-                    <p>Você tem certeza que deseja cancelar o envio do pedido? O pedido voltará ao status de pendente e o cliente e lojista serão notificados da alteração.</p>
+                    <p>{{ trans('supplier.text_confirm_cancelar_pedido') }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-danger">Cancelar envio</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
+                    <button class="btn btn-danger">{{ trans('supplier.cancelar_envio') }}</button>
                 </div>
             </form>
         </div>
@@ -264,14 +264,14 @@
             <form method="POST" action="" id="returnedShippingForm">
                 @csrf
                 <div class="modal-header mt-0">
-                    <h5 class="modal-title">Marcar pedido como devolvido</h5>
+                    <h5 class="modal-title">{{ trans('supplier.marcar_pedidos_devolvidos') }}</h5>
                 </div>
                 <div class="modal-body mb-0">
-                    <p>Você tem certeza que deseja marcar o pedido como devolvido? O lojista sera notificado da alteração.</p>
+                    <p>{{ trans('supplier.text_confirm_marcar_pedido_devolvidos') }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-primary">Marcar como devolvido</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
+                    <button class="btn btn-primary">{{ trans('supplier.marcar_como_devolvido') }}</button>
                 </div>
             </form>
         </div>

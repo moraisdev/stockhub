@@ -34,12 +34,12 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-xl">
-                                <h3 class="mb-0">Produto</h3>
+                                <h3 class="mb-0">{{ trans('supplier.product') }}</h3>
                             </div>
                           </div>
                     </div>
                     <div class="card-body">
-                        <h6 class="heading-small text-muted mb-4">Informações do produto</h6>
+                        <h6 class="heading-small text-muted mb-4">{{ trans('supplier.product_info') }}</h6>
                         <div class="row justify-content-center align-items-center">
                             <div class="col-lg-2 col-6">
                                 <div class="d-flex  justify-content-center">
@@ -57,7 +57,7 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-12">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="category">Categoria</label>
+                                            <label class="form-control-label" for="category">{{ trans('supplier.category') }}</label>
                                             <select id="category" class="form-control form-control-alternative" name="category" disabled>
                                                 <option>{{ ($product->category) ? $product->category->name : 'Sem Categoria' }}</option>
                                             </select>
@@ -65,14 +65,14 @@
                                     </div>
                                     <div class="col-lg-8 col-12">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="product_title">Título</label>
+                                            <label class="form-control-label" for="product_title">{{ trans('supplier.tittle') }}</label>
                                             <input type="text" id="product_title" class="form-control form-control-alternative" name="title" placeholder="Título do Produto" value="{{ old('title', $product->title) }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="product_ncm">NCM</label>
-                                            <input type="text" id="product_ncm" class="form-control form-control-alternative" name="ncm" placeholder="Nomenclatura Comum do Mercosul (NCM)" value="{{ old('ncm', $product->ncm) }}" readonly>
+                                            <label class="form-control-label" for="product_ncm">{{ trans('supplier.ncm') }}</label>
+                                            <input type="text" id="product_ncm" class="form-control form-control-alternative" name="ncm" placeholder="{{ trans('supplier.ncm_description') }}" value="{{ old('ncm', $product->ncm) }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -86,7 +86,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="product_description">Descrição</label>
+                                            <label class="form-control-label" for="product_description">{{ trans('supplier.description') }}</label>
                                             <textarea id="product_description" class="form-control form-control-alternative" name="description" placeholder="Description" readonly>{{ old('description', $product->description) }}</textarea>
                                         </div>
                                     </div>
@@ -99,14 +99,14 @@
                             <div class="col-12">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <h3 class="mb-0">Opções</h3>
+                                        <h3 class="mb-0">{{ trans('supplier.options') }}</h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <h6 class="heading-small text-muted mb-4">Opções</h6>
+                        <h6 class="heading-small text-muted mb-4">{{ trans('supplier.options') }}</h6>
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-lg-12" id="options_container">
@@ -117,7 +117,7 @@
                                             </div>
                                         </div>
                                     @empty
-                                        <p>Nenhuma opção cadastrada.</p>
+                                        <p>{{ trans('supplier.no_option_register') }}</p>
                                     @endforelse
                                 </div>
                             </div>
@@ -150,11 +150,11 @@
                                             @foreach($product->options as $option)
                                                 <th class="option_{{ $option->id }}_th">{{ $option->name }}</th>
                                             @endforeach
-                                            <th class="after_option_th" variant_id="{{ $variant->id }}">Preço ({{ $product->currency }})</th>
-                                            <th>Peso (g)</th>
-                                            <th>Largura (cm)</th>
-                                            <th>Altura (cm)</th>
-                                            <th>Profundidade (cm)</th>
+                                            <th class="after_option_th" variant_id="{{ $variant->id }}">{{ trans('supplier.money_price') }} ({{ $product->currency }})</th>
+                                            <th>{{ trans('supplier.weight') }}</th>
+                                            <th>{{ trans('supplier.width') }}</th>
+                                            <th>{{ trans('supplier.height') }}</th>
+                                            <th>{{ trans('supplier.depth') }}</th>
                                             </thead>
                                             <tbody>
 
@@ -172,7 +172,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text bg-secondary">$</span>
                                                         </div>
-                                                        <input type="text" class="form-control form-control-alternative decimal pl-2" name="variants[{{ $variant->id }}][price]" placeholder="Preço" value="{{ $variant->price }}" readonly>
+                                                        <input type="text" class="form-control form-control-alternative decimal pl-2" name="variants[{{ $variant->id }}][price]" placeholder="{{ trans('supplier.money_price') }}" value="{{ $variant->price }}" readonly>
                                                     </div>
                                                 </div>
                                             </td>
@@ -183,28 +183,28 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text bg-secondary">g</span>
                                                         </div>
-                                                        <input type="number" class="form-control form-control-alternative pl-2" name="variants[{{ $variant->id }}][weight_in_grams]" placeholder="Peso (g)" value="{{ $variant->weight_in_grams }}" readonly>
+                                                        <input type="number" class="form-control form-control-alternative pl-2" name="variants[{{ $variant->id }}][weight_in_grams]" placeholder="{{ trans('supplier.weight') }}" value="{{ $variant->weight_in_grams }}" readonly>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
                                                     <div class="input-group input-group-alternative flex-nowrap mb-3">
-                                                        <input type="text" class="form-control form-control-alternative" name="variants[{{ $variant->id }}][width]" placeholder="Largura (cm)" value="{{ $variant->width }}" readonly>
+                                                        <input type="text" class="form-control form-control-alternative" name="variants[{{ $variant->id }}][width]" placeholder="{{ trans('supplier.width') }}" value="{{ $variant->width }}" readonly>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
                                                     <div class="input-group input-group-alternative flex-nowrap mb-3">
-                                                        <input type="text" class="form-control form-control-alternative" name="variants[{{ $variant->id }}][height]" placeholder="Altura (cm)" value="{{ $variant->height }}" readonly>
+                                                        <input type="text" class="form-control form-control-alternative" name="variants[{{ $variant->id }}][height]" placeholder="{{ trans('supplier.height') }}" value="{{ $variant->height }}" readonly>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
                                                     <div class="input-group input-group-alternative flex-nowrap mb-3">
-                                                        <input type="text" class="form-control form-control-alternative" name="variants[{{ $variant->id }}][depth]" placeholder="Profundidade (cm)" value="{{ $variant->depth }}" readonly>
+                                                        <input type="text" class="form-control form-control-alternative" name="variants[{{ $variant->id }}][depth]" placeholder="{{ trans('supplier.depth') }}" value="{{ $variant->depth }}" readonly>
                                                     </div>
                                                 </div>
                                             </td>
@@ -215,7 +215,7 @@
                                 <hr class="my-4 w-100" />
                             </div>
                         @empty
-                            <p>Nenhuma variante cadastrada.</p>
+                            <p>{{ trans('supplier.nenhum_variante_cadastrada') }}</p>
                         @endforelse
                     </div>
                     <div class="card-header bg-white border-0">
@@ -223,7 +223,7 @@
                             <div class="col-12">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <h3 class="mb-0">Biblioteca de Imagens</h3>
+                                        <h3 class="mb-0">{{ trans('supplier.image_library') }}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +237,7 @@
                                 </div>
                             @empty
                                 <div class="col">
-                                    Nenhuma imagem cadastrada ainda.
+                                {{ trans('supplier.no_image_library_register') }}
                                 </div>
                             @endforelse
                         </div>

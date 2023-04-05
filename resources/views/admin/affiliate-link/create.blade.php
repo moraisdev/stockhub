@@ -1,6 +1,6 @@
 @extends('admin.layout.default')
 
-@section('title', config('app.name').' - Cadastrar Link Afiliado')
+@section('title', config('app.name').' - '.trans('supplier.text_cadastrar_link_afiliado'))
 
 @section('stylesheets')
 <style type="text/css">
@@ -22,7 +22,7 @@
     <div class="container-fluid d-flex align-items-center">
         <div class="row">
             <div class="col-lg-12 col-md-12">
-            <h1 class="display-2 text-white">Cadastrar Link Afiliado</h1>
+            <h1 class="display-2 text-white">{{ trans('supplier.text_cadastrar_link_afiliado') }}</h1>
                 <a href="{{ route('admin.affiliate-link.index') }}" class="btn btn-secondary">{{ __('supplier.back') }}</a>
             </div>
         </div>
@@ -35,29 +35,29 @@
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">Link Afiliado</h3>
+                            <h3 class="mb-0">{{ trans('supplier.text_link_afiliado') }}</h3>
                         </div>
                     </div>
                 </div>
                 <form method="POST" action="{{ route('admin.affiliate-link.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
-                        <h6 class="heading-small text-muted mb-4">Informações do Link Afiliado</h6>
+                        <h6 class="heading-small text-muted mb-4">{{ trans('supplier.text_informacao_link_afiliado') }}</h6>
                         <div class="row justify-content-center">
                             <div class="col-lg-12">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="product_title">Nome Afiliado</label>
-                                            <input type="text" id="product_title" class="form-control form-control-alternative" name="name" placeholder="Nome do Afiliado" value="{{ old('name') }}" required>
+                                            <label class="form-control-label" for="product_title">{{ trans('supplier.text_name_afiliado') }}</label>
+                                            <input type="text" id="product_title" class="form-control form-control-alternative" name="name" placeholder="{{ trans('supplier.text_name_afiliado') }}" value="{{ old('name') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="type">Tipo de Link</label>
+                                            <label for="type">{{ trans('supplier.tipo_link') }}</label>
                                             <select class="form-control" id="type" name='type'>
-                                              <option value='shop'>Lojista</option>
-                                              <option value='supplier'>Fornecedor</option>
+                                              <option value='shop'>{{ trans('supplier.lojista') }}</option>
+                                              <option value='supplier'>{{ trans('supplier.fornecedor') }}</option>
                                             </select>
                                         </div>
                                     </div>

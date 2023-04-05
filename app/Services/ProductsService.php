@@ -119,9 +119,9 @@ class ProductsService{
                 $variantVerified = ProductVariants::where('sku', $variantVerify['sku'])
                                                 ->first();
                 if($variantVerified){
-                    throw new CustomException("Erro sku ".$variantVerify['sku']." Sku Cadastrada com sucesso.", 500);
-               }
-           }
+                    throw new CustomException("Erro sku ".$variantVerify['sku']." já utilizada por outro fornecedor.", 500);
+                }
+            }
         }
 
         $product = new Products();
@@ -142,21 +142,6 @@ class ProductsService{
         $product->packing_weight = $request->packing_weight;
         $product->products_from = $request->products_from;
         $product->sku = $request->new_variants[0]['sku'];
-
-        $product->joias = $request->joias;
-        $product->atributo_joias = $request->atributo_joias;
-        $product->conexao_cabo = $request->conexao_cabo;
-        $product->tipo_entrada = $request->tipo_entrada;
-
-        $product->smartphone = $request->smartphone;
-        $product->atrib_phone_dualsim = $request->atrib_phone_dualsim;
-        $product->atrib_phone_men_int = $request->atrib_phone_men_int;
-        $product->atrib_phone_ram = $request->atrib_phone_ram;
-        $product->atrib_phone_cor = $request->atrib_phone_cor;
-        $product->atrib_qtd_menint = $request->atrib_qtd_menint;
-        $product->atrib_qtd_ram = $request->atrib_qtd_ram;
-        $product->atrib_phone_oper = $request->atrib_phone_oper; 
-        
        
         if($request->hasFile('img_source')){
             $name = Str::random(15).$this->supplier->id . '.' . $request->img_source->extension();
@@ -218,7 +203,7 @@ class ProductsService{
         $product->description = $request->description[$i];
         $product->public = $request->public[$i] ? 1 : 0;
         $product->show_in_products_page = $request->show_in_products_page[$i] ? 1 : 0;
-        $product->products_from = $request->products_from[$i];
+         $product->products_from = $request->products_from[$i];
 
         if(Auth::guard('admin')->id() != NULL){
             $product->ignore_percentage_on_tax = $request->ignore_percentage_on_tax ? NULL : NULL;
@@ -297,20 +282,6 @@ class ProductsService{
         $product->shipping_method_china_division = $request->shipping_method_china_division;
         $product->packing_weight = $request->packing_weight;
         $product->products_from = $request->products_from;
-
-        $product->joias = $request->joias;
-        $product->atributo_joias = $request->atributo_joias;
-        $product->conexao_cabo = $request->conexao_cabo;
-        $product->tipo_entrada = $request->tipo_entrada;
-
-        $product->smartphone = $request->smartphone;
-        $product->atrib_phone_dualsim = $request->atrib_phone_dualsim;
-        $product->atrib_phone_men_int = $request->atrib_phone_men_int;
-        $product->atrib_phone_ram = $request->atrib_phone_ram;
-        $product->atrib_phone_cor = $request->atrib_phone_cor;
-        $product->atrib_qtd_menint = $request->atrib_qtd_menint;
-        $product->atrib_qtd_ram = $request->atrib_qtd_ram;
-        $product->atrib_phone_oper = $request->atrib_phone_oper; 
        
 
         if(Auth::guard('admin')->id() != null){

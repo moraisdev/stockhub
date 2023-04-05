@@ -1,6 +1,6 @@
 @extends('admin.layout.default')
 
-@section('title', 'Email Templates')
+@section('title', __('supplier.template_email'))
 
 @section('stylesheets')
 <style type="text/css">
@@ -27,7 +27,7 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                        <h3 class="mb-0">Email Templates</h3>
+                        <h3 class="mb-0">{{ trans('supplier.template_email') }}</h3>
                         </div>
                         <div class="col">
                             <div class="float-right">                                
@@ -43,8 +43,8 @@
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">Descrição</th>
-                                <th scope="col" class="actions-th">Ações</th>
+                                <th scope="col">{{ trans('supplier.description') }}</th>
+                                <th scope="col" class="actions-th">{{ trans('supplier.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>

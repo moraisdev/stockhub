@@ -48,12 +48,12 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Valor</th>
+                                <th scope="col">{{ trans('supplier.name') }}</th>
+                                <th scope="col">{{ trans('supplier.price') }}</th>
                                 <th scope="col">Ciclo</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">{{ trans('supplier.text_status') }}</th>
  
-                                <th scope="col" class="actions-th">Ações</th>
+                                <th scope="col" class="actions-th">{{ trans('supplier.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -79,7 +79,7 @@
                                 @endif
                                 @if ($plano->status == 1)
                                 <td>
-                                    ATIVO
+                                    {{ trans('supplier.active') }}
                                 </td>
                                 @endif
                                 <td class="actions-td">
@@ -131,12 +131,12 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Valor</th>
+                                <th scope="col">{{ trans('supplier.name') }}</th>
+                                <th scope="col">{{ trans('supplier.price') }}</th>
                                 <th scope="col">Ciclo</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">{{ trans('supplier.text_status') }}</th>
  
-                                <th scope="col" class="actions-th">Ações</th>
+                                <th scope="col" class="actions-th">{{ trans('supplier.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -162,7 +162,7 @@
                                 @endif
                                 @if ($planofor->status == 1)
                                 <td>
-                                    ATIVO
+                                    {{ trans('supplier.active') }}
                                 </td>
                                 @endif
                                 <td class="actions-td">
@@ -204,8 +204,8 @@
                         <p>Você tem certeza que deseja excluir este plano?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button class="btn btn-danger">Excluir</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
+                        <button class="btn btn-danger">{{ trans('supplier.delete') }}</button>
                     </div>
                 </form>
             </div>

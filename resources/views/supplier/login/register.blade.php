@@ -23,7 +23,7 @@
                         <!-- <div class="text-center text-muted mb-4">
                             <small>Ou registre-se com seus dados</small>
                         </div> -->
-                        <div class="text-muted text-center mb-3"><small class='text-login-bold-white'>Cadastrar-se como Fornecedor</small></div>
+                        <div class="text-muted text-center mb-3"><small class='text-login-bold-white'>{{ trans('supplier.text_register_supplier') }}</small></div>
 
                         <form role="form" method="POST" action="{{ route('supplier.login.post_register') }}">
                             {{ csrf_field() }}
@@ -32,7 +32,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-badge"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="Nome do Fornecedor" type="text" name="name" value="{{ old('name') }}" readonly required>
+                                    <input class="form-control" placeholder="{{ trans('supplier.text_register_supplier_name') }}" type="text" name="name" value="{{ old('name') }}" readonly required>
                                 </div>
                             </div>
                             <div class="form-group mb-3">
@@ -40,7 +40,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="E-mail" type="email" name="email" value="{{ old('email') ? old('email') : $email }}" readonly required>
+                                    <input class="form-control" placeholder="{{ trans('supplier.text_email') }}" type="email" name="email" value="{{ old('email') ? old('email') : $email }}" readonly required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -48,7 +48,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="Senha" type="password" name="password" readonly required>
+                                    <input class="form-control" placeholder="{{ trans('supplier.text_password') }}" type="password" name="password" readonly required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -56,17 +56,17 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="Confirmar Senha" type="password" name="password_confirmation" readonly required>
+                                    <input class="form-control" placeholder="{{ trans('supplier.text_confirm_password') }}" type="password" name="password_confirmation" readonly required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" name="terms_agreed" id="terms-check" required>
-                                    <label class="custom-control-label text-login-bold-white" for="terms-check">Eu li e concordo com os <a href="{{ asset('assets/TermodeUso.pdf') }}" target="_blank">Termos e Condições de uso</a> do {{config('app.name')}}.</label>
+                                    <label class="custom-control-label text-login-bold-white" for="terms-check">{{ trans('supplier.text_terms_of_use01') }} <a href="{{ asset('assets/TermodeUso.pdf') }}" target="_blank">{{ trans('supplier.text_terms_of_use02') }}</a></label>
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4 btn-login-custom">Cadastrar-se</button>
+                                <button type="submit" class="btn btn-primary my-4 btn-login-custom">{{ trans('supplier.button_create_account') }}</button>
                             </div>
                         </form>
                     </div>
@@ -74,9 +74,6 @@
                 <div class="row mt-3">
                     <div class="col-6">
 
-                    </div>
-                    <div class="col-6 text-right">
-                        <a href="{{ route('supplier.login') }}" class="text-light"><small class='text-login-bold-white'>Login</small></a>
                     </div>
                 </div>
             </div>

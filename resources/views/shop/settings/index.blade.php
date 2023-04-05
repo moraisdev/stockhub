@@ -250,7 +250,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Chave secreta</label>
-                                <input type="text" name="secret_id" class="form-control" placeholder="Cliente Secret" value="{{ ($mercaodlivreapi) ? $mercaodlivreapi->secret_id : '' }}" required >
+                                <input type="text" name="secret_id" class="form-control" placeholder="{{ trans('supplier.cliente_secret') }}" value="{{ ($mercaodlivreapi) ? $mercaodlivreapi->secret_id : '' }}" required >
                             </div>
                                                         
                             <div class="form-group">

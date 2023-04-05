@@ -1,6 +1,6 @@
 @extends('admin.layout.default')
 
-@section('title', 'Email Edit')
+@section('title', __('supplier.email_edit'))
 
 @section('stylesheets')
 <style type="text/css">
@@ -27,7 +27,7 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                        <h3 class="mb-0">Email Edite</h3>
+                        <h3 class="mb-0">{{ trans('supplier.email_edit') }}</h3>
                         </div>
                         <div class="col">
                             <div class="float-right">                                
@@ -44,7 +44,7 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="mb-0">Template Email</h3>
+                            <h3 class="mb-0">{{ trans('supplier.template_email') }}</h3>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
 
                             <button type="submit"
                                     class="btn waves-effect waves-light btn-rounded btn-primary btn-block mt-3">
-                                <span>Atualizar</span></button>
+                                <span>{{ trans('supplier.atualizar') }}</span></button>
                             
                             
                         </form>

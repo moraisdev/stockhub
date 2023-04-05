@@ -1,6 +1,6 @@
 @extends('admin.layout.default')
 
-@section('title', 'Detalhes da compra (Lojista)')
+@section('title', __('supplier.detalhes_compra_lojista'))
 
 @section('content')
     <!-- Header -->
@@ -21,7 +21,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="mb-0">Detalhes da compra</h2>
+                                <h2 class="mb-0">{{ trans('supplier.detalhes_compra') }}</h2>
                             </div>
                         </div>
                     </div>
@@ -29,22 +29,22 @@
                         <div class="row">
                             <div class="col">
                                 <p>
-                                    <b>Origem do pedido:</b> {{ ucfirst($order->external_service) }} <br>
+                                    <b>{{ trans('supplier.origem_pedido') }}:</b> {{ ucfirst($order->external_service) }} <br>
                                     @if($order->external_service == 'shopify')
-                                        <b>ID externo:</b> #{{ ucfirst($order->external_id) }} <br>
+                                        <b>{{ trans('supplier.id_externo') }}:</b> #{{ ucfirst($order->external_id) }} <br>
                                     @endif
-                                    <b>Nome do pedido:</b> {{ $order->name }} <br>
+                                    <b>{{ trans('supplier.nome_pedido') }}:</b> {{ $order->name }} <br>
                                 </p>
                             </div>
                             <div class="col">
                                 <p>
-                                    <b>Valor na origem:</b> R$ {{ number_format($order->external_price,2,',','.') }} <br>
-                                    <b>Valor em produtos:</b> R$ {{ number_format($order->items_amount,2,',','.') }} <br>
+                                    <b>{{ trans('supplier.valor_origem') }}:</b> R$ {{ number_format($order->external_price,2,',','.') }} <br>
+                                    <b>{{ trans('supplier.valor_produtos') }}:</b> R$ {{ number_format($order->items_amount,2,',','.') }} <br>
                                     @if($order->shipping_amount)
-                                        <b>Valor do frete: </b> R$ {{ number_format($order->shipping_amount,2,',','.') }} <br>
+                                        <b>{{ trans('supplier.valor_frete') }}: </b> R$ {{ number_format($order->shipping_amount,2,',','.') }} <br>
                                     @endif
-                                    <b>Total do pedido: </b> R$ {{ number_format($order->amount,2,',','.') }} <br>
-                                    <b>Status do pagamento aos fornecedores:</b> {{ $order->f_status }} <br>
+                                    <b>{{ trans('supplier.total_pedido') }}: </b> R$ {{ number_format($order->amount,2,',','.') }} <br>
+                                    <b>{{ trans('supplier.status_pagamento_fornecedores') }}:</b> {{ $order->f_status }} <br>
                                 </p>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="mb-0">Detalhes da entrega</h2>
+                                <h2 class="mb-0">{{ trans('supplier.detalhes_entrega') }}</h2>
                             </div>
                         </div>
                     </div>
@@ -64,31 +64,31 @@
                                 <div class="col">
                                     <p>
                                         @if($order->external_service == 'shopify')
-                                            <b>ID externo do cliente:</b> #{{ $order->customer->external_id }} <br>
+                                            <b>{{ trans('supplier.id_cliente_externo') }}:</b> #{{ $order->customer->external_id }} <br>
                                         @endif
-                                        <b>Nome:</b> {{ $order->customer->address->name }} <br>
-                                        <b>E-mail:</b> {{ $order->customer->email }} <br>
-                                        <b>Telefone:</b> {{ $order->customer->address->phone }} <br>
+                                        <b>{{ trans('supplier.name') }}:</b> {{ $order->customer->address->name }} <br>
+                                        <b>{{ trans('supplier.text_email') }}:</b> {{ $order->customer->email }} <br>
+                                        <b>{{ trans('supplier.text_phone') }}:</b> {{ $order->customer->address->phone }} <br>
                                     </p>
                                 </div>
                                 <div class="col">
                                     <p>
-                                        <b>Endereço:</b> {{ $order->customer->address->address1 }} <br>
+                                        <b>{{ trans('supplier.adress') }}:</b> {{ $order->customer->address->address1 }} <br>
                                         @if($order->customer->address->address2)
                                             {{ $order->customer->address->address2 }}<br>
                                         @endif
                                         @if($order->customer->address->company)
                                             {{ $order->customer->address->company }}<br>
                                         @endif
-                                        <b>CEP:</b> {{ $order->customer->address->zipcode }} <br>
-                                        <b>Cidade:</b> {{ $order->customer->address->city }} <br>
-                                        <b>Estado:</b> {{ $order->customer->address->province }} <br>
+                                        <b>{{ trans('supplier.postal_code') }}:</b> {{ $order->customer->address->zipcode }} <br>
+                                        <b>{{ trans('supplier.city') }}:</b> {{ $order->customer->address->city }} <br>
+                                        <b>{{ trans('supplier.estado') }}:</b> {{ $order->customer->address->province }} <br>
                                     </p>
                                 </div>
                             @else
                                 <div class="col">
                                     <div class="alert alert-danger">
-                                        Não há nenhum cliente ligado à esse pedido e não é possível concluí-lo no momento. Entre em contato com a nossa equipe para resolver este pedido.
+                                    {{ trans('supplier.cliente_nao_ligado_pedido') }}
                                     </div>
                                 </div>
                             @endif
@@ -99,7 +99,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="mb-0">Produtos do pedido</h2>
+                                <h2 class="mb-0">{{ trans('supplier.produtos_pedido') }}</h2>
                             </div>
                         </div>
                     </div>
@@ -107,12 +107,12 @@
                         <table class="table table-flush align-items-center">
                             <thead>
                             <tr>
-                                <th>ID externa</th>
-                                <th>SKU</th>
-                                <th>Valor externo</th>
-                                <th>NCM</th>
-                                <th>Variante</th>
-                                <th>Valor a pagar</th>
+                                <th>{{ trans('supplier.id_externo') }}</th>
+                                <th>{{ trans('supplier.sku') }}</th>
+                                <th>{{ trans('supplier.valor_externo') }}</th>
+                                <th>{{ trans('supplier.ncm') }}</th>
+                                <th>{{ trans('supplier.variante') }}</th>
+                                <th>{{ trans('supplier.valor_pagar') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -139,7 +139,7 @@
                                     @if($variant)
                                         <tr>
                                             <td>#{{ $item->external_variant_id }}</td>
-                                            <td>{{ $variant->sku }}<br><small>O produto <b>{{$variant->title }}</b> não está mais disponível</small></td>
+                                            <td>{{ $variant->sku }}<br><small>{{ trans('supplier.o_produto') }} <b>{{$variant->title }}</b> {{ trans('supplier.nao_esta_disponivel') }}</small></td>
                                             <td>R$ {{ number_format($item->external_price,2,',','.') }}</td>
                                             <td>{{ $item->ncm }}</td>
                                             <td>{{ $variant->title }}</td>
@@ -150,7 +150,7 @@
                                 
                             @empty
                                 <tr>
-                                    <td colspan="6">Nenhum produto ligado à esse pedido.</td>
+                                    <td colspan="6">{{ trans('supplier.nenhum_produto_ligado') }}</td>
                                 </tr>
                             @endforelse
                             </tbody>
@@ -161,7 +161,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="mb-0">Pedidos gerados a partir desta compra</h2>
+                                <h2 class="mb-0">{{ trans('supplier.pedidos_gerados_desta_compra') }}</h2>
                             </div>
                         </div>
                     </div>
@@ -169,11 +169,11 @@
                         <table class="table table-flush align-items-center">
                             <thead>
                             <tr>
-                                <th>Fornecedor</th>
-                                <th>Total</th>
-                                <th>Status</th>
-                                <th>Produtos</th>
-                                <th>Tracking number</th>
+                                <th>{{ trans('supplier.fornecedor') }}</th>
+                                <th>{{ trans('supplier.total') }}</th>
+                                <th>{{ trans('supplier.text_status') }}</th>
+                                <th>{{ trans('supplier.products') }}</th>
+                                <th>{{ trans('supplier.tracking_number') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -197,7 +197,7 @@
                                                     <a href="#" class="avatar avatar-sm" tooltip="true" title="{{ $item->quantity.'x '.$variant->title }}">
                                                         <img alt="{{ $variant->title }}" src="{{ ($variant->img_source) ? $variant->img_source : asset('assets/img/products/product-no-image.png') }}" class="rounded-circle bg-white w-100 h-100">
                                                     </a>
-                                                    <br><small>O produto <b>{{$variant->title }}</b> não está mais disponível</small>
+                                                    <br><small>{{ trans('supplier.o_produto') }} <b>{{$variant->title }}</b> {{ trans('supplier.nao_esta_disponivel') }}</small>
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -207,13 +207,13 @@
                                         @if($sup_order->shipping && $sup_order->shipping->tracking_number)
                                             {{ $sup_order->shipping->tracking_number }}
                                         @else
-                                            Não disponível
+                                        {{ trans('supplier.nao_disponivel') }}
                                         @endif
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6">Nenhum pedido enviado a fornecedores referente à essa compra.</td>
+                                    <td colspan="6">{{ trans('supplier.nenhum_pedido_enviado_fornecedores_compra') }}</td>
                                 </tr>
                             @endforelse
                             </tbody>
@@ -221,7 +221,7 @@
                     </div>
                 </div>
                 <div class="float-right mt-4">
-                    <a href="{{ route('shop.orders.cancel', $order->id) }}" class="btn btn-danger">Cancelar pedido</a>
+                    <a href="{{ route('shop.orders.cancel', $order->id) }}" class="btn btn-danger">{{ trans('supplier.cancelar_pedido') }}</a>
                 </div>
             </div>
         </div>

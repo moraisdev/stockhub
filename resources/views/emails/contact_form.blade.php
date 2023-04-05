@@ -1,5 +1,5 @@
 <h2>Novo contato no site {{env('APP_NAME')}}</h2>
 
-<p>Nome: {{ $name }}</p>
-<p>E-mail: {{ $email }}</p>
+<p>{{ trans('supplier.name') }}: {{ $name }}</p>
+<p>{{ trans('supplier.text_email') }}: {{ $email }}</p>
 <p>Mensagem: {!! $messagee !!}</p>

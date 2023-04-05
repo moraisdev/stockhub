@@ -49,12 +49,12 @@ background-color: #E4001B !important;
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">{{ __('supplier.products_tittle') }}</h3>
+                                <h3 class="mb-0">{{ __('supplier.products') }}</h3>
                             </div>
                             <div class="col-10">
                                 <div class="float-right">
                                      <a class="btn btn-success" href="{{ route('supplier.products.import.csv_instructions') }}">
-                                        <i class="fas fa-file-csv mr-2"></i> Importar Excel</a> 
+                                        <i class="fas fa-file-csv mr-2"></i> {{ trans('supplier.importar_excel') }}</a> 
                                     @if ($authenticated_user->bling_apikey)
                                         <button class="btn btn-success"  onclick="importAllProductsBling()"><i
                                                 class="fas fa-arrow-down mr-2"></i>
@@ -65,7 +65,7 @@ background-color: #E4001B !important;
                                     <a class="btn btn-warning" href="#" id="massiveEdit"
                                         onclick="document.getElementById('formEdit').submit()"><i
                                             class="fas fa-edit mr-2"></i>
-                                        Editar selecionados </a>
+                                            {{ trans('supplier.editar_selecionados') }} </a>
                                 </div>
                             </div>
                         </div>
@@ -84,11 +84,11 @@ background-color: #E4001B !important;
                                 <thead>
                                     <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Imagem</th>
-                                    <th scope="col">SKU</th>
-                                    <th scope="col">Titulo</th>
-                                    <th scope="col" class="text-center">Visibilidade</th>
-                                    <th scope="col" class="actions-th">Ações</th>
+                                    <th scope="col">{{ trans('supplier.imagem') }}</th>
+                                    <th scope="col">{{ trans('supplier.sku') }}</th>
+                                    <th scope="col">{{ trans('supplier.titulo') }}</th>
+                                    <th scope="col" class="text-center">{{ trans('supplier.visibility') }}</th>
+                                    <th scope="col" class="actions-th">{{ trans('supplier.actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -131,18 +131,18 @@ background-color: #E4001B !important;
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Importando produtos do Bling</h5>
+                        <h5 class="modal-title">{{ trans('supplier.importar_produtos_bling') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
 
-                    <img src="{{ asset('assets/img/Spinner-1s-200px (1).gif') }}" style="height: 30px;" id="imgok" ><a id ="txtstatus">Importando e Atualizando Produto Bling</a>
+                    <img src="{{ asset('assets/img/Spinner-1s-200px (1).gif') }}" style="height: 30px;" id="imgok" ><a id ="txtstatus">{{ trans('supplier.importar_atualizando_produto_bling') }}</a>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.fechar') }}</button>
                     </div>
                 </div>
             </div>

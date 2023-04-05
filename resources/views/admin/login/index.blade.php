@@ -23,7 +23,7 @@
                         <!-- <div class="text-center text-muted mb-4">
                             <small>Ou entre com suas credenciais</small>
                         </div> -->
-                        <div class="text-muted text-center mb-3"><small class='text-login-bold-white'>Login</small></div>
+                        <div class="text-muted text-center mb-3"><small class='text-login-bold-white'>{{ trans('supplier.text_login') }}</small></div>
 
                         <form role="form" method="POST" action="{{ route('admin.login.authenticate') }}">
                             {{ csrf_field() }}
@@ -32,7 +32,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="Email" type="email" name="email" value="{{ old('email') }}" readonly>
+                                    <input class="form-control" placeholder="{{ trans('supplier.text_email') }}" type="email" name="email" value="{{ old('email') }}" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -40,17 +40,17 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="Senha" type="password" name="password" readonly>
+                                    <input class="form-control" placeholder="{{ trans('supplier.text_password') }}" type="password" name="password" readonly>
                                 </div>
                             </div>
                             <div class="custom-control custom-control-alternative custom-checkbox">
                                 <input class="custom-control-input" id=" customCheckLogin" type="checkbox" value="1" name="keep_user_connected" {{ (old('keep_user_connected') == 1) ? 'checked' : '' }}>
                                 <label class="custom-control-label" for=" customCheckLogin">
-                                    <span class="text-muted text-login-bold-white">Manter-me conectado</span>
+                                    <span class="text-muted text-login-bold-white">{{ trans('supplier.text_check_connection') }}</span>
                                 </label>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4 btn-login-custom">Login</button>
+                                <button type="submit" class="btn btn-primary my-4 btn-login-custom">{{ trans('supplier.text_login') }}</button>
                             </div>
                         </form>
                     </div>

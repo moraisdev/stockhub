@@ -35,42 +35,42 @@
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">Link Afiliado</h3>
+                            <h3 class="mb-0">{{ trans('supplier.text_link_afiliado') }}</h3>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <h6 class="heading-small text-muted mb-4">Informações do Link Afiliado</h6>
+                    <h6 class="heading-small text-muted mb-4">{{ trans('supplier.text_informacao_link_afiliado') }}</h6>
                     <div class="row justify-content-center">
                         <div class="col-lg-12">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="product_title">Nome Afiliado</label>
-                                        <input type="text" id="product_title" class="form-control form-control-alternative" name="name" placeholder="Nome do Afiliado" value="{{ $link->name }}" disabled>
+                                        <label class="form-control-label" for="product_title">{{ trans('supplier.text_name_afiliado') }}</label>
+                                        <input type="text" id="product_title" class="form-control form-control-alternative" name="name" placeholder="{{ trans('supplier.text_name_afiliado') }}" value="{{ $link->name }}" disabled>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="type">Tipo de Link</label>
+                                        <label for="type">{{ trans('supplier.tipo_link') }}</label>
                                         <select class="form-control" id="type" name='type' disabled>
-                                            <option value='shop' @if($link->type == 'shop') {{'selected'}} @endif>Lojista</option>
-                                            <option value='supplier' @if($link->type == 'supplier') {{'selected'}} @endif>Fornecedor</option>
+                                            <option value='shop' @if($link->type == 'shop') {{'selected'}} @endif>{{ trans('supplier.lojista') }}</option>
+                                            <option value='supplier' @if($link->type == 'supplier') {{'selected'}} @endif>{{ trans('supplier.fornecedor') }}</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <h3>Ativos no momento: <b>{{$countAtivos}}</b></h3>
+                    <h3>{{ trans('supplier.ativos_momento') }} <b>{{$countAtivos}}</b></h3>
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">Nome</th>
-                                <th scope="col">E-mail</th>
-                                <th scope="col">Situação</th>
-                                <th scope="col">Data Cadastro</th>
-                                <th style="width:50px" class="text-center">Ações</th>
+                                <th scope="col">{{ trans('supplier.name') }}</th>
+                                <th scope="col">{{ trans('supplier.text_email') }}</th>
+                                <th scope="col">{{ trans('supplier.situacao') }}</th>
+                                <th scope="col">{{ trans('supplier.data_cadastro') }}</th>
+                                <th style="width:50px" class="text-center">{{ trans('supplier.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,7 +89,7 @@
                                     {{ date('d/m/Y H:i:s', strtotime($shop->created_at)) }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.shops.login', $shop->id) }}" class="btn btn-info btn-sm" tooltip="true" title="Logar no painel do lojista" target="_blank">
+                                    <a href="{{ route('admin.shops.login', $shop->id) }}" class="btn btn-info btn-sm" tooltip="true" title="{{ trans('supplier.logar_painel_lojista') }}" target="_blank">
                                         <i class="fas fa-fw fa-sign-in-alt"></i>
                                     </a>
                                 </td>
@@ -97,7 +97,7 @@
                             @empty
                             <tr>
                                 <th scope="row" colspan="6">
-                                    Nenhum lojista cadastrado ainda
+                                {{ trans('supplier.nenhum_lojista_cadastrado') }}
                                 </th>
                             </tr>
                             @endforelse

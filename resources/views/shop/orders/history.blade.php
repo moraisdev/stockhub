@@ -38,10 +38,10 @@
                             <tr>
                                 <th style="width:30px"></th>
                                 <th>Data de pagamento</th>
-                                <th>Ref. Externa</th>
-                                <th>Nome do Pedido</th>
+                                <th>{{ trans('supplier.ref_externa') }}</th>
+                                <th>{{ trans('supplier.nome_pedido') }}</th>
                                 <th>Valor pago</th>
-                                <th>Status</th>
+                                <th>{{ trans('supplier.text_status') }}</th>
                             </tr>
                         </thead>
                         <tbody>

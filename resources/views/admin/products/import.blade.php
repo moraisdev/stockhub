@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Cadastro rápido de produtos</title>
+        <title>{{ trans('supplier.cadastro_rapido_produtos') }}</title>
         <link href="{{ asset('assets/css/argon-dashboard.css?v=1.1.1') }}" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/7b818e6d8e.js" crossorigin="anonymous"></script>
 
@@ -15,17 +15,17 @@
             @csrf
             <div class="row mx-1 my-2">
                 <div class="col">
-                    <h3 class="d-inline">Cadastro rápido de produtos</h3>
+                    <h3 class="d-inline">{{ trans('supplier.cadastro_rapido_produtos') }}</h3>
                     <div class="d-inline flex-grow-1">
                         <div class="float-right">
-                            <a href="{{ asset('assets/img/import-example.png') }}" target="_blank" class="btn btn-warning btn-sm" {{--data-toggle="modal" data-target="#modal-example"--}}><i class="fas fa-info"></i> Ver modelo de exemplo</a>
-                            <a href="{{ route('admin.products.update_descriptions', $supplier_id) }}" target="_blank" class="btn btn-primary btn-sm" {{--data-toggle="modal" data-target="#modal-example"--}}><i class="fas fa-box"></i> Atualizar descrições</a>
+                            <a href="{{ asset('assets/img/import-example.png') }}" target="_blank" class="btn btn-warning btn-sm" {{--data-toggle="modal" data-target="#modal-example"--}}><i class="fas fa-info"></i>{{ trans('supplier.ver_modelo_exemplo') }}</a>
+                            <a href="{{ route('admin.products.update_descriptions', $supplier_id) }}" target="_blank" class="btn btn-primary btn-sm" {{--data-toggle="modal" data-target="#modal-example"--}}><i class="fas fa-box"></i>{{ trans('supplier.atualizar_descricoes') }}</a>
                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-import-csv">
-                                <i class="fa fa-file-excel-o"></i> Importar CSV
+                                <i class="fa fa-file-excel-o"></i> {{ trans('supplier.importar_csv') }}
                             </button>
-                            <button type="button" class="btn btn-success btn-sm" onclick="addNewProduct()"><i class="fas fa-plus"></i> Adicionar produto</button>
-                            <button class="btn btn-primary btn-sm">Concluir Cadastro</button>
-                            <a href="{{ route('admin.dashboard') }}" class="btn btn-default btn-sm">Voltar para o sistema</a>
+                            <button type="button" class="btn btn-success btn-sm" onclick="addNewProduct()"><i class="fas fa-plus"></i>{{ trans('supplier.adicionar_produtos') }}</button>
+                            <button class="btn btn-primary btn-sm">{{ trans('supplier.concluir_cadastro') }}</button>
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-default btn-sm">{{ trans('supplier.voltar_sistema') }}</a>
                         </div>
                     </div>
                 </div>
@@ -34,22 +34,22 @@
                 <thead class="bg-white">
                     <tr>
                         <th></th>
-                        <th>Tipo</th>
-                        <th>Identificador</th>
-                        <th>Categoria</th>
-                        <th>Título</th>
-                        <th>NCM</th>
-                        <th>Descrição</th>
-                        <th>Público?</th>
-                        <th>Opções</th>
-                        <th>Valores das opções</th>
-                        <th>Preço</th>
-                        <th>SKU</th>
-                        <th>Peso (g)</th>
-                        <th>Largura (cm)</th>
-                        <th>Altura (cm)</th>
-                        <th>Profundidade (cm)</th>
-                        {{--<th>Foto</th>--}}
+                        <th>{{ trans('supplier.tipo') }}</th>
+                        <th>{{ trans('supplier.identificador') }}</th>
+                        <th>{{ trans('supplier.category') }}</th>
+                        <th>{{ trans('supplier.tittle') }}</th>
+                        <th>{{ trans('supplier.ncm') }}</th>
+                        <th>{{ trans('supplier.description') }}</th>
+                        <th>{{ trans('supplier.public') }}?</th>
+                        <th>{{ trans('supplier.options') }}</th>
+                        <th>{{ trans('supplier.valores_opcoes') }}</th>
+                        <th>{{ trans('supplier.money_price') }}</th>
+                        <th>{{ trans('supplier.sku') }}</th>
+                        <th>{{ trans('supplier.weight') }}</th>
+                        <th>{{ trans('supplier.width') }}</th>
+                        <th>{{ trans('supplier.height') }}</th>
+                        <th>{{ trans('supplier.depth') }}</th>
+                        {{--<th>{{ trans('supplier.foto') }}</th>--}}
                     </tr>
                 </thead>
                 <tbody id="products-table">
@@ -61,12 +61,12 @@
                                 </td>
                                 <td style="min-width: 130px">
                                     <select name="products[{{ $count }}][type]" class="form-control form-control-sm" onchange="changeType(this)">
-                                        <option value="product" {{ strtolower($line['type']) == 'produto' ? 'selected' : '' }}>Produto</option>
-                                        <option value="variant" {{ strtolower($line['type']) == 'variante' ? 'selected' : '' }}>Variante</option>
+                                        <option value="product" {{ strtolower($line['type']) == 'produto' ? 'selected' : '' }}>{{ trans('supplier.product') }}</option>
+                                        <option value="variant" {{ strtolower($line['type']) == 'variante' ? 'selected' : '' }}>{{ trans('supplier.variante') }}</option>
                                     </select>
                                 </td>
                                 <td style="min-width: 200px" id="identifier_td">
-                                    <input type="text" class="form-control form-control-sm" name="products[{{ $count }}][identifier]" placeholder="Identificador" onchange="updateIdentifier(this)" value="{{ strtolower($line['identifier']) }}">
+                                    <input type="text" class="form-control form-control-sm" name="products[{{ $count }}][identifier]" placeholder="{{ trans('supplier.identificador') }}" onchange="updateIdentifier(this)" value="{{ strtolower($line['identifier']) }}">
                                 </td>
                                 <td style="min-width: 130px">
                                     <select name="products[{{ $count }}][category_id]" class="form-control form-control-sm">
@@ -75,19 +75,19 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][title]" placeholder="Título" value="{{ $line['title'] }}"></td>
-                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][ncm]" placeholder="NCM" value="{{ $line['ncm'] }}"></td>
-                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][description]" placeholder="Descrição" value="{{ $line['description'] }}"></td>
+                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][title]" placeholder="{{ trans('supplier.tittle') }}" value="{{ $line['title'] }}"></td>
+                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][ncm]" placeholder="{{ trans('supplier.ncm') }}" value="{{ $line['ncm'] }}"></td>
+                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][description]" placeholder="{{ trans('supplier.description') }}" value="{{ $line['description'] }}"></td>
                                 <td style="min-width: 110px">
                                     <select name="products[{{ $count }}][public]" class="form-control form-control-sm">
-                                        <option value="0" {{ (strtolower($line['public']) == 'nao' || strtolower($line['public']) == 'não') ? 'selected' : '' }}>Não</option>
-                                        <option value="1" {{ (strtolower($line['public']) == 'sim') ? 'selected' : '' }}>Sim</option>
+                                        <option value="0" {{ (strtolower($line['public']) == 'nao' || strtolower($line['public']) == 'não') ? 'selected' : '' }}>{{ trans('supplier.nao') }}</option>
+                                        <option value="1" {{ (strtolower($line['public']) == 'sim') ? 'selected' : '' }}>{{ trans('supplier.sim') }}</option>
                                     </select>
                                 </td>
-                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][options]" placeholder="Opções" value="{{ $line['options'] }}"></td>
-                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[{{ $count }}][options_values]" placeholder="Valores das opções" value="{{ $line['options_values'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
-                                <td style="min-width: 125px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[{{ $count }}][price]" placeholder="Preço" value="{{ $line['price'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
-                                <td style="min-width: 150px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[{{ $count }}][sku]" placeholder="SKU" value="{{ $line['sku'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
+                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][options]" placeholder="{{ trans('supplier.options') }}" value="{{ $line['options'] }}"></td>
+                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[{{ $count }}][options_values]" placeholder="{{ trans('supplier.valores_opcoes') }}" value="{{ $line['options_values'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
+                                <td style="min-width: 125px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[{{ $count }}][price]" placeholder="{{ trans('supplier.money_price') }}" value="{{ $line['price'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
+                                <td style="min-width: 150px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[{{ $count }}][sku]" placeholder="{{ trans('supplier.sku') }}" value="{{ $line['sku'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
                                 <td style="min-width: 100px"><input type="number" class="form-control form-control-sm variant_only_input" name="products[{{ $count }}][weight_in_grams]" placeholder="Peso" value="{{ $line['weight_in_grams'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
                                 <td style="min-width: 100px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[{{ $count }}][width]" placeholder="Largura" value="{{ $line['width'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
                                 <td style="min-width: 100px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[{{ $count }}][height]" placeholder="Altura" value="{{ $line['height'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
@@ -100,12 +100,12 @@
                                     </td>
                                     <td style="min-width: 130px">
                                         <select name="products[{{ ($count+10000) }}][type]" class="form-control form-control-sm" onchange="changeType(this)">
-                                            <option value="product">Produto</option>
-                                            <option value="variant" selected>Variante</option>
+                                            <option value="product">{{ trans('supplier.product') }}</option>
+                                            <option value="variant" selected>{{ trans('supplier.variante') }}</option>
                                         </select>
                                     </td>
                                     <td style="min-width: 200px" id="identifier_td">
-                                        <input type="text" class="form-control form-control-sm" name="products[{{ ($count+10000) }}][identifier]" placeholder="Identificador" onchange="updateIdentifier(this)" value="{{ strtolower($line['identifier']) }}">
+                                        <input type="text" class="form-control form-control-sm" name="products[{{ ($count+10000) }}][identifier]" placeholder="{{ trans('supplier.identificador') }}" onchange="updateIdentifier(this)" value="{{ strtolower($line['identifier']) }}">
                                     </td>
                                     <td style="min-width: 130px">
                                         <select name="products[{{ ($count+10000) }}][category_id]" class="form-control form-control-sm">
@@ -114,19 +114,19 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ ($count+10000) }}][title]" placeholder="Título" value="{{ $line['title'] }}"></td>
-                                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ ($count+10000) }}][ncm]" placeholder="NCM" value="{{ $line['ncm'] }}"></td>
-                                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ ($count+10000) }}][description]" placeholder="Descrição" value="{{ $line['description'] }}"></td>
+                                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ ($count+10000) }}][title]" placeholder="{{ trans('supplier.tittle') }}" value="{{ $line['title'] }}"></td>
+                                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ ($count+10000) }}][ncm]" placeholder="{{ trans('supplier.ncm') }}" value="{{ $line['ncm'] }}"></td>
+                                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ ($count+10000) }}][description]" placeholder="{{ trans('supplier.description') }}" value="{{ $line['description'] }}"></td>
                                     <td style="min-width: 110px">
                                         <select name="products[{{ ($count+10000) }}][public]" class="form-control form-control-sm">
-                                            <option value="1" {{ (strtolower($line['public']) == 'sim') ? 'selected' : '' }}>Sim</option>
-                                            <option value="0" {{ (strtolower($line['public']) == 'nao' || strtolower($line['public']) == 'não') ? 'selected' : '' }}>Não</option>
+                                            <option value="1" {{ (strtolower($line['public']) == 'sim') ? 'selected' : '' }}>{{ trans('supplier.sim') }}</option>
+                                            <option value="0" {{ (strtolower($line['public']) == 'nao' || strtolower($line['public']) == 'não') ? 'selected' : '' }}>{{ trans('supplier.nao') }}</option>
                                         </select>
                                     </td>
-                                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ ($count+10000) }}][options]" placeholder="Opções" value="{{ $line['options'] }}"></td>
-                                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[{{ ($count+10000) }}][options_values]" placeholder="Valores das opções" value="{{ $line['options_values'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
-                                    <td style="min-width: 125px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[{{ ($count+10000) }}][price]" placeholder="Preço" value="{{ $line['price'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
-                                    <td style="min-width: 150px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[{{ ($count+10000) }}][sku]" placeholder="SKU" value="{{ $line['sku'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
+                                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ ($count+10000) }}][options]" placeholder="{{ trans('supplier.options') }}" value="{{ $line['options'] }}"></td>
+                                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[{{ ($count+10000) }}][options_values]" placeholder="{{ trans('supplier.valores_opcoes') }}" value="{{ $line['options_values'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
+                                    <td style="min-width: 125px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[{{ ($count+10000) }}][price]" placeholder="{{ trans('supplier.money_price') }}" value="{{ $line['price'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
+                                    <td style="min-width: 150px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[{{ ($count+10000) }}][sku]" placeholder="{{ trans('supplier.sku') }}" value="{{ $line['sku'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
                                     <td style="min-width: 100px"><input type="number" class="form-control form-control-sm variant_only_input" name="products[{{ ($count+10000) }}][weight_in_grams]" placeholder="Peso" value="{{ $line['weight_in_grams'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
                                     <td style="min-width: 100px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[{{ ($count+10000) }}][width]" placeholder="Largura" value="{{ $line['width'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
                                     <td style="min-width: 100px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[{{ ($count+10000) }}][height]" placeholder="Altura" value="{{ $line['height'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
@@ -143,12 +143,12 @@
                                 </td>
                                 <td style="min-width: 130px">
                                     <select name="products[{{ $count }}][type]" class="form-control form-control-sm" onchange="changeType(this)">
-                                        <option value="product" {{ $line['type'] == 'product' ? 'selected' : '' }}>Produto</option>
-                                        <option value="variant" {{ $line['type'] == 'variant' ? 'selected' : '' }}>Variante</option>
+                                        <option value="product" {{ $line['type'] == 'product' ? 'selected' : '' }}>{{ trans('supplier.product') }}</option>
+                                        <option value="variant" {{ $line['type'] == 'variant' ? 'selected' : '' }}>{{ trans('supplier.variante') }}</option>
                                     </select>
                                 </td>
                                 <td style="min-width: 200px" id="identifier_td">
-                                    <input type="text" class="form-control form-control-sm" name="products[{{ $count }}][identifier]" placeholder="Identificador" onchange="updateIdentifier(this)" value="{{ $line['identifier'] }}">
+                                    <input type="text" class="form-control form-control-sm" name="products[{{ $count }}][identifier]" placeholder="{{ trans('supplier.identificador') }}" onchange="updateIdentifier(this)" value="{{ $line['identifier'] }}">
                                 </td>
                                 <td style="min-width: 130px">
                                     <select name="products[{{ $count }}][category_id]" class="form-control form-control-sm">
@@ -157,19 +157,19 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][title]" placeholder="Título" value="{{ $line['title'] }}"></td>
-                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][ncm]" placeholder="NCM" value="{{ $line['ncm'] }}"></td>
-                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][description]" placeholder="Descrição" value="{{ $line['description'] }}"></td>
+                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][title]" placeholder="{{ trans('supplier.tittle') }}" value="{{ $line['title'] }}"></td>
+                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][ncm]" placeholder="{{ trans('supplier.ncm') }}" value="{{ $line['ncm'] }}"></td>
+                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][description]" placeholder="{{ trans('supplier.description') }}" value="{{ $line['description'] }}"></td>
                                 <td style="min-width: 110px">
                                     <select name="products[{{ $count }}][public]" class="form-control form-control-sm">
-                                        <option value="1" {{ $line['public'] == 1 ? 'selected' : '' }}>Sim</option>
-                                        <option value="0" {{ $line['public'] == 0 ? 'selected' : '' }}>Não</option>
+                                        <option value="1" {{ $line['public'] == 1 ? 'selected' : '' }}>{{ trans('supplier.sim') }}</option>
+                                        <option value="0" {{ $line['public'] == 0 ? 'selected' : '' }}>{{ trans('supplier.nao') }}</option>
                                     </select>
                                 </td>
-                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][options]" placeholder="Opções" value="{{ $line['options'] }}"></td>
-                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[{{ $count }}][options_values]" placeholder="Valores das opções" value="{{ $line['options_values'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
-                                <td style="min-width: 125px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[{{ $count }}][price]" placeholder="Preço" value="{{ $line['price'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
-                                <td style="min-width: 150px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[{{ $count }}][sku]" placeholder="SKU" value="{{ $line['sku'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
+                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[{{ $count }}][options]" placeholder="{{ trans('supplier.options') }}" value="{{ $line['options'] }}"></td>
+                                <td style="min-width: 200px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[{{ $count }}][options_values]" placeholder="{{ trans('supplier.valores_opcoes') }}" value="{{ $line['options_values'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
+                                <td style="min-width: 125px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[{{ $count }}][price]" placeholder="{{ trans('supplier.money_price') }}" value="{{ $line['price'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
+                                <td style="min-width: 150px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[{{ $count }}][sku]" placeholder="{{ trans('supplier.sku') }}" value="{{ $line['sku'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
                                 <td style="min-width: 100px"><input type="number" class="form-control form-control-sm variant_only_input" name="products[{{ $count }}][weight_in_grams]" placeholder="Peso" value="{{ $line['weight_in_grams'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
                                 <td style="min-width: 100px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[{{ $count }}][width]" placeholder="Largura" value="{{ $line['width'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
                                 <td style="min-width: 100px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[{{ $count }}][height]" placeholder="Altura" value="{{ $line['height'] }}" {{ $line['type'] == 'product' ? 'readonly' : '' }}></td>
@@ -186,18 +186,18 @@
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Importar produtos por CSV</h4>
+                            <h4 class="modal-title">{{ trans('supplier.importar_csv') }}</h4>
                         </div>
                         <div class="modal-body">
-                            <p>Selecione um arquivo CSV para importar os produtos para o cadastro rápido.</p>
+                            <p>{{ trans('supplier.selecione_csv_importar') }}</p>
                             <div class="form-group">
-                                <label>Arquivo CSV</label>
+                                <label>{{ trans('supplier.arquivo_csv') }}</label>
                                 <input type="file" class="form-control" name="csv_file">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-primary">Importar CSV</button>
-                            <button class="btn btn-secondary" data-dismiss="modal">Sair</button>
+                            <button class="btn btn-primary">{{ trans('supplier.importar_csv') }}</button>
+                            <button class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.sair') }}</button>
                         </div>
                     </div>
                 </form>
@@ -212,7 +212,7 @@
                             {{ session('error') }}
                         </div>
                         <div class="modal-footer bg-danger">
-                            <button class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                            <button class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.ok') }}</button>
                         </div>
                     </div>
                 </div>
@@ -230,12 +230,12 @@
                     </td>
                     <td style="min-width: 130px">
                         <select name="products[0][type]" class="form-control form-control-sm" onchange="changeType(this)">
-                            <option value="product">Produto</option>
-                            <option value="variant">Variante</option>
+                            <option value="product">{{ trans('supplier.product') }}</option>
+                            <option value="variant">{{ trans('supplier.variante') }}</option>
                         </select>
                     </td>
                     <td style="min-width: 200px" id="identifier_td">
-                        <input type="text" class="form-control form-control-sm" name="products[0][identifier]" placeholder="Identificador" onchange="updateIdentifier(this)">
+                        <input type="text" class="form-control form-control-sm" name="products[0][identifier]" placeholder="{{ trans('supplier.identificador') }}" onchange="updateIdentifier(this)">
                     </td>
                     <td style="min-width: 130px">
                         <select name="products[0][category_id]" class="form-control form-control-sm">
@@ -244,19 +244,19 @@
                             @endforeach
                         </select>
                     </td>
-                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[0][title]" placeholder="Título"></td>
-                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[0][ncm]" placeholder="NCM"></td>
-                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[0][description]" placeholder="Descrição"></td>
+                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[0][title]" placeholder="{{ trans('supplier.tittle') }}"></td>
+                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[0][ncm]" placeholder="{{ trans('supplier.ncm') }}"></td>
+                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[0][description]" placeholder="{{ trans('supplier.description') }}"></td>
                     <td style="min-width: 110px">
                         <select name="products[0][public]" class="form-control form-control-sm">
-                            <option value="1">Sim</option>
-                            <option value="0">Não</option>
+                            <option value="1">{{ trans('supplier.sim') }}</option>
+                            <option value="0">{{ trans('supplier.nao') }}</option>
                         </select>
                     </td>
-                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[0][options]" placeholder="Opções"></td>
-                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[0][options_values]" placeholder="Valores das opções" readonly></td>
-                    <td style="min-width: 125px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[0][price]" placeholder="Preço" readonly></td>
-                    <td style="min-width: 150px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[0][sku]" placeholder="SKU" readonly></td>
+                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm" name="products[0][options]" placeholder="{{ trans('supplier.options') }}"></td>
+                    <td style="min-width: 200px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[0][options_values]" placeholder="{{ trans('supplier.valores_opcoes') }}" readonly></td>
+                    <td style="min-width: 125px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[0][price]" placeholder="{{ trans('supplier.money_price') }}" readonly></td>
+                    <td style="min-width: 150px"><input type="text" class="form-control form-control-sm variant_only_input" name="products[0][sku]" placeholder="{{ trans('supplier.sku') }}" readonly></td>
                     <td style="min-width: 100px"><input type="number" class="form-control form-control-sm variant_only_input" name="products[0][weight_in_grams]" placeholder="Peso" readonly></td>
                     <td style="min-width: 100px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[0][width]" placeholder="Largura" readonly></td>
                     <td style="min-width: 100px"><input type="text" class="form-control form-control-sm decimal variant_only_input" name="products[0][height]" placeholder="Altura" readonly></td>

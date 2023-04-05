@@ -12,14 +12,14 @@
                 @method('DELETE')
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title">Excluir Pedido</h3>
+                        <h3 class="modal-title">{{ trans('supplier.excluir_pedido') }}</h3>
                     </div>
                     <div class="modal-body">
                         <p>Você tem certeza que deseja excluir o pedido <b><span id='name-order-delete'></span></b> desta fatura?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button class="btn btn-danger">Excluir</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
+                        <button class="btn btn-danger">{{ trans('supplier.delete') }}</button>
                     </div>
                 </div>
             </form>
@@ -89,8 +89,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Cupom</th>
-                                                <th>Produto</th>
-                                                <th>Desconto</th>
+                                                <th>{{ trans('supplier.product') }}</th>
+                                                <th>{{ trans('supplier.discount') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -174,8 +174,8 @@
                         <table class="table table-flush align-items-center">
                             <thead>
                                 <tr>
-                                    <th>Taxa</th>
-                                    <th>Valor</th>
+                                    <th>{{ trans('supplier.taxa') }}</th>
+                                    <th>{{ trans('supplier.price') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -229,8 +229,8 @@
                             <table class="table table-flush align-items-center">
                                 <thead>
                                     <tr>
-                                        <th>Taxa</th>
-                                        <th>Valor</th>
+                                        <th>{{ trans('supplier.taxa') }}</th>
+                                        <th>{{ trans('supplier.price') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -286,13 +286,13 @@
                         <table class="table table-flush align-items-center">
                             <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Cliente</th>
-                                <th>Produtos</th>
-                                <th>Valor em Produtos</th>
+                                <th>{{ trans('supplier.text_id') }}</th>
+                                <th>{{ trans('supplier.text_client') }}</th>
+                                <th>{{ trans('supplier.product') }}</th>
+                                <th>{{ trans('supplier.valor_produtos') }}</th>
                                 <th>Frete</th>
-                                <th>Total</th>
-                                <th>Ações</th>
+                                <th>{{ trans('supplier.total') }}</th>
+                                <th>{{ trans('supplier.actions') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -322,7 +322,7 @@
                                                         @endphp
 
                                                         @if($variant)
-                                                            O produto <b>{{$variant->title }}</b> não está mais disponível
+                                                        {{ trans('supplier.o_produto') }} <b>{{$variant->title }}</b> {{ trans('supplier.nao_esta_disponivel') }}
                                                         @endif
                                                         
                                                     @endif
@@ -346,7 +346,7 @@
                                         <td>
                                             @if($order->status == 'pending' && $order->order->status == 'pending')
                                                 {{-- Caso esteja pendente, ainda tem a possibilidade de excluir --}}
-                                                <a href="#!" data-toggle='modal' data-target='#modal-delete-order-in-group' onclick="updateDeleteModalOrderInGroup('{{$order->order->name}}', '{{route('shop.orders.groups.order.delete', ['group_id' => $group->id, 'order_id' => $order->order->id])}}')" class="btn btn-danger btn-sm" tooltip="true" title="Excluir">
+                                                <a href="#!" data-toggle='modal' data-target='#modal-delete-order-in-group' onclick="updateDeleteModalOrderInGroup('{{$order->order->name}}', '{{route('shop.orders.groups.order.delete', ['group_id' => $group->id, 'order_id' => $order->order->id])}}')" class="btn btn-danger btn-sm" tooltip="true" title="{{ trans('supplier.delete') }}">
                                                     <i class="fas fa-fw fa-times"></i>
                                                 </a>
                                             @endif
@@ -362,7 +362,7 @@
                                     </tr>
                                 @endforelse
                                 <tr>
-                                    <th colspan="3" class="text-right">Total</th>
+                                    <th colspan="3" class="text-right">{{ trans('supplier.total') }}</th>
                                     <td>R$ {{number_format($totalProdutos,2,',','.')}}</td>
                                     <td>R$ {{number_format($totalFretes,2,',','.')}}</td>
                                     <td>R$ {{number_format($totalFinal,2,',','.')}}</td>

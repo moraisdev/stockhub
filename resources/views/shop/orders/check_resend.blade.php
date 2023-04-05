@@ -29,11 +29,11 @@
                     <div class="row">
                         <div class="col">
                             <p>
-                                <b>Origem do pedido:</b> {{ ucfirst($order->external_service) }} <br>
+                                <b>{{ trans('supplier.origem_pedido') }}:</b> {{ ucfirst($order->external_service) }} <br>
                                 @if($order->external_service == 'shopify')
-                                <b>ID externo:</b> <a href="https://{{ $authenticated_user->shopify_app->domain }}.myshopify.com/admin/orders/{{ $order->external_id }}" target="_blank">#{{ ucfirst($order->external_id) }}</a> <br>
+                                <b>{{ trans('supplier.id_externo') }}:</b> <a href="https://{{ $authenticated_user->shopify_app->domain }}.myshopify.com/admin/orders/{{ $order->external_id }}" target="_blank">#{{ ucfirst($order->external_id) }}</a> <br>
                                 @endif
-                                <b>Nome do pedido:</b> {{ $order->name }} <br>
+                                <b>{{ trans('supplier.nome_pedido') }}:</b> {{ $order->name }} <br>
                             </p>
                         </div>
                         <div class="col">
@@ -85,13 +85,13 @@
                                     }
                                 @endphp
                                 
-                                <b>Valor em produtos:</b> R$ {{number_format($orderReturned->supplier_order->amount,2,',','.')}} {!! $flagDolar ? "<span style='font-size: 9pt;'>(* Os valores podem variar de acordo com a cotação atual do dólar)</span>" : '' !!} {{-- number_format($order->items_amount,2,',','.') --}} <br>
+                                <b>{{ trans('supplier.valor_produtos') }}:</b> R$ {{number_format($orderReturned->supplier_order->amount,2,',','.')}} {!! $flagDolar ? "<span style='font-size: 9pt;'>(* Os valores podem variar de acordo com a cotação atual do dólar)</span>" : '' !!} {{-- number_format($order->items_amount,2,',','.') --}} <br>
                                 @if($orderReturned->supplier_order->shipping->amount)
-                                    <b>Valor do frete: </b> R$ {{ number_format($orderReturned->supplier_order->shipping->amount,2,',','.') }} <br>
+                                    <b>{{ trans('supplier.valor_frete') }}: </b> R$ {{ number_format($orderReturned->supplier_order->shipping->amount,2,',','.') }} <br>
                                     {{-- {{dd($orderReturned->supplier_order->amount)}} --}}
                                     {{-- {{dd($orderReturned->supplier_order->shipping->amount)}} --}}
                                 @endif
-                                {{-- <b>Total do pedido: </b> R$ {{ number_format($orderReturned->supplier_order->amount + $orderReturned->supplier_order->shipping->amount,2,',','.') }} --}}
+                                {{-- <b>{{ trans('supplier.total_pedido') }}: </b> R$ {{ number_format($orderReturned->supplier_order->amount + $orderReturned->supplier_order->shipping->amount,2,',','.') }} --}}
                             </p>
                         </div>
                     </div>
@@ -118,17 +118,17 @@
                             <div class="col">
                                 <p>
                                     @if($order->external_service == 'shopify')
-                                    <b>ID externo do cliente:</b> <a href="https://{{ $authenticated_user->shopify_app->domain }}.myshopify.com/admin/customers/{{ $order->customer->external_id }}" target="_blank">#{{ $order->customer->external_id }}</a> <br>
+                                    <b>{{ trans('supplier.id_cliente_externo') }}:</b> <a href="https://{{ $authenticated_user->shopify_app->domain }}.myshopify.com/admin/customers/{{ $order->customer->external_id }}" target="_blank">#{{ $order->customer->external_id }}</a> <br>
                                     @endif
-                                    <b>Nome:</b> {{ $order->customer->address->name }} <br>
-                                    <b>E-mail:</b> {{ $order->customer->email }} <br>
-                                    <b>Telefone:</b> {{ $order->customer->address->phone }} <br>
+                                    <b>{{ trans('supplier.name') }}:</b> {{ $order->customer->address->name }} <br>
+                                    <b>{{ trans('supplier.text_email') }}:</b> {{ $order->customer->email }} <br>
+                                    <b>{{ trans('supplier.text_phone') }}:</b> {{ $order->customer->address->phone }} <br>
                                 </p>
                             </div>
                         @else
                             <div class="col">
                                 <div class="alert alert-danger">
-                                    Não há nenhum cliente ligado à esse pedido e não é possível concluí-lo no momento. Entre em contato com a nossa equipe para resolver este pedido.
+                                {{ trans('supplier.cliente_nao_ligado_pedido') }}
                                 </div>
                             </div>
                         @endif
@@ -142,14 +142,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Endereço</label>
-                                    <input type="text" class="form-control" name="address1" id="customer-address1-input" placeholder="Endereço" value='{{ $order->customer->address->address1 }}'>
+                                    <label>{{ trans('supplier.adress') }}</label>
+                                    <input type="text" class="form-control" name="address1" id="customer-address1-input" placeholder="{{ trans('supplier.adress') }}" value='{{ $order->customer->address->address1 }}'>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Número</label>
-                                    <input type="text" class="form-control" name="address2" id="customer-address2-input" placeholder="Complemento" value='{{ $order->customer->address->address2 }}'>
+                                    <label>{{ trans('supplier.numero') }}</label>
+                                    <input type="text" class="form-control" name="address2" id="customer-address2-input" placeholder="{{ trans('supplier.complemment') }}" value='{{ $order->customer->address->address2 }}'>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12">
@@ -160,14 +160,14 @@
                             </div>
                             <div class="col-lg-6 col-12">
                                 <div class="form-group">
-                                    <label>CEP</label>
-                                    <input type="text" class="form-control" name="zipcode" id="customer-zipcode-input" placeholder="CEP" value='{{ $order->customer->address->zipcode }}'>
+                                    <label>{{ trans('supplier.postal_code') }}</label>
+                                    <input type="text" class="form-control" name="zipcode" id="customer-zipcode-input" placeholder="{{ trans('supplier.postal_code') }}" value='{{ $order->customer->address->zipcode }}'>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12">
                                 <div class="form-group">
-                                    <label>Cidade</label>
-                                    <input type="text" class="form-control" name="city" id="customer-city-input" placeholder="Cidade" value='{{ $order->customer->address->city }}'>
+                                    <label>{{ trans('supplier.city') }}</label>
+                                    <input type="text" class="form-control" name="city" id="customer-city-input" placeholder="{{ trans('supplier.city') }}" value='{{ $order->customer->address->city }}'>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12">
@@ -203,7 +203,7 @@
                                     ];
                                 @endphp
                                 <div class="form-group">
-                                    <label>Estado</label>
+                                    <label>{{ trans('supplier.estado') }}</label>
                                     {{-- {{dd($provice_codes)}} --}}
                                     <select name="province_code" class='form-control' >                                        
                                         @foreach ($provice_codes as $state)
@@ -238,14 +238,14 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label>Endereço</label>
-                                <input type="text" class="form-control" name="address1" id="customer-address1-input" placeholder="Endereço">
+                                <label>{{ trans('supplier.adress') }}</label>
+                                <input type="text" class="form-control" name="address1" id="customer-address1-input" placeholder="{{ trans('supplier.adress') }}">
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <label>Complemento</label>
-                                <input type="text" class="form-control" name="address2" id="customer-address2-input" placeholder="Complemento">
+                                <label>{{ trans('supplier.complemment') }}</label>
+                                <input type="text" class="form-control" name="address2" id="customer-address2-input" placeholder="{{ trans('supplier.complemment') }}">
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
@@ -256,26 +256,26 @@
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="form-group">
-                                <label>CEP</label>
-                                <input type="text" class="form-control" name="zipcode" id="customer-zipcode-input" placeholder="CEP">
+                                <label>{{ trans('supplier.postal_code') }}</label>
+                                <input type="text" class="form-control" name="zipcode" id="customer-zipcode-input" placeholder="{{ trans('supplier.postal_code') }}">
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="form-group">
-                                <label>Cidade</label>
-                                <input type="text" class="form-control" name="city" id="customer-city-input" placeholder="Cidade">
+                                <label>{{ trans('supplier.city') }}</label>
+                                <input type="text" class="form-control" name="city" id="customer-city-input" placeholder="{{ trans('supplier.city') }}">
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="form-group">
-                                <label>Estado</label>
-                                <input type="text" class="form-control" name="province" id="customer-province-input" placeholder="Estado">
+                                <label>{{ trans('supplier.estado') }}</label>
+                                <input type="text" class="form-control" name="province" id="customer-province-input" placeholder="{{ trans('supplier.estado') }}">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
                     <button class="btn btn-primary">Alterar endereço</button>
                 </div>
             </div>
@@ -289,14 +289,14 @@
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title mb-0">Adicionar produto</h3>
+                    <h3 class="modal-title mb-0">{{ trans('supplier.adicionar_produtos') }}</h3>
                 </div>
                 <div class="modal-body py-0">
                     <p>Selecione um produto para adicioná-lo ao pedido.</p>
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label>Produto</label>
+                                <label>{{ trans('supplier.product') }}</label>
                                 <select class="form-control" name="variant_id" id="add-item-select" required>
                                     <option value="">Selecione um produto</option>
                                     @foreach($variants as $variant)
@@ -313,15 +313,15 @@
                         </div>
                         <div class="col-xl-4 col-lg-6 col-12">
                             <div class="form-group">
-                                <label>Quantidade</label>
-                                <input type="number" class="form-control" name="quantity" id="add-item-quantity" placeholder="Quantidade">
+                                <label>{{ trans('supplier.quantidade') }}</label>
+                                <input type="number" class="form-control" name="quantity" id="add-item-quantity" placeholder="{{ trans('supplier.quantidade') }}">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-primary">Adicionar produto</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
+                    <button class="btn btn-primary">{{ trans('supplier.adicionar_produtos') }}</button>
                 </div>
             </div>
         </form>
@@ -335,7 +335,7 @@
             @method('PUT')
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title mb-0">Editar produto</h3>
+                    <h3 class="modal-title mb-0">{{ trans('supplier.edit_product_tittle') }}</h3>
                 </div>
                 <div class="modal-body py-0">
                     <div class="row">
@@ -347,14 +347,14 @@
                         </div>
                         <div class="col-xl-4 col-lg-6 col-12">
                             <div class="form-group">
-                                <label>Quantidade</label>
-                                <input type="number" class="form-control" name="quantity" id="product-quantity" placeholder="Quantidade">
+                                <label>{{ trans('supplier.quantidade') }}</label>
+                                <input type="number" class="form-control" name="quantity" id="product-quantity" placeholder="{{ trans('supplier.quantidade') }}">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
                     <button class="btn btn-primary">Alterar</button>
                 </div>
             </div>
@@ -375,7 +375,7 @@
                     <p>Você tem certeza que deseja remover este produto do pedido?</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
                     <button class="btn btn-danger">Remover produto</button>
                 </div>
             </div>

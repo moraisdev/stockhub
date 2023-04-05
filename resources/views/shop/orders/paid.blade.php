@@ -37,7 +37,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="mb-0">Pedidos pagos</h2>
+                                <h2 class="mb-0">{{ trans('supplier.pedidos_pagos') }}</h2>
                             </div>
                         </div>
                     </div>
@@ -52,11 +52,11 @@
                         <table class="table table-flush align-items-center">
                             <thead>
                             <tr>
-                                <th>Data</th>
-                                <th>Ref. Externa</th>
-                                <th>Nome do Pedido</th>
-                                <th>Valor a pagar</th>
-                                <th>Ações</th>
+                                <th>{{ trans('supplier.date') }}</th>
+                                <th>{{ trans('supplier.ref_externa') }}</th>
+                                <th>{{ trans('supplier.nome_pedido') }}</th>
+                                <th>{{ trans('supplier.valor_pagar') }}</th>
+                                <th>{{ trans('supplier.actions') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -71,11 +71,11 @@
                                     <td>R$ {{ number_format($order->amount, 2, ',', '.') }}</td>
                                     <td>
                                         @if($order->supplier_order)
-                                        <a href="#!" class="btn btn-info btn-sm" data-toggle="modal" data-target="#upload-receipt-modal" onclick="uploadReceipt('{{ $receipt_route }}', {{ $order->id }})" tooltip="true" title="Notas Fiscais">
+                                        <a href="#!" class="btn btn-info btn-sm" data-toggle="modal" data-target="#upload-receipt-modal" onclick="uploadReceipt('{{ $receipt_route }}', {{ $order->id }})" tooltip="true" title="{{ trans('supplier.notas_fiscais_title') }}">
                                             <i class="fas fa-fw fa-receipt"></i>
                                         </a>
                                         @endif
-                                        <a href="{{ route('shop.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
+                                        <a href="{{ route('shop.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
                                             <i class="fas fa-fw fa-eye"></i>
                                         </a>
                                     </td>

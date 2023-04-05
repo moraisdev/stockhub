@@ -14,8 +14,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Média de ganho</h5>
-                                    <span class="h2 font-weight-bold text-success mb-0">R$ {{ number_format($totalAmountMedia, 2, ',','.') }} semanal</span>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.media_ganhos') }}</h5>
+                                    <span class="h2 font-weight-bold text-success mb-0">R$ {{ number_format($totalAmountMedia, 2, ',','.') }} {{ trans('supplier.semanal') }}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-success text-white rounded-circle shadow">
@@ -31,7 +31,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Ganhos da semana</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.week_earnings') }}</h5>
                                     <span class="h2 font-weight-bold mb-0">R$ {{ number_format($totalAmountWeek, 2, ',','.') }}</span>
                                 </div>
                                 <div class="col-auto">
@@ -48,7 +48,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Total de ganhos</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.total_earnings') }}</h5>
                                     <span class="h2 font-weight-bold mb-0">
                                     R$ {{ number_format($totalAmount, 2, ',','.') }}
                                     </span>
@@ -73,12 +73,12 @@
     			<div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">Painel administrativo</h2>
+                            <h2 class="mb-0">{{ trans('supplier.painel_administrativo') }}</h2>
                         </div>
                     </div>
                 </div>
     			<div class="card-body">
-                    Bem vindo ao painel administrativo do {{config('app.name')}}!
+                {{ trans('supplier.bem_vindo_painel_administrativo') }} {{config('app.name')}}!
     			</div>
     		</div>
     	</div>

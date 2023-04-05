@@ -115,7 +115,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Total Pedidos</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Total no Shopify</h5>
                                     <span class="h2 font-weight-bold mb-0">R$ {{ number_format($dashboard_data['total_earning'],2,',','.') }}</span>
                                 </div>
                                 <div class="col-auto">
@@ -172,7 +172,8 @@
                         <tr>
                             <th>ID</th>
                             <th>Data</th>
-                            <th>Ref. Externa/Valor </th>
+                            <th>Ref. Externa</th>
+                            <th>Valor</th>
                             <th>Cliente</th>
                             <th>Ações</th>
                         </tr>
@@ -183,15 +184,12 @@
                                 <td>{{ $order->name }}</td>
                                 <td>{{ date('d/m/Y', strtotime($order->created_at)) }}</td>
                                 @if($order->external_service == 'shopify')
-                                    <td>{{ ucfirst($order->external_service) }}: <br><a href="https://{{ $authenticated_user->shopify_app->domain }}.myshopify.com/admin/orders/{{ $order->external_id }}" target="_blank">#{{ $order->external_id }}</a> <br>
-                                      
-                               
+                                    <td>{{ ucfirst($order->external_service) }}: <a href="https://{{ $authenticated_user->shopify_app->domain }}.myshopify.com/admin/orders/{{ $order->external_id }}" target="_blank">#{{ $order->external_id }}</a></td>
                                 @endif
                                 @if($order->external_service == 'cartx')
-                                    <td>{{ ucfirst($order->external_service) }}: <br> <a href="https://accounts.cartx.io/orders/details/{{ $order->external_id }}" target="_blank">#{{ $order->external_id }}</a></td>
+                                    <td>{{ ucfirst($order->external_service) }}: <a href="https://accounts.cartx.io/orders/details/{{ $order->external_id }}" target="_blank">#{{ $order->external_id }}</a></td>
                                 @endif
-                                </td>
-                                <td>R$ {{ number_format($order->amount, 2, ',', '.') }} <br> ({{ ucfirst($order->external_service) }}: R$ {{ number_format($order->external_price, 2, ',', '.') }})</td>
+                                <td>R$ {{ number_format($order->amount, 2, ',', '.') }} ({{ ucfirst($order->external_service) }}: R$ {{ number_format($order->external_price, 2, ',', '.') }})</td>
                                 <td class="text-gray">
                                     - {{ ($order->customer) ? $order->customer->first_name.' '.$order->customer->last_name : '???' }}<br>
                                     - {{ ($order->customer) ? $order->customer->email : '???' }}<br>

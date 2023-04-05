@@ -11,6 +11,7 @@
         "php": "^7.3|^8.0",
         "ext-soap": "*",
         "automattic/woocommerce": "^3.0",
+        "caouecs/laravel-lang": "*",
         "doctrine/annotations": "^1.14",
         "doctrine/collections": "1.8.0",
         "doctrine/instantiator": "^1.4",

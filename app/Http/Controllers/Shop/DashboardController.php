@@ -20,14 +20,14 @@ class DashboardController extends Controller
 {
     public function index(){
         $shop = Auth::guard('shop')->user();
-
+ /*
         $plano = ShopContractedPlans::where('shop_id', $shop->id )->first();
         if($plano->subscription_status == 'inactive'){
             $shop->status = 'inactive';
             $shop->save();
 
         }
-
+ */
         $ordersService = new OrdersService($shop);
         $orders = $ordersService->getPendingOrders(10);
 

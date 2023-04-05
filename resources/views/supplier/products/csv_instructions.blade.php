@@ -1,6 +1,6 @@
 @extends('supplier.layout.default')
 
-@section('title', 'Produtos')
+@section('title', __('supplier.products'))
 
 @section('stylesheets')
     <style type="text/css">
@@ -22,24 +22,24 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">Importação de produtos através de um arquivo do Excel</h3>
+                                <h3 class="mb-0">{{ trans('supplier.importar_produtos_execel') }}</h3>
                             </div>
                             <div class="col">
                                 <div class="float-right">
-                                    <a class="btn btn-secondary" href="{{ route('supplier.products.index') }}"><i class="fas fa-arrow-left mr-2"></i> Voltar</a>
+                                    <a class="btn btn-secondary" href="{{ route('supplier.products.index') }}"><i class="fas fa-arrow-left mr-2"></i> {{ trans('supplier.back') }}</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-body pt-0 my-0">
                         <p class="my-0">
-                            Sabemos que o processo de importação manual de seus produtos para um novo sistema pode ser muito cansativa, por isso fornecemos uma ferramenta de importação de seus produtos através de um arquivo Excel, que pode ser gerado pela maioria dos aplicativos de gerenciamento de tabelas, como o <span class="text-success">Excel</span> e o <span class="text-success">LibreOffice Calc</span>.
+                        {{ trans('supplier.text_baixar_tabela_produtos_excel_01') }} <span class="text-success">{{ trans('supplier.excel') }}</span> {{ trans('supplier.text_e_o') }} <span class="text-success">{{ trans('supplier.libreoffice') }}</span>.
                         </p>
                         <p class="my-1">
-                            Basta você baixar a nossa tabela modelo de importação de produtos e abrir o arquivo com seu gerenciador de tabelas. Após preencher a tabela com todos os seus produtos não se esqueça de salvar o arquivo antes de realizar o upload!
+                        {{ trans('supplier.texrt_baixar_tabela_produtos_excel') }}
                         </p>
                         <div class="text-center">
-                            <a href="{{asset('assets/static/PlanilhaModeloProduto.xlsx')}}" class="btn btn-primary mt-2">Clique aqui para baixar o arquivo modelo</a>
+                            <a href="{{asset('assets/static/PlanilhaModeloProduto.xlsx')}}" class="btn btn-primary mt-2">{{ trans('supplier.clique_para_baixar_modelo') }}</a>
                         </div>
                     </div>
                 </div>
@@ -51,23 +51,23 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">Importar arquivo XLSX (Excel)</h3>
+                                <h3 class="mb-0">{{ trans('supplier.importar_xlsx_excel') }}</h3>
                             </div>
                         </div>
                     </div>
                     <div class="card-body pt-0 my-0">
                         <p class="my-0">
-                            Faça o upload do arquivo excel com seus produtos através do formulário abaixo para importá-los para o {{config('app.name')}}.
+                        {{ trans('supplier.text_faca_upload_arquivo_excel') }} {{config('app.name')}}.
                         </p>
                         <div class="row mt-4">
                             <div class="col-lg-6 offset-lg-3">
                             <form action="{{ route('supplier.products.import.csv') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                                 <div class="form-group">
-                                    <label for="arquivo" class="control-label">Arquivo Excel</label>
+                                    <label for="arquivo" class="control-label">{{ trans('supplier.arquivo_excel') }}</label>
                                     <input type="file" class="form-control" name="arquivo" id="arquivo">
                                 </div>
-                                <button  type="submit" class="btn btn-primary btn-block mt-2">Importar arquivo</button>
+                                <button  type="submit" class="btn btn-primary btn-block mt-2">{{ trans('supplier.importar_arquivo') }}</button>
                             </div>
                             </form>
                         </div>

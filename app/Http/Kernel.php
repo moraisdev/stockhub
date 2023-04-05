@@ -17,6 +17,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\CheckForMaintenanceMode::class,
         \App\Http\Middleware\TrimStrings::class,
+        \App\Http\Middleware\SetLocale::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
@@ -63,6 +64,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'shop.plan' => \App\Http\Middleware\VerifyShopPlan::class,
         'supplier.plan' => \App\Http\Middleware\VerifySupplierPlan::class,
+        'setlocale' => \App\Http\Middleware\SetLocale::class,
     ];
 
     /**

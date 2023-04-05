@@ -31,7 +31,7 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="mb-0">Produtos</h3>
+                            <h3 class="mb-0">{{ trans('supplier.products') }}</h3>
                         </div>
                         <div class="col">
                             <div class="float-right">
@@ -51,9 +51,9 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">IMAGEM</th>
-                                <th scope="col">Título</th>
-                                <th scope="col">SKU/EAN GTIN</th>
-                                <th scope="col">Qtd</th>
+                                <th scope="col">{{ trans('supplier.tittle') }}</th>
+                                <th scope="col">{{ trans('supplier.sku') }}/{{ trans('supplier.ean_gtin') }}</th>
+                                <th scope="col">{{ trans('supplier.quantidade') }}</th>
                                 <th scope="col" class="actions-th">Visualizar</th>
                             </tr>
                         </thead>
@@ -157,8 +157,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-success">Adicionar produto</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
+                    <button class="btn btn-success">{{ trans('supplier.adicionar_produtos') }}</button>
                 </div>
             </form>
         </div>
@@ -201,7 +201,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.fechar') }}</button>
                     </div>
                 </div>
             </div>

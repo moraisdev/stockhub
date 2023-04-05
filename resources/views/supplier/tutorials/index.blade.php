@@ -1,6 +1,6 @@
 @extends('supplier.layout.default')
 
-@section('title', config('app.name').' - Tutoriais')
+@section('title', __('supplier.tutoriais_title'))
 
 @section('content')
     <!-- Header -->
@@ -17,13 +17,13 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">Tutoriais</h3>
+                                <h3 class="mb-0">{{ trans('supplier.tutoriais_title') }}</h3>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <h4>Tutorial para fornecedores: <a href="https://youtu.be/qQFXt3Ayd24" target="_blank">assitir tutorial</a></h4>                        
-                        <h4>Integração Bling: <a href="https://youtu.be/Q3hy2ejRVnE" target="_blank">assitir tutorial</a></h4>
+                        <h4>{{ trans('supplier.tutorial_fornecedores') }} <a href="https://youtu.be/qQFXt3Ayd24" target="_blank">{{ trans('supplier.assistir_tutorial') }}</a></h4>                        
+                        <h4>{{ trans('supplier.integracao_bling') }} <a href="https://youtu.be/Q3hy2ejRVnE" target="_blank">{{ trans('supplier.assistir_tutorial') }}</a></h4>
                     </div>
                 </div>
             </div>

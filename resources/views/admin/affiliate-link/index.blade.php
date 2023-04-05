@@ -1,6 +1,6 @@
 @extends('admin.layout.default')
 
-@section('title', 'Links Afiliados')
+@section('title', __('supplier.links_afiliados'))
 
 @section('stylesheets')
 <style type="text/css">
@@ -27,11 +27,11 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                        <h3 class="mb-0">Links de Afiliados</h3>
+                        <h3 class="mb-0">{{ trans('supplier.links_afiliados') }}</h3>
                         </div>
                         <div class="col">
                             <div class="float-right">                                
-                                <a class="btn btn-primary" href="{{ route('admin.affiliate-link.create') }}"><i class="fas fa-plus mr-2"></i> Novo Link </a>
+                                <a class="btn btn-primary" href="{{ route('admin.affiliate-link.create') }}"><i class="fas fa-plus mr-2"></i> {{ trans('supplier.new_link') }} </a>
                             </div>
                         </div>
                     </div>
@@ -42,12 +42,12 @@
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Link</th>
-                                <th scope="col">Acessos</th>
-                                <th scope="col">Cadastrados</th>
-                                <th scope="col">Atualizado em</th>
-                                <th scope="col" class="actions-th">Ações</th>
+                                <th scope="col">{{ trans('supplier.name') }}</th>
+                                <th scope="col">{{ trans('supplier.link') }}</th>
+                                <th scope="col">{{ trans('supplier.acessos') }}</th>
+                                <th scope="col">{{ trans('supplier.cadastrados') }}</th>
+                                <th scope="col">{{ trans('supplier.atualizado_em') }}</th>
+                                <th scope="col" class="actions-th">{{ trans('supplier.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,7 +76,7 @@
                             @empty
                             <tr>
                                 <th scope="row" colspan="6">
-                                    Nenhum link cadastrado
+                                {{ trans('supplier.nenhum_link_cadastrado') }}
                                 </th>
                             </tr>
                             @endforelse
@@ -98,17 +98,17 @@
                     @csrf
                     @method('DELETE')
                     <div class="modal-header">
-                        <h5 class="modal-title">Apagar link</h5>
+                        <h5 class="modal-title">{{ trans('supplier.apagar_link') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Tem certeza que deseja apagar o link?</p>
+                        <p>{{ trans('supplier.text_apagar_link') }}</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button class="btn btn-danger">Apagar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
+                        <button class="btn btn-danger">{{ trans('supplier.apagar') }}</button>
                     </div>
                 </form>
             </div>

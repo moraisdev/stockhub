@@ -110,22 +110,22 @@
 
     @if(session('success'))
         <script type="text/javascript">
-            swal("Sucesso", "{{ session('success') }}", 'success');
+            swal("{{ trans('supplier.text_success_register') }}", "{{ session('success') }}", 'success');
         </script>
     @endif
     @if(session('error'))
         <script type="text/javascript">
-            swal("oops", "{{ session('error') }}", 'error');
+            swal("{{ trans('supplier.oops') }}", "{{ session('error') }}", 'error');
         </script>
     @endif
     @if(session('warning'))
         <script type="text/javascript">
-            swal("Atenção!", "{{ session('warning') }}", 'warning');
+            swal("{{ trans('supplier.atencao') }}!", "{{ session('warning') }}", 'warning');
         </script>
     @endif
     @if(session('info'))
         <script type="text/javascript">
-            swal("Informação:", "{{ session('info') }}");
+            swal("{{ trans('supplier.info') }}:", "{{ session('info') }}");
         </script>
     @endif
 </body>

@@ -14,7 +14,7 @@
                         class="btn btn-secondary">{{ __('supplier.back') }}</a>
                     <a class="btn btn-warning" href="#" id="massiveEdit"
                         onclick="document.getElementById('formUpdate').submit()"><i class="fas fa-edit mr-2"></i>
-                        Atualizar Produtos </a>
+                        {{ trans('supplier.atualizar_produtos') }} </a>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="card-body my-0">
-                        <p class="my-0">Listagem de produtos selecionados para edição em massa.</p>
+                        <p class="my-0">{{ trans('supplier.listagem_produtos_selecionados_massa') }}</p>
                     </div>
                     <div class="table-responsive">
                         <!-- Projects table -->
@@ -45,15 +45,15 @@
                                                 <td colspan="9"><strong>{{ $product->title }}</td>
                                             </tr>
                                             <tr>
-                                                <th scope="col">Categoria</th>
-                                                <th scope="col">Titulo</th>
-                                                <th scope="col">NCM</th>
-                                                <th scope="col">Origem</th>
-                                                <th scope="col">Moeda</th>
-                                                <th scope="col">ICMS</th>
-                                                <th scope="col">Descrição</th>
-                                                <th scope="col">Público</th>
-                                                <th scope="col">Mostrar na página?</th>
+                                                <th scope="col">{{ trans('supplier.category') }}</th>
+                                                <th scope="col">{{ trans('supplier.titulo') }}</th>
+                                                <th scope="col">{{ trans('supplier.ncm') }}</th>
+                                                <th scope="col">{{ trans('supplier.origem') }}</th>
+                                                <th scope="col">{{ trans('supplier.coin') }}</th>
+                                                <th scope="col">{{ trans('supplier.icms') }}</th>
+                                                <th scope="col">{{ trans('supplier.description') }}</th>
+                                                <th scope="col">{{ trans('supplier.public') }}</th>
+                                                <th scope="col">{{ trans('supplier.pergunta_mostrar_pagina') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -105,10 +105,10 @@
                                                     <select name="icms_exemption[]" id="icms_exemption" class="form-control"
                                                         required>
                                                         <option value="0"
-                                                            {{ $product->icms_exemption == '0' ? 'selected' : '' }}>Não
+                                                            {{ $product->icms_exemption == '0' ? 'selected' : '' }}>{{ trans('supplier.nao') }}
                                                         </option>
                                                         <option value="1"
-                                                            {{ $product->icms_exemption == '1' ? 'selected' : '' }}>Sim
+                                                            {{ $product->icms_exemption == '1' ? 'selected' : '' }}>{{ trans('supplier.sim') }}
                                                         </option>
                                                     </select>
                                                 </td>
@@ -119,9 +119,9 @@
                                                 </td>
                                                 <td>
                                                     <select name="public[]" id="public" class="form-control" required>
-                                                        <option value="0" {{ $product->public == '0' ? 'selected' : '' }}>Não
+                                                        <option value="0" {{ $product->public == '0' ? 'selected' : '' }}>{{ trans('supplier.nao') }}
                                                         </option>
-                                                        <option value="1" {{ $product->public == '1' ? 'selected' : '' }}>Sim
+                                                        <option value="1" {{ $product->public == '1' ? 'selected' : '' }}>{{ trans('supplier.sim') }}
                                                         </option>
                                                     </select>
                                                 </td>
@@ -130,22 +130,22 @@
                                                         class="form-control" required>
                                                         <option value="0"
                                                             {{ $product->show_in_products_page == '0' ? 'selected' : '' }}>
-                                                            Não
+                                                            {{ trans('supplier.nao') }}
                                                         </option>
                                                         <option value="1"
                                                             {{ $product->show_in_products_page == '1' ? 'selected' : '' }}>
-                                                            Sim
+                                                            {{ trans('supplier.sim') }}
                                                         </option>
                                                     </select>
                                                 </td>
                                             </tr>
                                             <thead>
-                                                <th>SKU</th>
+                                                <th>{{ trans('supplier.sku') }}</th>
                                                 <th>{{ __('supplier.stock') }}</th>
                                                 @foreach ($product->options as $option)
                                                     <th class="option_{{ $option->id }}_th">{{ $option->name }}</th>
                                                 @endforeach
-                                                <th class="after_option_th">Preço</th>
+                                                <th class="after_option_th">{{ trans('supplier.money_price') }}</th>
                                                 @if ($authenticated_user->id == 56)
                                                     <th>{{ __('supplier.factory_price') }}</th>
                                                 @endif
@@ -161,7 +161,7 @@
                                                 <div class="form-group">
                                                     <input type="text" class="form-control form-control-alternative"
                                                         name="variants[{{ $variant->id }}][sku]"
-                                                        value="{{ $variant->sku }}" placeholder="SKU" required>
+                                                        value="{{ $variant->sku }}" placeholder="{{ trans('supplier.sku') }}" required>
                                                 </div>
                                             </td>
                                             <td>
@@ -275,7 +275,7 @@
                                 @empty
                                     <tr>
                                         <th scope="row" colspan="6">
-                                            Nenhum produto selecionado
+                                        {{ trans('supplier.nenhum_produto_selecionado') }}
                                         </th>
                                     </tr>
                                     @endforelse
