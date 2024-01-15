@@ -131,12 +131,10 @@
                         <a href="{{ route('shop.login.forgot_password') }}" class="text-light"><small
                                 class='text-login-bold-white'>{{ trans('supplier.button_fogot_password') }}</small></a>
                     </div>
-                    @if(isset($admins) && $admins->cad_shop == 0) 
                     <div class="col-6 text-right">
                         <a href="{{ route('shop.login.register') }}" class="text-light"><small
                                 class='text-login-bold-white'>{{ trans('supplier.button_create_account_nav') }}</small></a>
                     </div>
-                    @endif
                 </div>
             </div>
         </div>

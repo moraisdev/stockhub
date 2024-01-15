@@ -421,7 +421,7 @@
                     },
                     success: function(response){
                         $("#page-1-form").hide();
-                        $("#page-4-form").show();
+                        $("#page-2-form").show();
                         $('#personal').addClass('active')
                         emailNewUser = email
                     },

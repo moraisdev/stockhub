@@ -130,7 +130,6 @@ class LoginService{
                 }
 
                 if($this->guard == 'supplier'){
-                    Mail::to($user->email)->send(new Welcome($user));
                     Mail::to($user->email)->send(new ApprovedRegistration($user));
 
                     $admins = Admins::find(2);

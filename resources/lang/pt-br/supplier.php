@@ -166,7 +166,7 @@ return [
     'button_create_account_nav' => 'Criar nova conta',
     'button_create_account' => 'Cadastra-se',
     'button_language_nav' => 'Idioma',
-    'text_year' => '2022',
+    'text_year' => '2024',
     'text_login_entrar' => 'Entrar',
     'text_register_supplier'=> 'Cadastrar-se como Fornecedor',
     'fornecedor' => 'Fornecedor',

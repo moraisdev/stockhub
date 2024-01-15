@@ -152,7 +152,7 @@
             <div class="col-md-6 px-xl-0">
                 <p class="mb-md-0 text-center text-md-left text-secondary">
      
-                  &copy; 2020 <a href="{{config('app.terms_url')}}" class="font-weight-bold ml-1" target="_blank">{{config('app.name')}}</a>
+                  &copy; 2024 <a href="{{config('app.terms_url')}}" class="font-weight-bold ml-1" target="_blank">{{config('app.name')}}</a>
      
                 </p>
             </div>
