@@ -24,14 +24,14 @@
                     <div class="card-body">                        
                         <div class="col-md-12">                                
                             <div class="form-group">
-                                <label class="control-label">{{ trans('supplier.estado') }}</label>
+                                <label class="control-label">Estado</label>
                                 <select class="form-control" name="state_code" id="state_select" >
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">{{ trans('supplier.city') }}</label>
+                                <label class="control-label">Cidade</label>
                                 <select class="form-control" name="city" id="city_select">
-                                    <option value="">{{ trans('supplier.selecione_estado_primeiro') }}</option>
+                                    <option value="">Selecione o estado primeiro</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -46,7 +46,7 @@
                             <p>Caso já saiba o CEP de destino, basta digitá-lo abaixo</p>
                             <div class="form-group">
                                 <label for="estado">Informe o CEP</label>
-                                <input type="text" name="cep" id="cep" placeholder="{{ trans('supplier.postal_code') }}" class='form-control cep' required>
+                                <input type="text" name="cep" id="cep" placeholder="CEP" class='form-control cep' required>
                             </div>
                             <div class="form-group">                                
                                 <label for="produtos">Selecione o produto</label>

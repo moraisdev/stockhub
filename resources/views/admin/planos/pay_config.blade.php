@@ -23,7 +23,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ trans('supplier.conta_bancara_safe2pay') }}</h3>
+                                <h3 class="mb-0">Safe2Pay e Conta Bancária</h3>
                             </div>
                         </div>
                     </div>
@@ -31,28 +31,28 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">{{ trans('supplier.metodo_recebimento_pagamento') }}</label>
+                                    <label class="control-label">Método de recebimento/pagamento</label>
                                     <select name="payment_method" class="form-control">
-                                        <option value="Safe2Pay">{{ trans('supplier.safe2pay') }}</option>
+                                        <option value="Safe2Pay">Safe2Pay</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">{{ trans('supplier.nome_responsavel_tecnico') }}</label>
-                                    <input type="text" class="form-control" name="tech_name" id="tech_name" placeholder="{{ trans('supplier.nome_responsavel_tecnico_safe2pay') }}" value="{{ $authenticated_user->tech_name }}" required>
+                                    <label class="control-label">Nome do responsável técnico</label>
+                                    <input type="text" class="form-control" name="tech_name" id="tech_name" placeholder="Nome do responsável técnico pela sua conta Safe2Pay" value="{{ $authenticated_user->tech_name }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">{{ trans('supplier.cpf_responsavel_tecnico') }}</label>
-                                    <input type="text" class="form-control" name="tech_document" id="tech_document" placeholder="{{ trans('supplier.documento_responsavel_conta_safe2pay') }}" value="{{ $authenticated_user->tech_document }}" required>
-                                    <small class="field_error text-danger" style="display: none">{{ trans('supplier.cpf_invalido') }}</small>
+                                    <label class="control-label">CPF do responsável técnico</label>
+                                    <input type="text" class="form-control" name="tech_document" id="tech_document" placeholder="Documento do responsável técnico pela sua conta Safe2Pay" value="{{ $authenticated_user->tech_document }}" required>
+                                    <small class="field_error text-danger" style="display: none">CPF inválido.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">{{ trans('supplier.email_reponsavel_tecnico') }}</label>
-                                    <input type="text" class="form-control" name="tech_email" id="tech_email" placeholder="{{ trans('supplier.email_responsavel_tecnico_safe2pay') }}" value="{{ $authenticated_user->tech_email }}" required>
+                                    <label class="control-label">E-mail do responsável técnico</label>
+                                    <input type="text" class="form-control" name="tech_email" id="tech_email" placeholder="E-mail do responsável técnico pela sua conta Safe2Pay" value="{{ $authenticated_user->tech_email }}" required>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">{{ trans('supplier.banco') }}</label>
+                                    <label class="control-label">Banco</label>
                                     <select class="form-control" name="bank[code]" id="bank_list" required>
 
                                     </select>
@@ -60,29 +60,29 @@
                                 <div class="form-group">
                                     <label class="control-label">Tipo de Conta</label>
                                     <select class="form-control" name="bank[account_type]" required>
-                                        <option value="cc" {{ $authenticated_user->bank && $authenticated_user->bank->account_type == 'cc' ? 'selected' : '' }}>{{ trans('supplier.conta_corrente') }}</option>
-                                        <option value="pp" {{ $authenticated_user->bank && $authenticated_user->bank->account_type == 'pp' ? 'selected' : '' }}>{{ trans('supplier.conta_poupanca') }}</option>
+                                        <option value="cc" {{ $authenticated_user->bank && $authenticated_user->bank->account_type == 'cc' ? 'selected' : '' }}>Conta Corrente</option>
+                                        <option value="pp" {{ $authenticated_user->bank && $authenticated_user->bank->account_type == 'pp' ? 'selected' : '' }}>Conta Poupança</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">{{ trans('supplier.agencia') }}</label>
+                                    <label class="control-label">Agência</label>
                                     <div class="row">
                                         <div class="col-lg-9 col-12">
-                                            <input type="text" class="form-control" name="bank[agency]" placeholder="{{ trans('supplier.agencia_bancaria') }}" value="{{ $authenticated_user->bank ? $authenticated_user->bank->agency : '' }}" required>
+                                            <input type="text" class="form-control" name="bank[agency]" placeholder="Agência bancária" value="{{ $authenticated_user->bank ? $authenticated_user->bank->agency : '' }}" required>
                                         </div>
                                         <div class="col-lg-3 col-12">
-                                            <input type="text" class="form-control" name="bank[agency_digit]" placeholder="{{ trans('supplier.digito') }}" value="{{ $authenticated_user->bank ? $authenticated_user->bank->agency_digit : '' }}">
+                                            <input type="text" class="form-control" name="bank[agency_digit]" placeholder="Dígito" value="{{ $authenticated_user->bank ? $authenticated_user->bank->agency_digit : '' }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">{{ trans('supplier.conta') }}</label>
+                                    <label class="control-label">Conta</label>
                                     <div class="row">
                                         <div class="col-lg-9 col-12">
-                                            <input type="text" class="form-control" name="bank[account]" placeholder="{{ trans('supplier.conta_bancaria') }}" value="{{ $authenticated_user->bank ? $authenticated_user->bank->account : '' }}" required>
+                                            <input type="text" class="form-control" name="bank[account]" placeholder="Conta bancária" value="{{ $authenticated_user->bank ? $authenticated_user->bank->account : '' }}" required>
                                         </div>
                                         <div class="col-lg-3 col-12">
-                                            <input type="text" class="form-control" name="bank[account_digit]" placeholder="{{ trans('supplier.digito') }}" value="{{ $authenticated_user->bank ? $authenticated_user->bank->account_digit : '' }}">
+                                            <input type="text" class="form-control" name="bank[account_digit]" placeholder="Dígito" value="{{ $authenticated_user->bank ? $authenticated_user->bank->account_digit : '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ trans('supplier.gerencianet') }}</h3>
+                                <h3 class="mb-0">GerenciaNet</h3>
                             </div>
                         </div>
                     </div>
@@ -105,23 +105,23 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">{{ trans('supplier.metodo_recebimento_pagamento') }}</label>
+                                    <label class="control-label">Método de recebimento/pagamento</label>
                                     <select name="payment_method" class="form-control">
-                                        <option value="Safe2Pay">{{ trans('supplier.gerencianet') }}</option>
+                                        <option value="Safe2Pay">GerenciaNet</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">{{ trans('supplier.cliente_id') }}</label>
+                                    <label class="control-label">Cliente ID</label>
                                     <input type="text" class="form-control" name="geren_cliente_id" id="geren_cliente_id" placeholder="Seu codigo client id" value="{{ $authenticated_user->geren_cliente_id  }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">{{ trans('supplier.cliente_secret') }}</label>
+                                    <label class="control-label">Cliente Secret</label>
                                     <input type="text" class="form-control" name="geren_cliente_se" id="geren_cliente_se" placeholder="Seu codigo secret id" value="{{ $authenticated_user->geren_cliente_se }}" required>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label class="control-label">{{ trans('supplier.chave_pix') }}</label>
-                                    <input type="text" class="form-control" name="geren_chave" id="geren_chave" placeholder="{{ trans('supplier.chave_pix') }}" value="{{ $authenticated_user->geren_chave }}" required>
+                                    <label class="control-label">Chave PIX</label>
+                                    <input type="text" class="form-control" name="geren_chave" id="geren_chave" placeholder="Sua Chave PIX" value="{{ $authenticated_user->geren_chave }}" required>
                                 </div>
                                 
 
@@ -140,7 +140,7 @@
                 @endif
                 
                 <div class="form-group text-right mt-4">
-                    <button class="btn btn-lg btn-primary">{{ trans('supplier.atualizar_meus_dados') }}</button>
+                    <button class="btn btn-lg btn-primary">Atualizar meus dados</button>
                 </div>
             </form>
         </div>

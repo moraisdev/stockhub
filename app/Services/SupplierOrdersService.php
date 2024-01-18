@@ -35,6 +35,22 @@ class SupplierOrdersService{
 		return $orders->get();
 	}
 
+	public function getPendingOrdersapi($limit = null){
+		$orders = SupplierOrders::with('items')->with('order')
+							 ->whereHas('shipping', function($q){
+							 	$q->where('status', 'pending');
+							 })
+							 ->where('supplier_id', $this->supplier->id)
+							 ->where('status', 'paid')
+							 ->orderBy('id', 'desc');
+
+		if($limit){
+			$orders->limit($limit);
+		}
+
+		return $orders->get();
+	}
+
 	public function getSentOrders($limit = null){
 		$orders = SupplierOrders::with('items')
 							 ->whereHas('shipping', function($q){

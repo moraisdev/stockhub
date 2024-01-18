@@ -13,14 +13,14 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="mb-0">{{ trans('supplier.pedidos_devolvidos') }}</h2>
+                                <h2 class="mb-0">Pedidos devolvidos</h2>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="d-flex flex-wrap align-items-center">
                             <p>
-                            {{ trans('supplier.listagem_pedidos_devolvidos') }}
+                                Listagem de pedidos devolvidos.
                                 {{-- Listing orders with pending shipping. You can update the order shipping through the "Update Shipping" button.<br> --}}
                             </p>
                         </div>
@@ -29,13 +29,13 @@
                         <table class="table table-flush align-items-center">
                             <thead>
                             <tr>
-                                <th>{{ trans('supplier.text_id') }}</th>
-                                <th>{{ trans('supplier.date') }}</th>
-                                <th>{{ trans('supplier.products') }}</th>                                
-                                <th>{{ trans('supplier.total_price') }}</th>
-                                <th>{{ trans('supplier.situacao') }}</th>
+                                <th>ID</th>
+                                <th>Data</th>
+                                <th>Produtos</th>                                
+                                <th>Valor total</th>
+                                <th>Situação</th>
                                 <th>Resolução</th>
-                                <th>{{ trans('supplier.actions') }}</th>
+                                <th>Ações</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -61,18 +61,18 @@
                                         </div>
                                     </td>
                                     <td>R$ {{ number_format($order->order->items_amount, 2, ',', '.') }}</td>
-                                    <th>{!!$order->status == 'pending' ? "<span style='color: #f5365c;'>{{ trans('supplier.pendente') }}</span>" : "<span style='color: #2dce89;'>Resolvido</span>" !!}</th>
+                                    <th>{!!$order->status == 'pending' ? "<span style='color: #f5365c;'>Pendente</span>" : "<span style='color: #2dce89;'>Resolvido</span>" !!}</th>
                                     <th>
                                         {{$order->decision == 'resend' ? 'Reenvio' : '' }}
                                         {{$order->decision == 'credit' ? 'Reembolso' : '' }}
                                     </th>
                                     <td>
                                         @if($order->status == 'pending')
-                                            <a href="#!" class="btn btn-success btn-sm" data-toggle="modal" data-target="#solve_returned" onclick="updateReturned('{{ $route }}', '{{number_format($order->order->items_amount, 2, ',', '.')}}')" tooltip="true" title="{{ trans('supplier.details') }}">
+                                            <a href="#!" class="btn btn-success btn-sm" data-toggle="modal" data-target="#solve_returned" onclick="updateReturned('{{ $route }}', '{{number_format($order->order->items_amount, 2, ',', '.')}}')" tooltip="true" title="Detalhes">
                                                 <i class="fas fa-check"></i>
                                             </a>
                                         @endif
-                                        <a href="{{ route('shop.orders.show', $order->order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
+                                        <a href="{{ route('shop.orders.show', $order->order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
                                             <i class="fas fa-fw fa-eye"></i>
                                         </a>
                                     </td>
@@ -113,8 +113,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.nao') }}</button>
-                        <button class="btn btn-danger" id='button-mark-selected-sent'>{{ trans('supplier.sim') }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                        <button class="btn btn-danger" id='button-mark-selected-sent'>Sim</button>
                     </div>
                 </form>
             </div>

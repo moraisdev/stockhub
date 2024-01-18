@@ -72,7 +72,7 @@ class MercadolivreService{
         }else{
             report($e);
             Log::error($e);
-           // ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
+            ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
            return $e;
         }
     }
@@ -94,28 +94,37 @@ class MercadolivreService{
             $dados['buying_mode']           = "buy_it_now";
             $dados['condition']             = "new";
             $dados['listing_type_id']       = "gold_pro";
+            
+
+            
            
+            
+            if(isset($product->img_source)){
+                $dados['pictures'][0]['source'] = $product->img_source;
+
+            }
+
             if(isset($productimagens[0]->src)){
-                $dados['pictures'][0]['source'] = $productimagens[0]->src;
+                $dados['pictures'][1]['source'] = $productimagens[0]->src;
 
             }
             if(isset($productimagens[1]->src)){
-                $dados['pictures'][1]['source'] = $productimagens[1]->src;
+                $dados['pictures'][2]['source'] = $productimagens[1]->src;
             }
             
             if(isset($productimagens[2]->src)){
-                $dados['pictures'][2]['source'] = $productimagens[2]->src;
+                $dados['pictures'][3]['source'] = $productimagens[2]->src;
 
             }
             
             if(isset($productimagens[3]->src)){
-                $dados['pictures'][3]['source'] = $productimagens[3]->src;
+                $dados['pictures'][4]['source'] = $productimagens[3]->src;
 
 
             }    
 
-
-            
+           
+            if(isset($product->ean_gtin)){ 
                $attributesgtin[] = [  
 
               
@@ -126,7 +135,8 @@ class MercadolivreService{
                                       
                 
             ];
-			
+        }
+            
 			 if(isset($product->sku)){ 
 				  $attributessku[] = [  
 
@@ -137,10 +147,110 @@ class MercadolivreService{
             ];
 				 
 			 }
+             $attributesobg = []; 
+             if($product->joias == 1){            
+
+                $attributesobg[] = [ 
+				
+				"id" => "MATERIAL",
+                "name" => "Material",
+                "value_id" =>  $product->atributo_joias,
+                
+                 "attribute_group_id" => "OTHERS",
+                 "attribute_group_name" => "Otros"
+				  
+			 ];	   
+            }
+            
+           
+            if($product->conexao_cabo == 1){            
+
+                $attributesobg[] = [ 
+				
+				"id" => "INPUT_CONNECTOR",
+                "name" => "Conector de entrada",
+                "value_id" =>  (string)  $product->tipo_entrada,
+                
+                 "attribute_group_id" => "OTHERS",
+                 "attribute_group_name" => "Otros"
+				  
+			 ];	   
+            }
+
+            if($product->atrib_calcados == 1){            
+
+                $attributesobg[] = [  
+                    "id" => "SIZE_GRID_ID",
+                    "value_id" => "11273930",
+                    "value_name" => "26008"       
+                   
+            ];
+    
+                   $attributecalcados[] = [        
+                    "id" => "SIZE_GRID_ROW_ID",
+                    "value_id" => "11286240",
+                    "value_name" => "26008:1"
+            ];
+            }
+
+            
+
+            if($product->smartphone == 1){            
+
+                $attributesobg[] = [ 
+				
+				"id" => "IS_DUAL_SIM",
+                "name" => "É Dual SIM",
+                "value_id" => (string) $product->atrib_phone_dualsim,                
+                 "attribute_group_id" => "OTHERS",
+                 "attribute_group_name" => "Otros",
+			 ];	
              
+             $attributesobgram[] = [ 
+                "id" => "RAM",
+                "name" => "Memória RAM",
+                "value_id" =>   $product->atrib_phone_ram,   
+                "value_name" => $product->atrib_qtd_ram . $product->atrib_phone_ram,  
+                "default_unit" => $product->atrib_phone_ram,
+                "number" => $product->atrib_qtd_ram,
+                "unit" => $product->atrib_phone_ram,                      
+                "attribute_group_id" => "OTHERS",
+                "attribute_group_name" => "Otros",
+             ];
+             $attributesobgmen[] =  [
+                "id" => "INTERNAL_MEMORY",
+                "name" => "Memória interna",
+                "value_id" => $product->atrib_phone_men_int,
+                "value_name" =>  $product->atrib_qtd_menint. $product->atrib_phone_men_int,  
+                "default_unit" => $product->atrib_phone_men_int,
+                "number" => $product->atrib_qtd_menint,
+                "unit" => $product->atrib_phone_men_int,           
+                "attribute_group_id" => "OTHERS",
+                "attribute_group_name" => "Otros",
+             ];
+             $attributesobgcolor[] =  [
+                "id" => "COLOR",
+                "name" => "Cor",
+                "value_id" => (string)  $product->atrib_phone_cor,                
+                "attribute_group_id" => "OTHERS",
+                "attribute_group_name" => "Otros",
+             ];
+
+             $attributesobgcarrier[] =  [
+                "id" => "CARRIER",
+                "name" => "Operadora",
+                "value_id" => (string)$product->atrib_phone_oper,                
+                "attribute_group_id" => "OTHERS",
+                "attribute_group_name" => "Otros",
+             ];
+
+       
+            }
+             
+            
              if(isset($product->variants[0]->sku)){
 
-                $attributessku[] = [  
+                $attributessku2[] = [  
 
               
                     "id" =>  "SELLER_SKU",
@@ -148,23 +258,44 @@ class MercadolivreService{
                     
                 ];
              }   
-
            
-            if (($product->sku <> null) and ($product->ean_gtin <> null)){
-                $dados['attributes'] = array_merge($searchprodutoml->attributes ,   $attributesgtin , $attributessku ) ;
-            }elseif ((($product->variants[0]->sku <> null) and ($product->ean_gtin <> null))) {
-                $dados['attributes'] = array_merge($searchprodutoml->attributes ,   $attributesgtin , $attributessku ) ;
-			}else{
+            
 
+            
+            // dd(count($attributesobg) , count($attributesgtin) , count($attributessku),  ($product->atrib_calcados ));
+
+
+            if((count($attributesobg) == 1) and (count($attributesgtin) == 1) and (count($attributessku) == 1) and ($product->smartphone == 1) ){
+                
+                $dados['attributes'] = array_merge($searchprodutoml->attributes , $attributessku ,$attributesgtin , $attributesobg  , $attributesobgram ,$attributesobgmen , $attributesobgcolor, $attributesobgcarrier);
+               
+            }elseif((count($attributesobg) == 1) and (count($attributesgtin) == 1) and (count($attributessku) == 1) and ($product->smartphone == 0) and  ($product->atrib_calcados == 0)){
+                $dados['attributes'] = array_merge($searchprodutoml->attributes , $attributessku ,$attributesgtin , $attributesobg );
+                
+            }elseif((count($attributesobg) == 1) and (count($attributesgtin) == 1) and (count($attributessku) == 1) and ($product->atrib_calcados == 1) ){
+                $dados['attributes'] = array_merge($searchprodutoml->attributes , $attributessku ,$attributesgtin , $attributesobg,  $attributecalcados  );    
+                            
+            }elseif((count($attributesgtin) == 1) and (count($attributessku) == 1) and ($product->smartphone == 0) and ($product->atrib_calcados == 0) ){                   
+                $dados['attributes'] = array_merge($searchprodutoml->attributes , $attributessku ,$attributesgtin);
+               
+            }elseif((count($attributessku) == 1)){                  
+                $dados['attributes'] = array_merge($searchprodutoml->attributes , $attributessku);
+               
+            }else{
                 $dados['attributes'] = $searchprodutoml->attributes;
-
+                
             } 
+
            
+
+           
+           
+          
            
             $dados['shipping']['free_shipping']       = "true"; 
             $dados['shipping']['mode']       = "me2"; 
 
-            //dd($dados);
+           // dd($product);
             
                         
                         $client = new \GuzzleHttp\Client();
@@ -179,8 +310,9 @@ class MercadolivreService{
 
         $postproduto = json_decode($response->getBody());
         $status = json_decode($response->getStatusCode()); 
-        return  ['code' => $status , 'anuncio' => $postproduto];
-
+      //  $menssage = json_decode($response->getMessage());
+        return  ['code' => $status , 'anuncio' => $postproduto ];
+ 
         
        // return $postproduto;
 
@@ -191,13 +323,24 @@ class MercadolivreService{
     }catch(\GuzzleHttp\Exception\RequestException $e){
        
         if($e->getCode() == 401){
-           return ['status' => 'error', 'message' => 'Não  conseguimos Publicar o Anuncio MercadoLivre. Verifique a configuração corretamente. Em caso de dúvidas entre em contato com nosso suporte.' , 'code' => '401'];
+			//dd($e);
+           return ['status' => 'error', 'message' => 'Não  conseguimos Publicar o Anuncio MercadoLivre. Verifique a configuração corretamente. Em caso de dúvidas entre em contato com nosso suporte.' , 'code' => '401' , 'message' => $e->getMessage()];
           
         }else{
-            report($e);
-            Log::error($e);
+			//dd($e);
+			//report($e);
+            //Log::error($e);
             ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
-             throw  $e;
+           //  throw  $e;
+			if($e->getCode() == 400){
+			//dd($e);
+           return ['status' => 'error', 'message' => 'Não  conseguimos Publicar o Anuncio MercadoLivre. Verifique os atributos obrigatorios.' , 'code' => '400' , 'message' => $e->getMessage() ];
+			}
+			
+			if($e->getCode() == 403){
+			//dd($e);
+           return ['status' => 'error', 'message' => 'Erro seu cadastro ML esta pendente de validacao de telefone.' , 'code' => '403' , 'message' => $e->getMessage() ];
+			}
             
         }
     }
@@ -318,7 +461,7 @@ class MercadolivreService{
 
                           $client = new \GuzzleHttp\Client();
                          // $response = $client->request('GET', 'https://api.mercadolibre.com/orders/search?seller='.$shopproductml->seller_id_ml.'&order.status=paid',
-                          $response = $client->request('GET', 'https://api.mercadolibre.com/orders/search/recent?seller='.$apimercadolivre->seller_id_ml.'&order.status=paid',
+                          $response = $client->request('GET', 'https://api.mercadolibre.com/orders/search/recent?seller='.$apimercadolivre->seller_id_ml.'&order.status=paid&sort=date_desc',
                          
                          [  
                              
@@ -346,12 +489,14 @@ class MercadolivreService{
             return ['status' => 'error', 'message' => 'Não  conseguimos buscar seus pedidos no mercadolivre. Verifique a configuração corretamente. Em caso de dúvidas entre em contato com nosso suporte.', $e->getCode()];
             
           }else{
-              report($e);
+             // report($e);
               Log::error($e);
               ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
-               throw  $e;
-             // dd($e); 
-              
+            //   throw  $e;
+             // dd($e);
+             if($e->getCode() == 403){ 
+                return  ['status' => '403' , 'order' => $e ];
+             } 
           }
       }
   
@@ -382,14 +527,19 @@ class MercadolivreService{
   
   
     }catch(\GuzzleHttp\Exception\RequestException $e){
+     
      if($e->getCode() == 404){           
         return ['status' => $e->getCode()];
-                          
+     
+    if($e->getCode() == 401){           
+        return ['status' => '401'];
+            
+    }                      
     }else{
+       
         report($e);
         Log::error($e);
         ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
-        throw  $e;
         return ['status' => $e->getCode()];
                             
      }
@@ -401,10 +551,11 @@ class MercadolivreService{
 
       public static function registerOrder($shop, $order_ml){
         
+		
        
         try {              
                 $order = Orders::firstOrNew(['shop_id' => $shop->id, 'external_id' => $order_ml->id]);
-                
+               
                 if($order->id != null){
                     return true;
                 }
@@ -417,13 +568,15 @@ class MercadolivreService{
                 $order->status = 'pending';
                 $order->external_created_at = date('Y-m-d h:i:s', strtotime($order_ml->last_updated));
                 $order->shipping_ml = $order_ml->shipping->id;
+				$order->save();
     
+
                 if(!$order->save()){
                     return null;
                 }
     
-              
-                $items = self::registerItems($order, $order_ml->order_items); 
+                $order_items = $order_ml->order_items;
+                $items = self::registerItems($order, $order_items); 
                 $customer = self::registerCustomer($shop, $order_ml);
 
                 if($customer == 403){
@@ -449,19 +602,21 @@ class MercadolivreService{
 
 
 
-    public static function registerItems($order, $ml_line_items){
+    public static function registerItems($order, $order_items){
         try {
             $items = [];
             $total_amount = 0;
             $charge_or_not = 1;
 
           
-
-            foreach ($ml_line_items as $ml_item) {
+           
+            foreach ($order_items as $ml_item) {
                
+				
                 $shopproduct = ShopProducts::where('ml_product_id', $ml_item->item->id)->first();
-                $variant = ProductVariants::where('product_id', $shopproduct->product_id)->first();
+                $variant = ProductVariants::where('sku', $ml_item->item->seller_sku)->first();
                 $amount = ($variant->price * $ml_item->quantity);
+			
                
                 $item = new OrderItems();               
                 $item->order_id = $order->id;
@@ -479,10 +634,10 @@ class MercadolivreService{
                 $item->save();
                 
 
-                if($orderItemDiscount){ //caso haja desconto, salva o item o OrderItem
-                    $orderItemDiscount->order_item_id = $item->id;
-                    $orderItemDiscount->save();
-                }
+          //      if($orderItemDiscount){ //caso haja desconto, salva o item o OrderItem
+          //          $orderItemDiscount->order_item_id = $item->id;
+          //          $orderItemDiscount->save();
+          //      }
 
                 $items[] = $item;
             }
@@ -623,9 +778,9 @@ class MercadolivreService{
 			$response = $client->request('GET', 'https://api.mercadolibre.com/shipment_labels?shipment_ids='.$order->shipping_ml.'&response_type=pdf',
             [  
                 
-                 'headers' => [
-             'Authorization' => 'Bearer '.$apimercadolivre->token,
-             'Cache-Control' => 'no-cache', 
+            'headers' => [
+            'Authorization' => 'Bearer '.$apimercadolivre->token,
+            'Cache-Control' => 'no-cache', 
             'Content-Type' => 'application/pdf',
            
 					 
@@ -640,7 +795,42 @@ class MercadolivreService{
 
             echo $response->getBody()->getContents();	                
         } catch(\Exception $e){
-            report($e);
+            //report($e);
+            ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
+			 if($e->getCode() == 400){  
+
+                return $e->getCode();
+
+            }    
+        }
+    }
+
+    public static function imprimirEtiquetatermica($apimercadolivre, $order){
+        //dd($order);
+		try {
+
+            $client = new \GuzzleHttp\Client();
+			$response = $client->request('GET', 'https://api.mercadolibre.com/shipment_labels?shipment_ids='.$order->shipping_ml.'&response_type=zpl2',
+            [  
+                
+            'headers' => [
+            'Authorization' => 'Bearer '.$apimercadolivre->token,
+            'Cache-Control' => 'no-cache', 
+            'Content-Type' => 'application/pdf',
+           
+					 
+            ]
+         ]);
+
+			$lengthArray = $response->getHeader('Content-Length');
+            $length = $lengthArray[0];
+			header('Content-Type: application/pdf; charset=utf-8');
+            header('Content-Length: '.$length);
+            header("Content-Disposition: inline; filename='details.pdf'");
+
+            echo $response->getBody()->getContents();	                
+        } catch(\Exception $e){
+            //report($e);
             ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
 			 if($e->getCode() == 400){  
 
@@ -679,10 +869,10 @@ class MercadolivreService{
         return ['status' => $e->getCode()];
                           
     }else{
-        report($e);
+        //report($e);
         Log::error($e);
         ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
-        throw  $e;
+        //throw  $e;
         return ['status' => $e->getCode()];
                             
      }
@@ -721,6 +911,148 @@ public static function getusuario($shop, $apimercadolivre){
 }
 
 }
+	
+	public static function getOrderbusca($apimercadolivre){
+
+       
+        
+      
+          try{
+
+                          $client = new \GuzzleHttp\Client();
+                         // $response = $client->request('GET', 'https://api.mercadolibre.com/orders/search?seller='.$shopproductml->seller_id_ml.'&order.status=paid',
+                          $response = $client->request('GET', 'https://api.mercadolibre.com/orders/search',
+                         
+                         [  
+                             
+                              'headers' => [
+                          'Authorization' => 'Bearer '.$apimercadolivre->token,
+                          'Accept' => 'application/json',
+                         ]
+                      ]);
+  
+                      
+                      $getorder = json_decode($response->getBody());        
+                      
+                      $status = json_decode($response->getStatusCode());       
+                      return  ['status' => $status , 'order' => $getorder ];
+                    //  return $getorder->results;
+
+                     // dd($getorder->results);
+        
+  
+  
+  
+        //  return ['status' => 'success', 'message' => 'Pedidos buscados no Bling com sucesso.'];
+      }catch(\GuzzleHttp\Exception\RequestException $e){
+          if($e->getCode() == 401){           
+            return ['status' => 'error', 'message' => 'Não  conseguimos buscar seus pedidos no mercadolivre. Verifique a configuração corretamente. Em caso de dúvidas entre em contato com nosso suporte.', $e->getCode()];
+            
+          }else{
+              report($e);
+              Log::error($e);
+              ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
+               throw  $e;
+             // dd($e); 
+              
+          }
+      }
+  
+      }
+
+
+      public static function getAtributos($apimercadolivre){
+
+      
+        try{
+
+                        $client = new \GuzzleHttp\Client();
+                       // $response = $client->request('GET', 'https://api.mercadolibre.com/orders/search?seller='.$shopproductml->seller_id_ml.'&order.status=paid',
+                        $response = $client->request('GET', 'https://api.mercadolibre.com/categories/MLB23332/attributes',
+                       
+                       [  
+                           
+                            'headers' => [
+                        'Authorization' => 'Bearer '.$apimercadolivre->token,
+                        'Accept' => 'application/json',
+                       ]
+                    ]);
+
+                    
+                    $getAtributos = json_decode($response->getBody());        
+                    
+                    $status = json_decode($response->getStatusCode());       
+                    return  ['status' => $status , 'atributos' => $getAtributos ];
+                  //  return $getorder->results;
+
+                   // dd($getorder->results);
+      
+
+
+
+      //  return ['status' => 'success', 'message' => 'Pedidos buscados no Bling com sucesso.'];
+    }catch(\GuzzleHttp\Exception\RequestException $e){
+        if($e->getCode() == 401){           
+          return ['status' => 'error', 'message' => 'Não  conseguimos buscar seus pedidos no mercadolivre. Verifique a configuração corretamente. Em caso de dúvidas entre em contato com nosso suporte.', $e->getCode()];
+          
+        }else{
+            report($e);
+            Log::error($e);
+            ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
+             throw  $e;
+           // dd($e); 
+            
+        }
+    }
+
+    }
+
+
+    public static function getmedidas($apimercadolivre){
+
+      
+        try{
+
+                        $client = new \GuzzleHttp\Client();
+                       // $response = $client->request('GET', 'https://api.mercadolibre.com/orders/search?seller='.$shopproductml->seller_id_ml.'&order.status=paid',
+                        $response = $client->request('GET', 'https://api.mercadolibre.com/domains/MLB-SNEAKERS/technical_specs?section=grids',
+                       
+                       [  
+                           
+                            'headers' => [
+                        'Authorization' => 'Bearer '.$apimercadolivre->token,
+                        'Accept' => 'application/json',
+                       ]
+                    ]);
+
+                    
+                    $getAtributos = json_decode($response->getBody());        
+                    
+                    $status = json_decode($response->getStatusCode());       
+                    return  ['status' => $status , 'atributos' => $getAtributos ];
+                  //  return $getorder->results;
+
+                   // dd($getorder->results);
+      
+
+
+
+      //  return ['status' => 'success', 'message' => 'Pedidos buscados no Bling com sucesso.'];
+    }catch(\GuzzleHttp\Exception\RequestException $e){
+        if($e->getCode() == 401){           
+          return ['status' => 'error', 'message' => 'Não  conseguimos buscar seus pedidos no mercadolivre. Verifique a configuração corretamente. Em caso de dúvidas entre em contato com nosso suporte.', $e->getCode()];
+          
+        }else{
+            report($e);
+            Log::error($e);
+            ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
+             throw  $e;
+           // dd($e); 
+            
+        }
+    }
+
+    }
 
 
 }    

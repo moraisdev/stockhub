@@ -1,6 +1,6 @@
 @extends('supplier.layout.default')
 
-@section('title', __('supplier.products'))
+@section('title', 'Products')
 
 @section('stylesheets')
 <style type="text/css"> 
@@ -28,7 +28,7 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="mb-0">{{ trans('supplier.variante') }}</h3>
+                            <h3 class="mb-0">Variante</h3>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                             <div class="card-header border-0">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h3 class="mb-0">{{ trans('supplier.selecione_aliexpress') }}</h3>
+                                        <h3 class="mb-0">Selecione as opções equivalentes dessa variante no AliExpress</h3>
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                                     @if(!$loop->first)
                                     <div class="form-group ml-2 mr-2">
                                         <label class="control-label d-block">&nbsp;</label>
-                                        <button type="submit" class="btn btn-secondary mr-2" data-toggle="tab" href="#tab-variant-{{ $loop->index - 1 }}" role="tab">{{ trans('supplier.back') }}</button>
+                                        <button type="submit" class="btn btn-secondary mr-2" data-toggle="tab" href="#tab-variant-{{ $loop->index - 1 }}" role="tab">Voltar</button>
                                     </div>
                                     @endif
                                     @php 
@@ -112,12 +112,12 @@
                                         @if(!$loop->last)
                                         <div class="form-group ml-2 mr-2">
                                             <label class="control-label d-block">&nbsp;</label>
-                                            <button type="button" class="btn btn-primary" data-toggle="tab" href="#tab-variant-{{ $loop->index + 1 }}" role="tab">{{ trans('supplier.proxima_variante') }}</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="tab" href="#tab-variant-{{ $loop->index + 1 }}" role="tab">Próxima variante</button>
                                         </div>
                                         @else
                                         <div class="form-group ml-2 mr-2">
                                             <label class="control-label d-block">&nbsp;</label>
-                                            <button type="submit" class="btn btn-success">{{ trans('supplier.concluir_ligacao_variantes') }}</button>
+                                            <button type="submit" class="btn btn-success">Concluir ligação de variantes</button>
                                         </div>
                                         @endif
                                     </div>
@@ -128,7 +128,7 @@
                             $progress += $increase;
                         @endphp
                         @empty
-                            <p>{{ trans('supplier.nenhum_variante_cadastrada') }}</p>
+                            <p>Nenhuma variante cadastrada.</p>
                         @endforelse
                     </div>
                 </form>

@@ -1,6 +1,6 @@
 @extends('admin.layout.default')
 
-@section('title', __('supplier.pedidos_title'))
+@section('title', 'Pedidos')
 
 @section('content')
     <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
@@ -20,7 +20,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="mb-0">{{ trans('supplier.pedidos_pendentes_fornecedores') }}</h2>
+                                <h2 class="mb-0">Pedidos pendentes dos fornecedores</h2>
                             </div>
                         </div>
                     </div>
@@ -28,12 +28,12 @@
                         <table class="table table-flush align-items-center">
                             <thead>
                             <tr>
-                                <th>{{ trans('supplier.fornecedor') }}</th>
-                                <th>{{ trans('supplier.lojista') }}</th>
-                                <th>{{ trans('supplier.date') }}</th>
-                                <th>{{ trans('supplier.products') }}</th>
-                                <th>{{ trans('supplier.total_price') }}</th>
-                                <th class="actions-th">{{ trans('supplier.actions') }}</th>
+                                <th>Fornecedor</th>
+                                <th>Lojista</th>
+                                <th>Data</th>
+                                <th>Produtos</th>
+                                <th>Valor total</th>
+                                <th class="actions-th">Ações</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -48,7 +48,7 @@
                                         @if($order->supplier)
                                             <a href="{{ route('admin.suppliers.login', $order->supplier->id) }}" target="_blank">{{ $order->supplier->name }}</a></td>    
                                         @else
-                                            <small>{{ trans('supplier.fornecedor_nao_encontrado') }}</small>
+                                            <small>Fornecedor não encontrado</small>
                                         @endif
                                         
                                     <td>{{ $order->order->shop ? $order->order->shop->name : '#' }}</td>
@@ -66,7 +66,7 @@
                                                     @endphp
 
                                                     @if($variant)
-                                                    {{ trans('supplier.o_produto') }} <b>{{$variant->title }}</b> {{ trans('supplier.nao_esta_disponivel') }}
+                                                        O produto <b>{{$variant->title }}</b> não está mais disponível
                                                     @endif
                                                 @endif
                                             @endforeach
@@ -74,14 +74,14 @@
                                     </td>
                                     <td>R$ {{ number_format($order->total_amount, 2, ',', '.') }}</td>
                                     <td>
-                                        <a href="{{ route('admin.orders.suppliers.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
+                                        <a href="{{ route('admin.orders.suppliers.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
                                             <i class="fas fa-fw fa-eye"></i>
                                         </a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4">{{ trans('supplier.text_nao_ha_pedidos_pendentes') }}</td>
+                                    <td colspan="4">Não há nenhum pedido pendente para envio.</td>
                                 </tr>
                             @endforelse
                             </tbody>

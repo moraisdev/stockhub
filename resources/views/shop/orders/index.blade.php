@@ -14,7 +14,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.pendentes_title') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Pendentes</h5>
                                     <span class="h2 font-weight-bold mb-0">{{ $countOrders }}</span>
                                 </div>
                                 <div class="col-auto">
@@ -54,19 +54,16 @@
     			<div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">Pedidos Pendentes</h2>
+                            <h2 class="mb-0">Carrinho</h2>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="d-flex flex-wrap align-items-center justify-content-between">
                         <p>
-                            Listagem de pedidos com pagamento pendente. Você pode marcar os pedidos que deseja pagar e efetuar um pagamento em lote. Assim que o pagamento for confirmado irá iniciar o processo de envio.<br>
+                       
+                        Listagem de produtos com pagamento pendente. Você pode marcar os produtos que deseja pagar e efetuar um pagamento em lote. Assim que o pagamento for confirmado irá iniciar o processo de envio.<br>
                         </p>
-
-                        <p class="mb-0">Você pode importar os pedidos pagos de sua loja Shopify, WooCommerce ou Cartx através dos botões abaixo.  </p>
-
-                        <p class="mb-0">Obs. Para Realizar a gestão dos seus pedidos, voçê precisa clicar em importar pedidos ex. importar mercadolivre, em seguida selecionar os pedidos que deseja realizar o pagamento.  </p>
 
                         <div class="w-100 d-flex flex-wrap align-items-center justify-content-end mt-3">
 
@@ -103,14 +100,14 @@
                             <!-- bling -->
                             
                             @if($authenticated_user->bling_apikey)
-                            <a href="{{ route('shop.orders.import_pedido_bling') }}" class="btn btn-primary" style="background-color: #77d77;">{{ trans('supplier.import_products_from_bling') }}</a>
+                            <a href="{{ route('shop.orders.import_pedido_bling') }}" class="btn btn-primary" style="background-color: #77d77;">Importar Bling</a>
                             @endif  
                             
                            
-                            {{$authenticated_user->Mercadolivreapi}}
-                            <br> 
+                            @if(isset($apimercadolivreapi))
+                            <br>                             
                             <a href="{{ route('shop.orders.mercadolivre') }}" class="btn btn-primary" style="background-color: #77d77;">Importar Mercadolivre</a>
-                              
+                            @endif                               
                             
                             
                         </div>
@@ -121,31 +118,31 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">                                
-                                    <input class="form-control" type="search" name='query' placeholder="{{ trans('supplier.digite_para_buscar') }}" id="search-query" value='{{isset($query) ? $query : ''}}'>
+                                    <input class="form-control" type="search" name='query' placeholder='Digite algo para buscar...' id="search-query" value='{{isset($query) ? $query : ''}}'>
                                 </div> 
                             </div>
                             <div class="col-3">                            
                                 <button class="btn btn-icon btn-primary" type="submit" id='get-search-button'>
                                     <span class="btn-inner--icon"><i class="fas fa-search"></i></span>
-                                    <span class="btn-inner--text">{{ trans('supplier.buscar') }}</span>
+                                    <span class="btn-inner--text">Buscar</span>
                                 </button>
                             </div>
                         </div>                    
                     </div>
                     
                     <div class="col-md-12 mb-4">                        
-                            <p class='small'>{{ trans('supplier.escolha_qual_campo_buscar') }}</p>
+                            <p class='small'>Escolha qual campo buscar</p>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id='filtro-cliente' value='customer' name='filter' {{isset($filter) && $filter == 'customer' ? 'checked' : ''}} {{!isset($filter) ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="filtro-cliente">{{ trans('supplier.text_client') }}</label>
+                                <label class="custom-control-label" for="filtro-cliente">Cliente</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id='filtro-id' value='name' name='filter' {{isset($filter) && $filter == 'name' ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="filtro-id">{{ trans('supplier.text_id') }}</label>
+                                <label class="custom-control-label" for="filtro-id">ID</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id='filtro-data-importacao' value='created_at' name='filter' {{isset($filter) && $filter == 'created_at' ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="filtro-data-importacao">{{ trans('supplier.data_importacao') }}</label>
+                                <label class="custom-control-label" for="filtro-data-importacao">Data Importação</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id='filtro-data-origem' value='external_created_at' name='filter' {{isset($filter) && $filter == 'external_created_at' ? 'checked' : ''}}>
@@ -153,25 +150,25 @@
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id='filtro-ref-externa' value='external_id' name='filter' {{isset($filter) && $filter == 'external_id' ? 'checked' : ''}}>
-                                <label class="custom-control-label" for="filtro-ref-externa">{{ trans('supplier.ref_externa') }}</label>
+                                <label class="custom-control-label" for="filtro-ref-externa">Ref. Externa</label>
                             </div>
                     </div>
                 </form>
 				<div class="table-responsive" id='table-search'>
                     @if(isset($countOrdersSearch))
                         <div class='ml-4'>
-                            <span class='small'>{{ trans('supplier.resultados') }}: <b>{{$orders->total()}}</b></span>
+                            <span class='small'>Resultados: <b>{{$orders->total()}}</b></span>
                         </div>
                     @endif
                     <table class="table table-flush align-items-center">
                         <thead>
                             <tr>
                                 <th style="width:30px" class="no-sort"><input type="checkbox" class="select_all"></th>
-                                <th>{{ trans('supplier.text_id') }}</th>
-                                <th>{{ trans('supplier.date') }}</th>
-                                <th>{{ trans('supplier.ref_externa') }}/{{ trans('supplier.price') }}</th>
-                                <th>{{ trans('supplier.text_client') }}</th>
-                                <th>{{ trans('supplier.actions') }}</th>
+                                <th>ID</th>
+                                <th>Data</th>
+                                <th>Ref. Externa/Valor</th>
+                                <th>Cliente</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -237,39 +234,42 @@
                                     </td>
                                     <td>{{ $order->id }}</td>
                                     <td>Importação: {{ date('d/m/Y', strtotime($order->created_at)) }} <br>
-                                    {{ trans('supplier.origem') }}:{{ date('d/m/Y', strtotime($order->external_created_at)) }}
+                                        Origem:
+                                        @if ($order->external_created_at)
+                                            {{ date('d/m/Y', strtotime($order->external_created_at)) }}
+                                        @endif
                                     </td>
                                     
                                     @if($order->external_service == 'shopify')
                                     <td>- {{ ucfirst($order->external_service) }}: <a href="https://{{ $authenticated_user->shopify_app->domain }}.myshopify.com/admin/orders/{{ $order->external_id }}" target="_blank">#{{ $order->external_id }}</a>
                                     <br>
-                                    - {{ trans('supplier.fornecedor') }}: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
+                                    - Fornecedor: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
                                     - {{ucfirst($order->external_service)}}: R$ {{-- number_format($items_external_amount, 2, ',', '.') --}} {{ number_format($order->external_price, 2, ',', '.') }}
                                    </td>
                                     @endif
                                     @if($order->external_service == 'cartx')
                                     <td>- {{ ucfirst($order->external_service) }}: <a href="https://accounts.cartx.io/orders/details/{{ $order->external_id }}" target="_blank">#{{ $order->external_id }}</a>
                                     <br>
-                                    - {{ trans('supplier.fornecedor') }}: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
+                                    - Fornecedor: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
                                     - {{ucfirst($order->external_service)}}: R$ {{-- number_format($items_external_amount, 2, ',', '.') --}} {{ number_format($order->external_price, 2, ',', '.') }}
                                     </td>
                                     @endif
                                     @if($order->external_service == 'woocommerce')
                                     <td>- {{ ucfirst($order->external_service) }}: <a href="{{ $authenticated_user->woocommerce_app->domain }}/orders/details/{{ $order->external_id }}" target="_blank">#{{ $order->external_id }}</a>
                                     <br>  
-                                    - {{ trans('supplier.fornecedor') }}: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
+                                    - Fornecedor: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
                                     - {{ucfirst($order->external_service)}}: R$ {{-- number_format($items_external_amount, 2, ',', '.') --}} {{ number_format($order->external_price, 2, ',', '.') }}
                                    </td>
                                     @endif
                                     @if($order->external_service == 'planilha')
                                     <td>- Planilha <br>
-                                    - {{ trans('supplier.fornecedor') }}: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
+                                    - Fornecedor: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
                                     - {{ucfirst($order->external_service)}}: R$ {{-- number_format($items_external_amount, 2, ',', '.') --}} {{ number_format($order->external_price, 2, ',', '.') }}
                                     </td>
                                     @endif
                                     @if($order->external_service == 'yampi')
                                     <td>- Yampi  
-                                    - {{ trans('supplier.fornecedor') }}: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
+                                    - Fornecedor: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
                                     - {{ucfirst($order->external_service)}}: R$ {{-- number_format($items_external_amount, 2, ',', '.') --}} {{ number_format($order->external_price, 2, ',', '.') }}
                               
                                     </td>
@@ -277,7 +277,7 @@
                                     @if($order->external_service == 'bling_service')
                                     <td>- {{ ucfirst($order->external_service) }}: <a href="#" target="_blank">#{{ $order->external_id }}</a>
                                     <br>
-                                    - {{ trans('supplier.fornecedor') }}: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
+                                    - Fornecedor: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
                                     - {{ucfirst($order->external_service)}}: R$ {{-- number_format($items_external_amount, 2, ',', '.') --}} {{ number_format($order->external_price, 2, ',', '.') }}
                               
                                 
@@ -287,7 +287,7 @@
                                     @endif 
                                     @if($order->external_service == 'mercadolivre')
                                     <td>- Mercadolivre <br>
-                                    - {{ trans('supplier.fornecedor') }}: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
+                                    - Fornecedor: R$ {{ number_format($items_amount, 2, ',', '.') }} {{-- number_format($order->amount, 2, ',', '.') --}} <br>
                                     - {{ucfirst($order->external_service)}}: R$ {{-- number_format($items_external_amount, 2, ',', '.') --}} {{ number_format($order->external_price, 2, ',', '.') }}
                               
                                    </td>
@@ -300,7 +300,7 @@
                                         - {{ $order->customer->address->address2.'-'.$order->customer->address->city.'/'.$order->customer->address->privince_code.'-'.$order->customer->address->zipcode }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('shop.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
+                                        <a href="{{ route('shop.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
                                             <i class="fas fa-fw fa-eye"></i>
                                         </a>
                                         
@@ -314,7 +314,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4">{{ trans('supplier.nenhum_pedido_pendente_pagamento') }}</td>
+                                    <td colspan="4">Carrinho vazio.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -322,7 +322,7 @@
                     {!! $orders->appends(request()->query())->render() !!}
                     <div class="card-body">
                         <div class="float-right mb-4">
-                            <button class="btn btn-success" id="pay_selected_orders">Efetuar pagamento dos pedidos marcados</button>
+                            <button class="btn btn-success" id="pay_selected_orders">Finalizar compra</button>
                         </div>
                     </div>
                 </div>
@@ -369,7 +369,7 @@
                 <div class="modal-footer">
                 <a type="button" class="btn btn-danger" href="{{asset('assets/static/PlanilhaModelo.xlsx')}}" download >Baixar Modelo</a>
                 <button type="submit" class="btn btn-primary">Importar</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.fechar') }}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </form>
         </div>
@@ -457,13 +457,13 @@
 						 location.href= "/shop/orders/invoices/pending";
                     },
                     error: function(data){
-                        $('#pay_selected_orders').html('Efetuar pagamento dos pedidos marcados')
+                        $('#pay_selected_orders').html('Finalizar compra')
                         $('#pay_selected_orders').attr('disabled', false)
                         //console.log(data)
                     }
                 })
             }else{
-                Swal.fire("{{ trans('supplier.atencao') }}", "Selecione ao menos uma ordem para quitar.", 'warning');
+                Swal.fire("Atenção", "Selecione ao menos um item para pagar.", 'warning');
             }
         });
     </script>

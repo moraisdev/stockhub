@@ -10,14 +10,14 @@
             @method('DELETE')
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title">{{ trans('supplier.excluir_registro') }}</h3>
+                    <h3 class="modal-title">Excluir registro</h3>
                 </div>
                 <div class="modal-body">
-                    <p>{{ trans('supplier.confirm_excluir_registro') }}</p>
+                    <p>Você tem certeza que deseja excluir este registro?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
-                    <button class="btn btn-danger">{{ trans('supplier.delete') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-danger">Excluir</button>
                 </div>
             </div>
         </form>
@@ -51,7 +51,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.pedidos_pendentes') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Pedidos pendentes</h5>
                                     <span class="h2 font-weight-bold mb-0">{{ $orderPending }}</span>
                                 </div>
                                 <div class="col-auto">
@@ -68,7 +68,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.pedidos_pagos') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Pedidos pagos</h5>
                                     <span class="h2 font-weight-bold mb-0">{{ $orderPaid }}</span>
                                 </div>
                                 <div class="col-auto">
@@ -91,7 +91,7 @@
     			<div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">{{ trans('supplier.lojistas_title') }}</h2>
+                            <h2 class="mb-0">Lojistas</h2>
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                                     <div class="col-3">                            
                                         <button class="btn btn-icon btn-primary" type="submit" id='get-search-button'>
                                             <span class="btn-inner--icon"><i class="fas fa-search"></i></span>
-                                            <span class="btn-inner--text">{{ trans('supplier.buscar') }}</span>
+                                            <span class="btn-inner--text">Buscar</span>
                                         </button>
                                     </div>
                                 </div>                    
@@ -122,21 +122,21 @@
                         <thead>
                             <tr>
                                 <th>Dados</th>
-                                <th>{{ trans('supplier.assinatura_title') }}</th>
-                                <th style="width:50px" class="text-center">{{ trans('supplier.actions') }}</th>
+                                <th>Assinatura</th>
+                                <th style="width:50px" class="text-center">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php
                                 $dataAtual = date("Y-m-d");
-                                $arrStatusInternalSubscription = ['active' => '{{ trans('supplier.ativa') }}', 'inactive' => '{{ trans('supplier.inativa') }}', 'overdue' => '{{ trans('supplier.atrasada') }}', 'pending' => '{{ trans('supplier.pendente') }}']; //status
+                                $arrStatusInternalSubscription = ['active' => 'Ativa', 'inactive' => 'Inativa', 'overdue' => 'Atrasada', 'pending' => 'Pendente']; //status
                             @endphp
                             @forelse($shops as $shop)
                                 <tr style="font-size:5px">
-                                    <td>{{ trans('supplier.name') }}         : {{ $shop->name }} <br>
-                                    {{ trans('supplier.text_email') }}        :{{ $shop->email }}<br>
-                                    {{ trans('supplier.text_phone') }}   :{{ $shop->phone }}  <br>
-                                    {{ trans('supplier.cadastrado_em') }} {{ date('d/m/Y', strtotime($shop->created_at)) }} 
+                                    <td>Nome         : {{ $shop->name }} <br>
+                                        Email        :{{ $shop->email }}<br>
+                                        Telelefone   :{{ $shop->phone }}  <br>
+                                        Cadastrado em: {{ date('d/m/Y', strtotime($shop->created_at)) }} 
                                     </td>
                                    
                                                                        
@@ -144,24 +144,24 @@
                                    
                                     @if(isset($shop->contracted_plan))
                                     @if(($shop->contracted_plan->name_plan == 'FREE') and ($shop->contracted_plan->subscription_status == 'active'))
-                                    {{ trans('supplier.gratuito') }}
-                                    @endif    
+                                        Gratuito 
+                                    
 
-                                    @if(($shop->contracted_plan->name_plan <> 'FREE') and ($shop->contracted_plan->subscription_status == 'active'))
-                                    {{ trans('supplier.ativa') }}
+                                    @elseif(($shop->contracted_plan->name_plan <> 'FREE') and ($shop->contracted_plan->subscription_status == 'active'))
+                                     Ativa
                                     
                                     @elseif(($shop->contracted_plan->name_plan <> 'FREE') and ($shop->contracted_plan->subscription_status == 'inactive'))
                                      Sem Acesso
                                     
                                     @elseif(($shop->contracted_plan->name_plan <> 'FREE') and ($shop->contracted_plan->subscription_status == 'atrasada'))
-                                    {{ trans('supplier.atrasada') }}
+                                     Atrasada
                                     
                                     @elseif(($shop->contracted_plan->name_plan <> 'FREE') and ($shop->contracted_plan->subscription_status == 'pending'))
-                                    {{ trans('supplier.pendente') }}
+                                     Pendente
                                     
                                     
                                     @elseif(($shop->contracted_plan->name_plan == 'FREE') and ($shop->contracted_plan->subscription_status == 'active'))
-                                    {{ trans('supplier.gratuito') }}
+                                        Gratuito 2
                                     @endif 
                                     @else 
 
@@ -170,7 +170,7 @@
                                            
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ route('admin.shops.show', $shop->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
+                                        <a href="{{ route('admin.shops.show', $shop->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
                                             <i class="fas fa-fw fa-eye"></i>
                                         </a>
                                         @if($shop->token_card)
@@ -199,7 +199,7 @@
                                         <a href="{{ route('admin.shops.more_days_free', $shop->id) }}" class="btn btn-success btn-sm" tooltip="true" title="+ 7 dias grátis">
                                             <i class="fas fa-fw fa-plus"></i>
                                         </a>
-                                        <a href="{{ route('admin.shops.login', $shop->id) }}" class="btn btn-info btn-sm" tooltip="true" title="{{ trans('supplier.logar_painel_lojista') }}" target="_blank">
+                                        <a href="{{ route('admin.shops.login', $shop->id) }}" class="btn btn-info btn-sm" tooltip="true" title="Logar no painel do lojista" target="_blank">
                                             <i class="fas fa-fw fa-sign-in-alt"></i>
                                         </a>
                                         <!-- <a href="#!" data-toggle="modal" data-target="#modal-delete" onclick="updateDeleteModal('{{ route('admin.shops.delete', $shop->id) }}')" class="btn btn-danger btn-sm" tooltip="true" title="Excluir lojista" target="_blank">

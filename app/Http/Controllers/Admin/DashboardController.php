@@ -20,6 +20,7 @@ use App\Services\MelhorEnvioService;
 use App\Models\Shops;
 use App\Models\FreteMelhorEnvio;
 use App\Models\SupplierOrderShippings;
+use App\Models\ShopBanner;
 
 class DashboardController extends Controller
 {
@@ -176,6 +177,8 @@ class DashboardController extends Controller
         $totalAmountWeek = SupplierOrders::where("created_at",">", Carbon::now()->subDays(7))->where("status", "paid")->sum("total_amount");
         $totalAmountMedia = SupplierOrders::where("created_at",">", Carbon::now()->subMonths(3))->where("status", "paid")->sum("total_amount")/3;
        
+        
+        
         return view('admin.dashboard.index', compact('totalAmount','totalAmountWeek','totalAmountMedia'));
     }
 

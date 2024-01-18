@@ -17,8 +17,8 @@
                         <p>Você tem certeza que deseja excluir a fatura pendente <b><span id='id-group-delete'></span></b>?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
-                        <button class="btn btn-danger">{{ trans('supplier.delete') }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-danger">Excluir</button>
                     </div>
                 </div>
             </form>
@@ -58,10 +58,10 @@
                         <table class="table table-flush align-items-center">
                             <thead>
                             <tr>
-                                <th>{{ trans('supplier.actions') }}</th>
+                                <th>Ações</th>
                                 <th>ID Fatura</th>
-                                <th>{{ trans('supplier.date') }}</th>
-                                <th>{{ trans('supplier.text_status') }}</th>
+                                <th>Data</th>
+                                <th>Status</th>
                                 <th>Pedidos Loja</th>
                             </tr>
                             </thead>
@@ -69,11 +69,11 @@
                                 @forelse($groups as $group)
                                     <tr>
                                         <td>
-                                            <a href="{{ route('shop.orders.group_detail', $group->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
+                                            <a href="{{ route('shop.orders.group_detail', $group->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
                                                 <i class="fas fa-fw fa-eye"></i>
                                             </a>
                                             @if($group->status == 'pending')
-                                                <a href="#!" data-toggle='modal' data-target='#modal-delete-group' onclick="updateDeleteModalGroup({{$group->id}}, '{{route('shop.orders.groups.delete', ['group_id' => $group->id])}}')" class="btn btn-danger btn-sm" tooltip="true" title="{{ trans('supplier.delete') }}">
+                                                <a href="#!" data-toggle='modal' data-target='#modal-delete-group' onclick="updateDeleteModalGroup({{$group->id}}, '{{route('shop.orders.groups.delete', ['group_id' => $group->id])}}')" class="btn btn-danger btn-sm" tooltip="true" title="Excluir">
                                                     <i class="fas fa-fw fa-times"></i>
                                                 </a>
                                             @endif

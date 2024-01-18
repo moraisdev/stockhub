@@ -17,7 +17,6 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\CheckForMaintenanceMode::class,
         \App\Http\Middleware\TrimStrings::class,
-        \App\Http\Middleware\SetLocale::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 

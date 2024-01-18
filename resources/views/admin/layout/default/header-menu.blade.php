@@ -18,12 +18,12 @@
     </a>
     <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
         <div class=" dropdown-header noti-title">
-            <h6 class="text-overflow m-0">{{ trans('supplier.seja_bem_vindo_title') }}</h6>
+            <h6 class="text-overflow m-0">Seja bem vindo!</h6>
         </div>
         <div class="dropdown-divider"></div>
         <a href="{{ route('admin.logout') }}" class="dropdown-item">
             <i class="fas fa-sign-out-alt"></i>
-            <span>{{ trans('supplier.logout_title') }}</span>
+            <span>Logout</span>
         </a>
     </div>
 </li>

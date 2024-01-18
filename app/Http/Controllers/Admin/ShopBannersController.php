@@ -16,6 +16,7 @@ class ShopBannersController extends Controller
 
     public function create(){
         return view('admin.banners.create');
+        
     }
 
     public function store(Request $request){
@@ -27,17 +28,17 @@ class ShopBannersController extends Controller
         if($request->hasFile('img_source')){
             $name = Str::random(15). '.' . $request->img_source->extension();
 
-            $path = $request->img_source->storeAs('image_uploads', $name, 's3');
+            $path = $request->img_source->storeAs(env('PASTASP'), $name, 'digitalocean');
 
-            $banner->img_source = env('AWS_URL', 'https://uploads-mawa.s3-sa-east-1.amazonaws.com/').$path;
+            $banner->img_source = env('SPACEDIG', 'PASTASP' ).'/'.$path;
         }
 
         if($request->hasFile('img_source_mobile')){
             $name = Str::random(15). '.' . $request->img_source_mobile->extension();
 
-            $path = $request->img_source_mobile->storeAs('image_uploads', $name, 's3');
+            $path = $request->img_source_mobile->storeAs(env('PASTASP'), $name, 'digitalocean');
 
-            $banner->img_source_mobile = env('AWS_URL', 'https://uploads-mawa.s3-sa-east-1.amazonaws.com/').$path;
+            $banner->img_source_mobile = env('SPACEDIG', 'PASTASP' ).'/'.$path;
         }
 
         if($banner->save()){
@@ -55,6 +56,7 @@ class ShopBannersController extends Controller
 
     public function edit($banner_id){
         $banner = ShopBanner::find($banner_id);
+        
 
         return view('admin.banners.edit', compact('banner'));
     }
@@ -64,6 +66,18 @@ class ShopBannersController extends Controller
     }
 
     public function delete(){
+        
+
+    }
+
+    public function destroy($banner_id){
+        $banner = ShopBanner::find($banner_id);       
+        if($banner->delete()){
+    		return redirect()->route('admin.banners.index')->with('success', 'Banner excluída com sucesso.');
+    	}else{
+    		return redirect()->back()->with('error', 'Erro ao excluir Benner. Tente novamente em alguns minutos.')->withInput();
+    	}
+        
 
     }
 }

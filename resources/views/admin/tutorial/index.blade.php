@@ -1,6 +1,6 @@
 @extends('admin.layout.default')
 
-@section('title', __('supplier.tutoriais_title'))
+@section('title', 'Tutoriais')
 
 @section('stylesheets')
 <style type="text/css">
@@ -43,9 +43,9 @@
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">{{ trans('supplier.description') }}</th>
-                                <th scope="col">{{ trans('supplier.link') }}</th>
-                                <th scope="col" class="actions-th">{{ trans('supplier.actions') }}</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Link</th>
+                                <th scope="col" class="actions-th">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,17 +85,17 @@
                     @csrf
                     @method('DELETE')
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ trans('supplier.apagar_link') }}</h5>
+                        <h5 class="modal-title">Apagar link</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>{{ trans('supplier.text_apagar_link') }}</p>
+                        <p>Tem certeza que deseja apagar o link?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
-                        <button class="btn btn-danger">{{ trans('supplier.apagar') }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-danger">Apagar</button>
                     </div>
                 </form>
             </div>

@@ -60,13 +60,6 @@ class OrdersService{
                     ->where('supplier_order_created', 0)
                     ->orderBy('id', 'desc')
                     ->paginate(100);
-
-                    
-		// if($limit){
-		//     $orders->limit($limit);
-        // }
-
-        // return $orders->get();
       
         return $orders;
 
@@ -261,11 +254,6 @@ class OrdersService{
                     ->orderBy('id', 'desc')
                     ->count();
 
-		// if($limit){
-		//     $orders->limit($limit);
-        // }
-
-        // return $orders->get();
         return $countOrders;
     }
 
@@ -444,7 +432,6 @@ class OrdersService{
                             $new_item->amount = $amount;
                         }
 
-                        //caso seja um produto da s2m2, ainda tem q multiplicar por 1.05 para adicionar mais 5% de mão de obra no item
                         if($item->variant->product->supplier->id == 56){
                             $new_item->amount = $new_item->amount * 1.05;
                         }
@@ -478,7 +465,6 @@ class OrdersService{
                                     $new_item->amount = $amount;
                                 }
 
-                                //caso seja um produto da s2m2, ainda tem q multiplicar por 1.05 para adicionar mais 5% de mão de obra no item
                                 if($product->supplier->id == 56){
                                     $new_item->amount = $new_item->amount * 1.05;
                                 }
@@ -493,11 +479,6 @@ class OrdersService{
                     }
 
                 }
-
-                //$total_measurement - 100
-                //$centimeters_supplier - X
-                //$total * x = $cent_suplier * 100
-                //x = $cent_suplier * 100 / $total
 
                 $new_order->amount = $total_amount;
                 $new_order->total_amount = $total_amount + $total_shipping;
@@ -708,18 +689,9 @@ class OrdersService{
             $sup_orders = SupplierOrders::where('group_id', $group->id)->get();
 
             foreach($sup_orders as $s){
-                //if($s->status != 'paid'){ //tinha um erro no upsell aqui, nesse passo precisa só verificar se a supplier order ainda não mudou pra paga, e muda-la caso seja necessário
                     $s->order->update(['status' => 'paid']);
                     $s->update(['status' => 'paid']);
 
-                    //manda um email pra cada fornecedor que tem ordem no grupo
-                    //Mail::to($s->supplier->email)->send(new NewOrderRequest($s->supplier->email));
-
-                    //manda um email pro lojista falando que o pedido foi processado
-                    //Mail::to($s->order->shop->email)->send(new ProcessedOrder($s->order));
-
-                    //verifica, caso o frete da ordem tenha sido o Melhor Envio, faz a cotação de novo e compra o frete
-                    //verifica também se já não salvou esse frete
                     $verifyFreteMelhorEnvio = FreteMelhorEnvio::where('order_id', $s->order->id)
                                                             ->where('supplier_id', $s->supplier->id)
                                                             ->where('supplier_order_id', $s->id)

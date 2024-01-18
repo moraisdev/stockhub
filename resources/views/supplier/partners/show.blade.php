@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.dash_data') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Dash data</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -30,7 +30,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.dash_data') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Dash data</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -47,7 +47,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.dash_data') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Dash data</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -64,7 +64,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.dash_data') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Dash data</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -98,9 +98,9 @@
                                 <b>{{ __('supplier.responsible_name') }}:</b> {{ $shop->responsible_name }} <br>
                                 <b>{{ __('supplier.id_documentation') }}:</b> {{ $shop->f_document }} <br>
                                 @if(strlen($shop->f_document) > 14)
-                                    <b>{{ __('supplier.fantasy_name') }}:</b> {{ $shop->fantasy_name ? $shop->fantasy_name : '{{ trans('supplier.nao_cadastrado') }}' }} <br>
-                                    <b>{{ __('supplier.company_name') }}:</b> {{ $shop->corporate_name ? $shop->corporate_name : '{{ trans('supplier.nao_cadastrado') }}' }} <br>
-                                    <b>{{ __('supplier.state_registration') }}:</b> {{ $shop->state_registration ? $shop->state_registration : '{{ trans('supplier.nao_cadastrado') }}' }} <br>
+                                    <b>{{ __('supplier.fantasy_name') }}:</b> {{ $shop->fantasy_name ? $shop->fantasy_name : 'não cadastrado' }} <br>
+                                    <b>{{ __('supplier.company_name') }}:</b> {{ $shop->corporate_name ? $shop->corporate_name : 'não cadastrado' }} <br>
+                                    <b>{{ __('supplier.state_registration') }}:</b> {{ $shop->state_registration ? $shop->state_registration : 'não cadastrado' }} <br>
                                 @endif
                             </p>
                         </div>
@@ -128,10 +128,10 @@
                     <table class="table table-flush align-items-center">
                         <thead>
                             <tr>
-                                <th>{{ trans('supplier.text_id') }}</th>
+                                <th>ID</th>
                                 <th>{{ __('supplier.products') }}</th>
                                 <th>{{ __('supplier.total_price') }}</th>
-                                <th>{{ trans('supplier.text_status') }}</th>
+                                <th>Status</th>
                                 <th>{{ __('supplier.actions') }}</th>
                             </tr>
                         </thead>
@@ -153,7 +153,7 @@
                                     <td>R$ {{ number_format($order->total_amount,2,',','.') }}</td>
                                     <td>{{ ucfirst($order->f_status) }}</td>
                                     <td>
-                                        <a href="{{ route('supplier.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
+                                        <a href="{{ route('supplier.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
                                             <i class="fas fa-fw fa-eye"></i>
                                         </a>
                                     </td>

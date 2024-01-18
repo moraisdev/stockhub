@@ -1,6 +1,6 @@
 @extends('admin.layout.default')
 
-@section('title', __('supplier.categorias'))
+@section('title', 'Categorias')
 
 @section('stylesheets')
 <style type="text/css"> 
@@ -85,17 +85,17 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="mb-0">{{ trans('supplier.categorias') }}</h3>
+                            <h3 class="mb-0">Categorias</h3>
                         </div>
                         <div class="col">
                             <div class="float-right">
-                                <a class="btn btn-primary" href="{{ route('admin.categories.create') }}"><i class="fas fa-plus mr-2"></i>{{ trans('supplier.nova_categoria') }}</a>
+                                <a class="btn btn-primary" href="{{ route('admin.categories.create') }}"><i class="fas fa-plus mr-2"></i> Nova categoria</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-body my-0">
-                    <p class="my-0">{{ trans('supplier.text_listagem_categorias') }}</p>
+                    <p class="my-0">Listagem de categorias do sistema. Estas categorias estarão disponíveis para os fornecedores no cadastro de produtos.</p>
                 </div>
                 <div class="table-responsive">
                     <!-- Projects table -->
@@ -103,8 +103,8 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">{{ trans('supplier.name') }}</th>
-                                <th scope="col" class="actions-th">{{ trans('supplier.actions') }}</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col" class="actions-th">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -127,7 +127,7 @@
                             @empty
                             <tr>
                                 <th scope="row" colspan="6">
-                                {{ trans('supplier.text_nenhuma_categoria_cadastrada') }}
+                                    Nenhuma categoria cadastrada ainda.
                                 </th>
                             </tr>
                             @endforelse
@@ -144,17 +144,17 @@
                     @csrf
                     @method('DELETE')
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ trans('supplier.excluir_categoria') }}</h5>
+                        <h5 class="modal-title">Excluir categoria</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>{{ trans('supplier.text_confirm_excluir_categoria') }}</p>
+                        <p>Você tem certeza que deseja excluir esta categoria?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
-                        <button class="btn btn-danger">{{ trans('supplier.delete') }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-danger">Excluir</button>
                     </div>
                 </form>
             </div>

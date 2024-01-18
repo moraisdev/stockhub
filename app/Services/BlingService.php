@@ -26,22 +26,27 @@ class BlingService{
     }
 
     public function importProducts($supplier, $page){
-       try {
-
-
-            //carrega todos os produtos do fornecedor no bling
-            $client = new \GuzzleHttp\Client();
-            $response = $client->request('GET', "https://bling.com.br/Api/v2/produtos/page=".$page."/json/?apikey=".$supplier->bling_apikey.'&estoque=S&imagem=S');
-
-            $response = json_decode($response->getBody())->retorno->produtos;
-            return $response;
-
-        } catch (\Exception $e){
-            ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
-            Log::error('Error in BlingService', [$e]);
-            return false;
-        }
-    }
+        try {
+             //carrega todos os produtos do fornecedor no bling
+             $client = new \GuzzleHttp\Client();
+             $params = [
+                 'apikey' => $supplier->bling_apikey,
+                 'estoque' => 'S',
+                 'imagem' => 'S'
+             ];
+             $url = "https://bling.com.br/Api/v2/produtos/page=".$page."/json/?" . http_build_query($params);
+             $response = $client->request('GET', $url);
+     
+             $response = json_decode($response->getBody())->retorno->produtos;
+             return $response;
+     
+         } catch (\Exception $e){
+             ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
+             Log::error('Error in BlingService', [$e]);
+             return false;
+         }
+     }
+     
 
     public function importProductsid($supplier, $product){
         try {
@@ -358,7 +363,7 @@ private function exportXml($prod , $stock , $imagens){
         $xml .= '<codigo>'.$prod->sku.'</codigo>';
         $xml .= '<descricao>'.$prod->title.'</descricao>';
         $xml .= '<situacao>Ativo</situacao>';
-        $xml .= '<descricaoCurta>'.$prod->description.'</descricaoCurta>';
+        $xml .= '<descricaoCurta>'.$prod->product->description.'</descricaoCurta>';
         $xml .= '<descricaoComplementar></descricaoComplementar>';
         $xml .= '<un>UN</un>';
         $xml .= '<vlr_unit>0.00</vlr_unit>';
@@ -366,7 +371,7 @@ private function exportXml($prod , $stock , $imagens){
         $xml .= '<peso_bruto>'.$peso.'</peso_bruto>';
         $xml .= '<peso_liq>'.$peso.'</peso_liq>';
         $xml .= '<class_fiscal>'.$prod->ncm.'</class_fiscal>';
-        $xml .= '<marca></marca>';
+        $xml .= '<marca>'.$prod->product->product_brand.'</marca>';
         $xml .= '<origem>0</origem>';
         $xml .= '<gtin>'.$prod->ean_gtin.'</gtin>';
         $xml .= '<estoque>'.$stock->quantity.'</estoque>';
@@ -383,8 +388,8 @@ private function exportXml($prod , $stock , $imagens){
        $xml .= '<volumes>1</volumes>';
        $xml .= '<imagens>';
        foreach($imagens as $img){
-              $xml .= ' <url>'.$img->src.'</url>';
-              }
+        $xml .= ' <url>'.htmlspecialchars($img->src, ENT_QUOTES, 'UTF-8').'</url>';
+        }
         $xml .= '</imagens>';
 
         $xml .= '</produto>';
@@ -400,8 +405,8 @@ private function exportXml($prod , $stock , $imagens){
 function executeInsertProduct($url, $data){
     $curl_handle = curl_init();
     curl_setopt($curl_handle, CURLOPT_URL, $url);
-    curl_setopt($curl_handle, CURLOPT_POST, count($data));
-    curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($curl_handle, CURLOPT_POST, true);
+    curl_setopt($curl_handle, CURLOPT_POSTFIELDS, http_build_query($data));
     curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
     $response = curl_exec($curl_handle);
     curl_close($curl_handle);

@@ -26,7 +26,6 @@
                         $woocommerce_app = $authenticated_user->woocommerce_app;
                     @endphp
                     <div class="card-body">
-                        <p>Para ligar a sua loja Woo à sua conta {{ env('APP_NAME') }}, siga este <a href="{{$tutorial[5]['link']}}" target="_blank">tutorial</a>.</p>
                         <form method="POST" action="{{ route('shop.settings.update_woocommerce_app') }}">
                             @csrf
                             @method('PUT')
@@ -42,8 +41,8 @@
                                 <input type="text" name="app_key" class="form-control" placeholder="Chave do APP" value="{{ ($woocommerce_app) ? $woocommerce_app->app_key : '' }}" required >
                             </div>
                             <div class="form-group">
-                                <label>APP Password</label>
-                                <input type="text" name="app_password" class="form-control" placeholder="Senha do APP" value="{{ ($woocommerce_app) ? $woocommerce_app->app_password : '' }}" required >
+                                <label>APP Secret</label>
+                                <input type="text" name="app_password" class="form-control" placeholder="Secret do APP" value="{{ ($woocommerce_app) ? $woocommerce_app->app_password : '' }}" required >
                             </div>
                             <div class="form-group d-none">
                                 <input type="checkbox" class="mr-2" name="automatic_order_update" {{ ($woocommerce_app && $woocommerce_app->automatic_order_update) ? 'checked' : '' }}> Atualizar pedidos automaticamente
@@ -70,7 +69,6 @@
                         $yampi_app = $authenticated_user->yampi_app;
                     @endphp
                     <div class="card-body">
-                        <p>Para ligar a sua conta da Yampi à sua conta {{ env('APP_NAME')}}, siga este <a href="{{$tutorial[6]['link']}}" target="_blank">tutorial</a>.</p>
                         <form method="POST" action="{{ route('shop.settings.update_yampi_app') }}">
                             @csrf
                             @method('PUT')
@@ -115,7 +113,6 @@
                         $cartx_app = $authenticated_user->cartx_app;
                     @endphp
                       <div class="card-body">
-                        <p>Para ligar a sua loja cartx à sua conta {{ env('APP_NAME') }}, siga este <a href="{{$tutorial[1]['link']}}" target="_blank">tutorial</a>.</p>
                         <form method="POST" action="{{ route('shop.settings.update_cartx_app') }}">
                             @csrf
                             @method('PUT')
@@ -154,7 +151,6 @@
 
                     @endphp
                     <div class="card-body">
-                        <p>Para ligar a sua conta da Bling à sua conta {{ env('APP_NAME') }}, siga este <a href="{{$tutorial[7]['link']}}" target="_blank">tutorial</a>.</p>
                         <form method="POST" action="{{ route('shop.profile.updatebling') }}">
                             @csrf
                             @method('PUT')
@@ -185,7 +181,6 @@
                         $shopify_app = $authenticated_user->shopify_app;
                     @endphp
                     <div class="card-body">
-                        <p>Para ligar a sua loja shopify à sua conta {{ env('APP_NAME') }}, siga este <a href="{{$tutorial[0]['link']}}" target="_blank">tutorial</a>.</p>
                         <form method="POST" action="{{ route('shop.settings.update_shopify_app') }}">
                             @csrf
                             @method('PUT')
@@ -204,7 +199,7 @@
                                 <input type="text" name="app_key" class="form-control" placeholder="Chave do APP" value="{{ ($shopify_app) ? $shopify_app->app_key : '' }}" required >
                             </div>
                             <div class="form-group">
-                                <label>APP Password</label>
+                                <label>APP Secret</label>
                                 <input type="text" name="app_password" class="form-control" placeholder="Senha do APP" value="{{ ($shopify_app) ? $shopify_app->app_password : '' }}" required >
                             </div>
                             <div class="form-group d-none">
@@ -239,7 +234,6 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <p>Para ligar a sua loja Mercadolivre à sua conta {{ env('APP_NAME') }}, siga este <a href="{{$tutorial[0]['link']}}" target="_blank">tutorial</a>.</p>
                         <form method="POST" action="{{ route('shop.settings.update_mercadolivre_app') }}">
                             @csrf
                             @method('PUT')
@@ -250,7 +244,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Chave secreta</label>
-                                <input type="text" name="secret_id" class="form-control" placeholder="{{ trans('supplier.cliente_secret') }}" value="{{ ($mercaodlivreapi) ? $mercaodlivreapi->secret_id : '' }}" required >
+                                <input type="text" name="secret_id" class="form-control" placeholder="Cliente Secret" value="{{ ($mercaodlivreapi) ? $mercaodlivreapi->secret_id : '' }}" required >
                             </div>
                                                         
                             <div class="form-group">
@@ -303,7 +297,6 @@
                     </div>
                     <div class="card-body">
                    
-                        <p>Para ligar a sua loja Shoppe à sua conta {{ env('APP_NAME') }}, siga este <a href="{{$tutorial[0]['link']}}" target="_blank">tutorial</a>.</p>
                         <form method="POST" action="{{ route('shop.settings.update_shoppe_app') }}">
                             @csrf
                             @method('PUT')

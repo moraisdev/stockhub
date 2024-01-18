@@ -12,6 +12,7 @@ use App\Imports\OrdersImport;
 use App\Models\OrderShippings;
 use App\Models\ProductVariants;
 use App\Models\CustomerAddresses;
+use App\Models\Products;
 use App\Models\ShippingLabel;
 use App\Services\CorreiosService;
 use Illuminate\Support\Facades\DB;
@@ -73,6 +74,7 @@ class CsvService{
     {
         $shop = Auth::guard('shop')->user();
         $shop_id = $shop->id;
+      
         
         //$customer_id = DB::Select('select id from customers where shop_id = ' . $shop_id . ' and email = "' . $csv_order['Email'] . '"');
         if(!$csv_order['Código Pedido']) return " pedido sem identificação (Código do pedido). ";
@@ -80,24 +82,25 @@ class CsvService{
       //  if(!$csv_order['CPF']) return $csv_order["Cliente"]." não possui CPF. ";
 
         try {
-            if ($shop->status == 'inactive') {
-                return false;
-            }
+            //if ($shop->status == 'inactive') {
+            //    return false;
+           // }
 
             // if (!$csv_order['E-mail']) {
             //     return false;
             // }
             
-            if (!self::checkOrderItems($csv_order)) {
-                return false;
-            }
+           // if (!self::checkOrderItems($csv_order)) {
+               
+           //     return false;
+           // }
 
             $newExternalId = bin2hex(random_bytes(30));
             
             $order = Orders::create(['shop_id' => $shop->id, 'external_id' => $newExternalId ]); //gerar um random
 
             $order->external_service = 'planilha';
-            $order->name = $csv_order['Código Pedido'];           
+            $order->name = $csv_order['Cliente'];           
             $order->email = isset($csv_order['E-mail']) ? $csv_order['E-mail'] : '';
             $order->external_price = isset($csv_order['Total']) ? $csv_order['Total'] : 0.0;
             // $order->external_usd_price = $csv_order->total / 5.34;
@@ -108,10 +111,12 @@ class CsvService{
             if (!$order->save()) {
                 return null;
             }
+
             $items = self::registerItems($order, $csv_order['item']);
+            
             $customer = self::registerCustomer($shop, $csv_order);
             $shipping = self::registerShipping($order, $items['items'], $customer, $shop);
-           // dd($shipping);
+            
             //quando o valor do frete estiver zerado o os dados de endereço não forem informados, quer dizer que é por etiqueta, então salva o id da etiqua na ordem
             if( $shipping['total_shipping_amount'] == 0
                 && !$customer->address->address1 && !$customer->address->zipcode && !$customer->address->city
@@ -173,7 +178,7 @@ class CsvService{
                     return true;
                 }
             }
-
+            
             return false;
         } catch (\Exception $e) {
             report($e);
@@ -187,7 +192,7 @@ class CsvService{
             $total_amount = 0;
             //dd($csv_line_items);
             foreach ($csv_line_items as $csv_item) {
-                //dd($csv_item);
+                
                 //antes, verifica se é um kit, caso seja, multiplica pela quantidade que indica na string
                 $arrSku = explode("-", $csv_item['SKU']);
                 //a string deve ter o padrão kit-unidades-skuitem
@@ -203,6 +208,8 @@ class CsvService{
                     }                   
 
                     $variant = ProductVariants::where('sku', $stringSku)->first();
+                   
+
 
                     $aplicatedDiscount = 0; //desconto aplicado
                     $orderItemDiscount = NULL; //salva o desconto usado no item (caso exista)
@@ -246,7 +253,7 @@ class CsvService{
 
                     array_push($items, $item);
                 }else{ //caso não seja um kit faz com o sku normal
-                    $variant = ProductVariants::where('sku', $csv_item['SKU'])->first();                   
+                    $variant = ProductVariants::where('sku', $csv_item['SKU'])->first();
                     
                     $aplicatedDiscount = 0; //desconto aplicado
                     $orderItemDiscount = NULL; //salva o desconto usado no item (caso exista)
@@ -261,6 +268,7 @@ class CsvService{
                     }else{
                         continue;
                     }
+                    
                     
                     $item = new OrderItems();                
 
@@ -442,7 +450,20 @@ class CsvService{
     {
 
         try {
-            $customer = Customers::create(['shop_id' => $shop->id]);
+
+            $cep = $csv_customer['CEP'];
+			$cep = trim($cep);
+			$cep = str_replace('-', '', $cep);
+			$cep = str_replace('.', '', $cep);
+            
+
+            $customer = Customers::where('shop_id',$shop->id )->where('cpf',$csv_customer['CPF'])->first();
+            if($customer)  {
+
+                $customerAndress = CustomerAddresses::where('customer_id', $customer->id)->first();
+                if($customerAndress->zipcode !=  $cep){
+
+                    $customer = Customers::create(['shop_id' => $shop->id]);
             
             $customer->external_service = 'planilha';
             $customer->first_name = strtok($csv_customer['Cliente'], ' ');
@@ -450,14 +471,16 @@ class CsvService{
             $customer->email = isset($csv_customer['E-mail']) ? $csv_customer['E-mail'] : '';
             $customer->total_spent = isset($csv_customer['Taxes']) ? $csv_customer['Taxes'] : 0.0;
 			$cpf = isset($csv_customer['CPF']) ? $csv_customer['CPF'] : '';
-			$countcpf = strlen($cpf);
+			$cpfCaracteres = str_replace([',', '.', '-'], '',$cpf);
+            $countcpf = strlen($cpfCaracteres);
 			
 			
 			
 			if ($countcpf == 10){
 				$customer->cpf =  '0'.$cpf;
-			}	
-			
+			}
+            	
+			$customer->cpf = $cpf;
             
 
             if (!$customer->save()) {
@@ -471,6 +494,19 @@ class CsvService{
             }
 
             return $customer;
+
+
+                }else {
+                    $customer = Customers::where('shop_id',$shop->id )->where('cpf',$csv_customer['CPF'])->first();
+                    return $customer;
+                }
+
+
+
+            }
+
+
+            
         } catch (\Exception $e) {           
             report($e);
             ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
@@ -489,6 +525,23 @@ class CsvService{
             $address->city = $csv_customer['Cidade'];
             $address->province = $csv_customer['UF'];
             $address->country = 'Brasil';
+            $phone = $csv_customer['Telefone'];
+
+            // Remover todos os caracteres que não são dígitos
+            $phone_digits = preg_replace('/[^0-9]/', '', $phone);
+
+            // Verificar se o número de telefone tem 11 dígitos
+            if (strlen($phone_digits) == 11) {
+            // Formatar o número de telefone para o formato (00) 99999-0000
+            $formatted_phone = '(' . substr($phone_digits, 0, 2) . ') ' . substr($phone_digits, 2, 5) . '-' . substr($phone_digits, 7, 4);
+            } else {
+            // Se o número de telefone não tiver 11 dígitos, não formatá-lo e deixá-lo como está
+            $formatted_phone = $phone;
+            }
+
+            // Salvar o número de telefone formatado no objeto $address
+            $address->phone = $formatted_phone;
+
             
             //$address->phone = $csv_customer['Billing Phone'];
             $address->province_code =  $csv_customer['UF'];
@@ -921,18 +974,23 @@ class CsvService{
 
     public static function validarext($url)
 {
-    if($url <> null){
-    $validar = get_headers($url);
-    $validar = explode(" ",$validar[0]);
-    $validar = $validar[1];
-    if($validar == "302" || $validar == "200")
-        return true;
-    else
+    if ($url != null) {
+        $options = array(
+            'http' => array(
+                'method' => "HEAD",
+                'header' => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3\r\n"
+            )
+        );
+        $context = stream_context_create($options);
+        $headers = @get_headers($url, 1, $context);
+        if ($headers && (strpos($headers[0], '200') !== false || strpos($headers[0], '302') !== false)) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
         return false;
-    }else{
-        return false;
-
-    }   
+    }
 
 }
 

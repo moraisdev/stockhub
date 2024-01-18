@@ -90,7 +90,7 @@
                         <!-- <div class="text-center text-muted mb-4">
                                             <small>Ou entre com suas credenciais</small>
                                         </div> -->
-                        <div class="text-muted text-center mb-3"><small class='text-login-bold-white'>{{ trans('supplier.text_login') }}</small></div>
+                        <div class="text-muted text-center mb-3"><small class='text-login-bold-white'>Login</small></div>
 
                         <form role="form" method="POST" action="{{ route('shop.login.authenticate') }}">
                             {{ csrf_field() }}
@@ -100,7 +100,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="{{ trans('supplier.text_email') }}" type="email" name="email"
+                                    <input class="form-control" placeholder="Email" type="email" name="email"
                                         value="{{ old('email') }}" readonly>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="{{ trans('supplier.text_password') }}" type="password" name="password"
+                                    <input class="form-control" placeholder="Senha" type="password" name="password"
                                         readonly>
                                 </div>
                             </div>
@@ -117,11 +117,11 @@
                                 <input class="custom-control-input" id=" customCheckLogin" type="checkbox" value="1"
                                     name="keep_user_connected" {{ old('keep_user_connected') == 1 ? 'checked' : '' }}>
                                 <label class="custom-control-label" for=" customCheckLogin">
-                                    <span class="text-muted text-login-bold-white">{{ trans('supplier.text_check_connection') }}</span>
+                                    <span class="text-muted text-login-bold-white">Manter-me conectado</span>
                                 </label>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4 btn-login-custom">{{ trans('supplier.text_login_entrar') }}</button>
+                                <button type="submit" class="btn btn-primary my-4 btn-login-custom">Entrar</button>
                             </div>
                         </form>
                     </div>
@@ -129,21 +129,21 @@
                 <div class="row mt-3">
                     <div class="col-6">
                         <a href="{{ route('shop.login.forgot_password') }}" class="text-light"><small
-                                class='text-login-bold-white'>{{ trans('supplier.button_fogot_password') }}</small></a>
+                                class='text-login-bold-white'>Esqueci minha senha</small></a>
                     </div>
                     <div class="col-6 text-right">
                         <a href="{{ route('shop.login.register') }}" class="text-light"><small
-                                class='text-login-bold-white'>{{ trans('supplier.button_create_account_nav') }}</small></a>
+                                class='text-login-bold-white'>Criar nova conta</small></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        var purecookieTitle = "{{ trans('supplier.purecookieTitle') }}",
-            purecookieDesc = "{{ trans('supplier.purecookieDesc') }}",
-            purecookieLink = '<a href="https://www.cssscript.com/privacy-policy/" target="_blank">{{ trans('supplier.purecookieLink') }}</a>',
-            purecookieButton = "{{ trans('supplier.purecookieButton') }}";
+        var purecookieTitle = "Cookies.",
+            purecookieDesc = "Ao usar esse site, automaticamente você aceita o uso de cookies.",
+            purecookieLink = '<a href="https://www.cssscript.com/privacy-policy/" target="_blank">Saiba mais</a>',
+            purecookieButton = "Entendi";
 
         function pureFadeIn(e, o) {
             var i = document.getElementById(e);

@@ -1,6 +1,6 @@
 @extends('supplier.layout.default')
 
-@section('title', __('supplier.visualizar_pedido'))
+@section('title', 'Visualizar pedido')
 
 @section('content')
 <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.dash_data') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Dash data</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -30,7 +30,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.dash_data') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Dash data</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -47,7 +47,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.dash_data') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Dash data</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -64,7 +64,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.dash_data') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Dash data</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -87,10 +87,10 @@
     			<div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">{{ trans('supplier.pedido') }} {{ $supplier_order->f_display_id }}</h2>
+                            <h2 class="mb-0">Pedido {{ $supplier_order->f_display_id }}</h2>
                         </div>
                         <div class="d-flex col align-items-center justify-content-end">
-                            <h2>{{ trans('supplier.total_price') }}: R$ {{ \App\Http\Controllers\Supplier\FunctionsController::supplierOrderAmount($supplier_order) }}</h2>
+                            <h2>Valor total: R$ {{ \App\Http\Controllers\Supplier\FunctionsController::supplierOrderAmount($supplier_order) }}</h2>
                         </div>
                     </div>
                 </div>
@@ -99,20 +99,20 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h4>{{ trans('supplier.detalhes_lojista') }}:</h4>
+                            <h4>Detalhes do lojista:</h4>
                             <p class="mb-0">
-                                <b>{{ trans('supplier.text_loja') }}:</b> {{ $supplier_order->order->shop->name }} <br>
-                                <b>{{ trans('supplier.responsible_name') }}:</b> {{ $supplier_order->order->shop->responsible_name }} <br>
-                                <b>{{ trans('supplier.cpf_cnpj') }}</b> {{ $supplier_order->order->shop->document }} <br>
+                                <b>Loja:</b> {{ $supplier_order->order->shop->name }} <br>
+                                <b>Nome do responsável:</b> {{ $supplier_order->order->shop->responsible_name }} <br>
+                                <b>CPF/CNPJ:</b> {{ $supplier_order->order->shop->document }} <br>
                                 @if(strlen($supplier_order->order->shop->f_document) > 14)
-                                    <b>{{ trans('supplier.fantasy_name') }}:</b> {{ $supplier_order->order->shop->fantasy_name ? $supplier_order->order->shop->fantasy_name : '{{ trans('supplier.nao_cadastrado') }}' }} <br>
-                                    <b>{{ trans('supplier.company_name') }}:</b> {{ $supplier_order->order->shop->corporate_name ? $supplier_order->order->shop->corporate_name : '{{ trans('supplier.nao_cadastrado') }}' }} <br>
-                                    <b>{{ trans('supplier.state_registration') }}:</b> {{ $supplier_order->order->shop->state_registration ? $supplier_order->order->shop->state_registration : '{{ trans('supplier.nao_cadastrado') }}' }} <br>
+                                    <b>Nome fantasia:</b> {{ $supplier_order->order->shop->fantasy_name ? $supplier_order->order->shop->fantasy_name : 'não cadastrado' }} <br>
+                                    <b>Razão Social:</b> {{ $supplier_order->order->shop->corporate_name ? $supplier_order->order->shop->corporate_name : 'não cadastrado' }} <br>
+                                    <b>Inscrição Estadual:</b> {{ $supplier_order->order->shop->state_registration ? $supplier_order->order->shop->state_registration : 'não cadastrado' }} <br>
                                 @endif
                             </p>
                         </div>
                         <div class="col d-flex justify-content-end align-items-center">
-                            <a href="{{ route('supplier.partners.show', $supplier_order->order->shop->hash) }}" class="btn btn-info">{{ trans('supplier.var_detalhe_lojista') }}</a>
+                            <a href="{{ route('supplier.partners.show', $supplier_order->order->shop->hash) }}" class="btn btn-info">Ver detalhes do lojista</a>
                         </div>
                     </div>
                 </div>
@@ -122,15 +122,15 @@
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">{{ trans('supplier.detalhes_frete') }}</h2>
+                            <h2 class="mb-0">Detalhes do frete</h2>
                         </div>
                         @if($authenticated_user->shipping_method != 'melhor_envio')
                             <div class="d-flex col align-items-center justify-content-end">
-                                <a href="{{ route('supplier.orders.print_content_declaration', $supplier_order->id) }}" target="_blank" class="btn btn-danger btn-sm" tooltip="true" title="{{ trans('supplier.imprimir_declaracao_conteudo') }}">
-                                    <i class="fas fa-fw fa-file"></i> {{ trans('supplier.imprimir_declaracao_conteudo') }}
+                                <a href="{{ route('supplier.orders.print_content_declaration', $supplier_order->id) }}" target="_blank" class="btn btn-danger btn-sm" tooltip="true" title="Imprimir Declaração de Conteúdo">
+                                    <i class="fas fa-fw fa-file"></i> Imprimir Declaração de Conteúdo
                                 </a>
-                                <a href="{{ route('supplier.orders.print_tag', $supplier_order->id) }}" target="_blank" class="btn btn-danger btn-sm" tooltip="true" title="{{ trans('supplier.imprimir_etiqueta') }}">
-                                    <i class="fas fa-fw fa-tag"></i> {{ trans('supplier.imprimir_etiqueta') }}
+                                <a href="{{ route('supplier.orders.print_tag', $supplier_order->id) }}" target="_blank" class="btn btn-danger btn-sm" tooltip="true" title="Imprimir Etiqueta">
+                                    <i class="fas fa-fw fa-tag"></i> Imprimir etiqueta
                                 </a>
                             </div>
                         @endif
@@ -138,27 +138,27 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h4>{{ trans('supplier.detalhes_cliente') }}:</h4>
+                    <h4>Detalhes do cliente:</h4>
                     <div class="row">
                         <div class="col">
                             <p>
-                                <b>{{ trans('supplier.name') }}:</b> {{ $supplier_order->order->customer->address->name }} <br>
-                                <b>{{ trans('supplier.text_email') }}:</b> {{ $supplier_order->order->customer->email }} <br>
-                                <b>{{ trans('supplier.text_phone') }}:</b> {{ $supplier_order->order->customer->address->phone }} <br>
+                                <b>Nome:</b> {{ $supplier_order->order->customer->address->name }} <br>
+                                <b>E-mail:</b> {{ $supplier_order->order->customer->email }} <br>
+                                <b>Telefone:</b> {{ $supplier_order->order->customer->address->phone }} <br>
                             </p>
                         </div>
                         <div class="col">
                             <p>
-                                <b>{{ trans('supplier.adress') }}:</b> {{ $supplier_order->order->customer->address->address1 }} <br>
+                                <b>Endereço:</b> {{ $supplier_order->order->customer->address->address1 }} <br>
                                 @if($supplier_order->order->customer->address->address2)
                                     {{ $supplier_order->order->customer->address->address2 }}<br>
                                 @endif
                                 @if($supplier_order->order->customer->address->company)
                                     {{ $supplier_order->order->customer->address->company }}<br>
                                 @endif
-                                <b>{{ trans('supplier.postal_code') }}:</b> {{ $supplier_order->order->customer->address->zipcode }} <br>
-                                <b>{{ trans('supplier.city') }}:</b> {{ $supplier_order->order->customer->address->city }} <br>
-                                <b>{{ trans('supplier.estado') }}:</b> {{ $supplier_order->order->customer->address->province }} <br>
+                                <b>CEP:</b> {{ $supplier_order->order->customer->address->zipcode }} <br>
+                                <b>Cidade:</b> {{ $supplier_order->order->customer->address->city }} <br>
+                                <b>Estado:</b> {{ $supplier_order->order->customer->address->province }} <br>
                             </p>
                         </div>
                     </div>
@@ -169,8 +169,8 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="mb-0">{{ trans('supplier.etiqueta') }}</h2>
-                                <a class='btn btn-primary mt-3' download='{{$supplier_order->f_display_id}}-etiqueta' style='color: #fff' href='{{asset('etiqueta/'. $supplier_order->order->shipping_label->url_labels)}}'><i class="fas fa-file-download"></i>{{ trans('supplier.baixar_etiqueta') }}</a>
+                                <h2 class="mb-0">Etiqueta</h2>
+                                <a class='btn btn-primary mt-3' download='{{$supplier_order->f_display_id}}-etiqueta' style='color: #fff' href='{{asset('etiqueta/'. $supplier_order->order->shipping_label->url_labels)}}'><i class="fas fa-file-download"></i> Baixar etiqueta</a>
                             </div>
                         </div>
                     </div>
@@ -182,14 +182,14 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="mb-0">{{ trans('supplier.anotacoes') }}</h2>
+                                <h2 class="mb-0">Anotações</h2>
                             </div>
                         </div>
                     </div>
                     <div class="card-body pb-3">
                         <textarea name="comments" rows="6" class="form-control">{{ $supplier_order->comments }}</textarea>
                         <div class="float-right">
-                            <button class="btn btn-primary mt-2">{{ trans('supplier.save') }}</button>
+                            <button class="btn btn-primary mt-2">Salvar</button>
                         </div>
                     </div>
                 </div>
@@ -198,7 +198,7 @@
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">{{ trans('supplier.meus_produtos_pedidos') }}</h2>
+                            <h2 class="mb-0">Meus produtos neste pedido</h2>
                         </div>
                     </div>
                 </div>
@@ -206,10 +206,10 @@
                     <table class="table table-flush align-items-center">
                         <thead>
                             <tr>
-                                <th>{{ trans('supplier.quantidade') }}</th>
-                                <th>{{ trans('supplier.product') }}</th>
-                                <th>{{ trans('supplier.sku') }}</th>
-                                <th>{{ trans('supplier.valor_unitario') }}</th>
+                                <th>Qtd</th>
+                                <th>Produto</th>
+                                <th>SKU</th>
+                                <th>Valor unitário</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -231,7 +231,7 @@
                                     @endphp
                                     <tr>
                                         <td>{{ $item->quantity }}</td>
-                                        <td>{{ trans('supplier.o_produto') }} <b>{{$variant->title }}</b> {{ trans('supplier.nao_esta_disponivel') }}</td>
+                                        <td>O produto <b>{{$variant->title }}</b> não está mais disponível</td>
                                         <td>{{ $variant->sku }}</td>
                                         <td>{{ $product->currency == 'US$' ? 'R$ '.(number_format($variant->price * $dolar_price['price'],2,',','.')) : 'R$ '.number_format($variant->price,2,',','.') }} </td>
                                     </tr>
@@ -239,11 +239,11 @@
                                 
                             @empty
                                 <tr>
-                                    <td colspan="6">{{ trans('supplier.nenhum_pedido_ligado') }}</td>
+                                    <td colspan="6">Não há nenhum produto ligado à este pedido. Entre em contato com o suporte da {{config('app.name')}}.</td>
                                 </tr>
                             @endforelse
                             <tr>
-                                <td style="font-size: 1rem" colspan="3" class="text-right">{{ trans('supplier.total_price') }}: </td>
+                                <td style="font-size: 1rem" colspan="3" class="text-right">Valor total: </td>
                                 <th style="font-size: 1rem">R$ {{ \App\Http\Controllers\Supplier\FunctionsController::supplierOrderAmount($supplier_order) }}</th>
                             </tr>
                         </tbody>

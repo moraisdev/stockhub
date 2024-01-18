@@ -21,6 +21,13 @@ Route::get('valida_img_bling', 'Api\BlingController@valida_img')->name('api.supp
 Route::get('valida_planos', 'Api\BlingController@planofornecedor')->name('api.valida_planos');
 Route::any('safe2pay/webhooks/transaction', 'Api\Safe2payController@transaction')->name('api.safe2pay.transaction');
 
+Route::get('orders/all', 'Api\OrdersController@index')->name('api.orders');
+Route::get('orders/data', 'Api\OrdersController@api')->name('api.api');
+
+Route::get('citel', 'Api\BlingController@citel')->name('api.citel');
+Route::get('citelcadcliente', 'Api\BlingController@CadCliente')->name('api.citelcadcliente');
+Route::get('citelconscliente', 'Api\BlingController@getConsCliente')->name('api.citelconscliente');
+
 Route::get('correios/simulate', 'Api\CorreiosController@simulate')->name('api.correios.simulate');
 
 Route::get('simulate/get-zipcode', 'Api\CitiesController@getZipcode')->name('api.melhor_envio.get_zipcode');

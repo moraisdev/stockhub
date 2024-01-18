@@ -53,12 +53,12 @@
                         <!-- <div class="text-center text-muted mb-4">
                             <small>Ou registre-se com seus dados</small>
                         </div> -->
-                        <div class="text-muted text-center mb-3"><small class='text-login-bold-white'>{{ trans('supplier.text_register_shop') }}</small></div>
+                        <div class="text-muted text-center mb-3"><small class='text-login-bold-white'>Cadastrar-se como lojista</small></div>
 
                         <div id="msform">
                             <!-- progressbar -->
                             {{-- <ul id="progressbar">
-                                <li class="active" id="account"><strong>{{ trans('supplier.conta') }}</strong></li>
+                                <li class="active" id="account"><strong>Conta</strong></li>
                                 <li id="personal"><strong>Planos</strong></li>
                                 <li id="payment"><strong>Pagamento</strong></li>
                                 <li id="confirm"><strong>Finalizar</strong></li>
@@ -70,7 +70,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-badge"></i></span>
                                             </div>
-                                            <input class="form-control" placeholder="{{ trans('supplier.text_register_shop_name') }}" type="text" name="name" value="{{ old('name') }}"  required>
+                                            <input class="form-control" placeholder="Nome da sua loja" type="text" name="name" value="{{ old('name') }}"  required>
                                         </div>
                                     </div>
                                     <div class="form-group mb-3">
@@ -78,7 +78,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                             </div>
-                                            <input class="form-control" placeholder="{{ trans('supplier.text_email') }}" type="email" name="email" value="{{ old('email') ? old('email') : $email }}"  required>
+                                            <input class="form-control" placeholder="Email" type="email" name="email" value="{{ old('email') ? old('email') : $email }}"  required>
                                         </div>
                                     </div>
                                     <div class="form-group mb-3">
@@ -86,7 +86,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-mobile-button"></i></span>
                                             </div>
-                                            <input class="form-control phone" placeholder="{{ trans('supplier.text_phone') }}" type="text" name="phone" id='phone'  required>
+                                            <input class="form-control phone" placeholder="Telefone" type="text" name="phone" id='phone'  required>
                                         </div>
                                     </div>
                                     <div class="form-group mb-3">
@@ -94,7 +94,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-badge"></i></span>
                                             </div>
-                                            <input class="form-control cpf" placeholder="{{ trans('supplier.text_cpf_cnpj') }}" type="text" name="cpf" id='cpf'  required>
+                                            <input class="form-control cpf" placeholder="CPF ou CNPJ" type="text" name="cpf" id='cpf'  required>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -102,7 +102,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                             </div>
-                                            <input class="form-control" placeholder="{{ trans('supplier.text_password') }}" type="password" name="password"  required>
+                                            <input class="form-control" placeholder="Senha" type="password" name="password"  required>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -110,18 +110,18 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                             </div>
-                                            <input class="form-control" placeholder="{{ trans('supplier.text_confirm_password') }}" type="password" name="password_confirmation"  required>
+                                            <input class="form-control" placeholder="Confirmar senha" type="password" name="password_confirmation"  required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" name="terms_agreed" id="terms-check" required>
-                                            <label class="custom-control-label text-login-bold" for="terms-check">{{ trans('supplier.text_terms_of_use01') }} <a href="{{ asset('assets/TermodeUso.pdf') }}" target="_blank">{{ trans('supplier.text_terms_of_use02') }}</a></label>
+                                            <label class="custom-control-label text-login-bold" for="terms-check">Eu li e concordo com os <a href="{{ asset('assets/TermodeUso.pdf') }}" target="_blank">Termos e Condições de uso</a> do {{config('app.name')}}.</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div id='content-form-1-load' class="col-md-12"></div>
-                                <button id='submit-form-1' class="btn btn-primary">{{ trans('supplier.button_create_account') }}</button>
+                                <button id='submit-form-1' class="btn btn-primary">Próximo</button>
                             </fieldset>
                             {{-- <fieldset id='page-2-form'>
                                 <div class="p-3">
@@ -192,7 +192,7 @@
                                 </div>
                                 <div id='content-form-2-load' class="col-md-12"></div>
                                 <button name="previous" class="previous btn btn-secondary" >Anterior</button>
-                                <button id='submit-form-2' class="btn btn-primary" >{{ trans('supplier.next') }}</button>
+                                <button id='submit-form-2' class="btn btn-primary" >Próximo</button>
                             </fieldset>
                             <fieldset id='page-3-form'>
                                 <div class="p-5">
@@ -299,7 +299,7 @@
                             </fieldset> --}}
                             <fieldset id='page-4-form'>
                                 <div class="p-3 pt-5 pb-5">
-                                    <h2 class="text-center">{{ trans('supplier.text_success_register') }}</h2>
+                                    <h2 class="text-center">Sucesso!</h2>
                                     <div class="row justify-content-center">
                                         <div class="col-2">
                                             <img src="https://img.icons8.com/color/96/000000/ok--v2.png" class="fit-image">
@@ -307,8 +307,8 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div id='finish-register-message' class="col-12 text-center">
-                                            <h5>{{ trans('supplier.text_success_register_01') }}</h5>
-                                            <p>{{ trans('supplier.text_success_register_email') }} <b></b></p>
+                                            <h5>Você concluiu seu registro!</h5>
+                                            <p>Foi enviado um e-mail de verificação para o e-mail <b></b></p>
                                         </div>
                                     </div>
                                 </div>
@@ -319,6 +319,9 @@
                 <div class="row mt-3">
                     <div class="col-6">
 
+                    </div>
+                    <div class="col-6 text-right">
+                        <a href="{{ route('shop.login') }}" class="text-light"><small class='text-login-bold-white'>Login</small></a>
                     </div>
                 </div>
             </div>
@@ -421,7 +424,7 @@
                     },
                     success: function(response){
                         $("#page-1-form").hide();
-                        $("#page-2-form").show();
+                        $("#page-4-form").show();
                         $('#personal').addClass('active')
                         emailNewUser = email
                     },
@@ -744,8 +747,8 @@
                     success: function(response){
                         $("#page-3-form").hide();
                         $('#finish-register-message').html(
-                            "<h5>{{ trans('supplier.text_success_register_01') }}</h5>"+
-                            "<p>{{ trans('supplier.text_success_register_email') }} <b>"+emailNewUser+"</b></p>"
+                            "<h5>Você concluiu seu registro!</h5>"+
+                            "<p>Foi enviado um e-mail de verificação para o e-mail <b>"+emailNewUser+"</b></p>"
                         );
                         $('#confirm').addClass('active')
                         $("#page-4-form").show();

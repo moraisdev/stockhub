@@ -1,6 +1,6 @@
 @extends('admin.layout.default')
 
-@section('title', __('supplier.pedidos_lojistas'))
+@section('title', 'Pedidos dos lojistas')
 
 @section('content')
 <!-- Header -->
@@ -18,7 +18,7 @@
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">{{ trans('supplier.pedidos_pendentes_lojistas') }}</h2>
+                            <h2 class="mb-0">Pedidos pendentes dos Lojistas</h2>
                         </div>
                     </div>
                 </div>
@@ -26,15 +26,15 @@
                     <table class="table table-flush align-items-center">
                         <thead>
                         <tr>
-                            <th>{{ trans('supplier.text_loja') }}</th>
-                            <th>{{ trans('supplier.text_client') }}</th>
-                            <th>{{ trans('supplier.fatura') }}</th>
-                            <th>{{ trans('supplier.date') }}</th>
-                            <th>{{ trans('supplier.ref_externa') }}</th>
-                            <th>{{ trans('supplier.nome_pedido') }}</th>
-                            <th>{{ trans('supplier.valor_pagar') }}</th>
-                            <th>{{ trans('supplier.transacao_safe2pay') }}</th>
-                            <th>{{ trans('supplier.actions') }}</th>
+                            <th>Loja</th>
+                            <th>Cliente</th>
+                            <th>Fatura</th>
+                            <th>Data</th>
+                            <th>Ref. Externa</th>
+                            <th>Nome do Pedido</th>
+                            <th>Valor a pagar</th>
+                            <th>Transação Safe2pay</th>
+                            <th>Ações</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -71,14 +71,14 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.orders.shops.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
+                                    <a href="{{ route('admin.orders.shops.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
                                         <i class="fas fa-fw fa-eye"></i>
                                     </a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6">{{ trans('supplier.nenhum_pedido_pendente_pagamento') }}</td>
+                                <td colspan="6">Nenhum pedido pendente de pagamento.</td>
                             </tr>
                         @endforelse
                         </tbody>

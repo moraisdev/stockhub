@@ -25,7 +25,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-4">
-                            {{ trans('supplier.price') }}: <h3>R$ {{ number_format($payment->amount, 2, ',', '.') }}</h3>
+                                Valor: <h3>R$ {{ number_format($payment->amount, 2, ',', '.') }}</h3>
                             </div>
                             <div class="col-lg-4">
                                 Você está pagando para: <h3>{{ $supplier->name }}</h3>

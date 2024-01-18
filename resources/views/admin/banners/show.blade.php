@@ -1,6 +1,6 @@
 @extends('admin.layout.default')
 
-@section('title', config('app.name').' - '.trans('supplier.visualizar_banner'))
+@section('title', config('app.name').' - Visualizar Banner')
 
 @section('stylesheets')
 <style type="text/css">
@@ -22,7 +22,7 @@
     <div class="container-fluid d-flex align-items-center">
         <div class="row">
             <div class="col-lg-12 col-md-12">
-            <h1 class="display-2 text-white">{{ trans('supplier.visualizar_banner') }}</h1>
+            <h1 class="display-2 text-white">Visualizar Banner</h1>
                 <a href="{{ route('admin.banners.index') }}" class="btn btn-secondary">{{ __('supplier.back') }}</a>
             </div>
         </div>
@@ -35,27 +35,27 @@
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">{{ trans('supplier.banner') }}</h3>
+                            <h3 class="mb-0">Banner</h3>
                         </div>
                     </div>
                 </div>
                 <form method="POST" action="{{ route('admin.banners.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
-                        <h6 class="heading-small text-muted mb-4">{{ trans('supplier.informacoes_banner') }}</h6>
+                        <h6 class="heading-small text-muted mb-4">Informações do Banner</h6>
                         <div class="row justify-content-center">
                             <div class="col-lg-12">
                                 <div class="row">
                                     <div class="col-lg-12 col-12">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="product_title">{{ trans('supplier.name') }}</label>
-                                            <input type="text" id="product_title" class="form-control form-control-alternative" name="name" placeholder="{{ trans('supplier.nome_banner') }}" value="{{ $banner->name }}" disabled>
+                                            <label class="form-control-label" for="product_title">Nome</label>
+                                            <input type="text" id="product_title" class="form-control form-control-alternative" name="name" placeholder="Nome do Banner" value="{{ $banner->name }}" disabled>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-12">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="product_title">{{ trans('supplier.link') }}</label>
-                                            <input type="text" id="product_title" class="form-control form-control-alternative" name="link" placeholder="{{ trans('supplier.link_banner') }}" value="{{ $banner->link ? $banner->link : '' }}" disabled>
+                                            <label class="form-control-label" for="product_title">Link</label>
+                                            <input type="text" id="product_title" class="form-control form-control-alternative" name="link" placeholder="Link do Banner" value="{{ $banner->link ? $banner->link : '' }}" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@
                                         <img id="img_source_preview" src="{{ $banner->img_source }}" class="img-fluid">
                                     </div>
                                 </div>
-                                <h5 class="text-center" for="img_source">{{ trans('supplier.image_computer') }}</h5>
+                                <h5 class="text-center" for="img_source">Imagem Computador 1593x228 pixels</h5>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex  justify-content-center text-center" >                                    
@@ -74,7 +74,7 @@
                                         <img id="img_source_preview" src="{{ $banner->img_source_mobile ? $banner->img_source_mobile : '' }}" class="img-fluid" >
                                     </div>
                                 </div>
-                                <h5 class="text-center" for="img_source_mobile">{{ trans('supplier.image_mobile') }}</h5>
+                                <h5 class="text-center" for="img_source_mobile">Imagem Mobile/Celular 800x800 pixels</h5>
                             </div>
                         </div>
                     </div>
@@ -95,20 +95,20 @@
                 <table class='table table-borderless variant-fields-table'>
                     <thead>
                         <tr>
-                            <th>{{ trans('supplier.quantidade') }}</th>
-                            <th>{{ trans('supplier.discount') }}(%)</th>
+                            <th>Quantidade</th>
+                            <th>Desconto(%)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>
                                 <div class='form-group'>
-                                    <input type="number" class='form-control form-control-alternative' name='new_discounts[0][quantity]' placeholder="{{ trans('supplier.quantidade') }}">
+                                    <input type="number" class='form-control form-control-alternative' name='new_discounts[0][quantity]' placeholder="Quantidade">
                                 </div>
                             </td>
                             <td>
                                 <div class='form-group'>
-                                    <input type="number" step="0.01" class='form-control form-control-alternative' name='new_discounts[0][value]' placeholder="{{ trans('supplier.discount') }}">
+                                    <input type="number" step="0.01" class='form-control form-control-alternative' name='new_discounts[0][value]' placeholder="Desconto">
                                 </div>
                             </td>
                             <td>
@@ -149,7 +149,7 @@
             <div class="table-responsive">
                 <table class="table table-borderless variant-fields-table">
                     <thead>
-                        <th>{{ trans('supplier.sku') }}</th>
+                        <th>SKU</th>
                         <th>{{ __('supplier.stock') }}</th>
                         <th class="after_option_th">{{ __('supplier.price') }}</th>
                         @if($authenticated_user->id == 56)
@@ -164,11 +164,11 @@
                     <tbody>
                         <td>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-alternative" name="new_variants[0][sku]" placeholder="{{ trans('supplier.sku') }}" required>
+                                <input type="text" class="form-control form-control-alternative" name="new_variants[0][sku]" placeholder="SKU" required>
                             </div>
                         </td>
                         <td>
-                            <div class="form-group">
+                        <div class="form-group">
                                 <input type="number" class="form-control form-control-alternative" name="new_variants[0][stock]" placeholder="{{ __('supplier.stock_quantity') }}" required>
                             </div>
                         </td>

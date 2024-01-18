@@ -24,10 +24,12 @@ class PlansController extends Controller
 {
     public function index(){
         $shop = Auth::guard('shop')->user();
+        
 
         $admin = Admins::find(2);
 
         $planos = Shopplano::all();
+       
       
                 
         if ($admin->plano_shop == '2') {
@@ -135,7 +137,6 @@ class PlansController extends Controller
      
     }
     if ($admin->plano_shop == '1') {
-
 
         return view('shop.plans.index', compact('planos'));
 
@@ -285,9 +286,12 @@ class PlansController extends Controller
     } 
     if ($admin->plano_shop == '1') {
 
-        $plano = Shopplano::where('id' , $request->plan_id)->first();       
+        $plano = Shopplano::where('id' , $request->plan_id)->first();         
+             
         $shop_contact_plano = ShopContractedPlans::where('shop_id', $shop->id)->first();
 
+       
+        if($shop_contact_plano){
         if ($shop_contact_plano->name_plan == 'FREE'){
             $shop_invoice = new Store_invoice();
             $shop_invoice->shop_id = $shop->id;
@@ -298,14 +302,59 @@ class PlansController extends Controller
             $shop_invoice->payment = 'pending';
             $shop_invoice->due_date = $shop_contact_plano->due_date;
             $shop_invoice->save();             
-        }
+        }else{
 
+            $shop_invoice = new Store_invoice();
+            $shop_invoice->shop_id = $shop->id;
+            $shop_invoice->plan = $plano->descricao;
+            $shop_invoice->sub_total = $plano->valor; 
+            $shop_invoice->total = $plano->valor;
+            $shop_invoice->status = 'active';
+            $shop_invoice->payment = 'pending';
+            $shop_invoice->due_date = $shop_contact_plano->due_date;
+            $shop_invoice->save();
+
+
+
+        }
+    }  
+       
+    if ($shop_contact_plano){
         $shop_contact_plano->name_plan = $plano->descricao;
         $shop_contact_plano->plan_id =$plano->id;
         $shop_contact_plano->valor = $plano->valor;
         $shop_contact_plano->save();
         $codeSelectedPlan = 1;
-        
+    }else {
+
+        $shop_contact_plano_novo = new ShopContractedPlans;
+        $shop_contact_plano_novo->name_plan = $plano->descricao;
+        $shop_contact_plano_novo->plan_id =$plano->id;
+        $shop_contact_plano_novo->valor = $plano->valor;
+        $shop_contact_plano_novo->shop_id = $shop->id;
+        $shop_contact_plano_novo->shop_id = $shop->id;
+        $shop_contact_plano_novo->due_date = date('Y-m-d');
+        $shop_contact_plano_novo->subscription_status = 'active';
+        $shop_contact_plano_novo->save();
+        $codeSelectedPlan = 1;
+
+        $shop_invoice = new Store_invoice();
+        $shop_invoice->shop_id = $shop->id;
+        $shop_invoice->plan = $plano->descricao;
+        $shop_invoice->sub_total = $plano->valor; 
+        $shop_invoice->total = $plano->valor;
+        $shop_invoice->status = 'active';
+        $shop_invoice->payment = 'pending';
+        $shop_invoice->due_date = date('Y-m-d');
+        $shop_invoice->save();             
+
+
+    }
+
+
+
+
+     
         return redirect()->route('shop.plans.invoice')->with('success', 'Plano Alterado com sucesso.');
 
        

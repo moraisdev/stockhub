@@ -76,7 +76,7 @@ class ProductsController extends Controller
     }
 
  public function importProductsBlingJson()
-   {
+ {
     $supplier = Auth::user();
     $page = 1;
 
@@ -88,9 +88,6 @@ class ProductsController extends Controller
         if ($supplier->bling_apikey) {
 
             while ($page < 50) {
-
-
-
 
             $blingService = new BlingService();
             $produtosBling = $blingService->importProducts($supplier, $page);
@@ -104,7 +101,7 @@ class ProductsController extends Controller
 
             foreach ($produtosBling as $produtoBling) {
                 if (Products::where('sku', $produtoBling->produto->codigo)->where('supplier_id', $supplier->id)->count() == 0) {
-
+                    echo $produtoBling->produto->descricao; 
                     Products::create([
                      'supplier_id' => $supplier->id,
                      'sku' => $produtoBling->produto->codigo,
@@ -123,21 +120,21 @@ class ProductsController extends Controller
                  $resp = $product->where('sku', $produtoBling->produto->codigo)->where('supplier_id', $supplier->id)->first();
                  $resp->hash =  md5(uniqid($resp->id, true));
                  $resp->save();
-                }else {
-
-                    $product = new Products();
-                    $resp = $product->where('sku', $produtoBling->produto->codigo)->where('supplier_id', $supplier->id)->first();
-                    $resp->supplier_id = $supplier->id;
-                    $resp->title = $produtoBling->produto->descricao;
-                    $resp->description = strip_tags($produtoBling->produto->descricaoCurta);
-                    $resp->ncm = $produtoBling->produto->class_fiscal;
-                    $resp->ean_gtin = $produtoBling->produto->gtin;
-                   
-                    
-                    $resp->save();
                 }
-               
+                
+                $altura =0;
+                $largura = 0;  
+                if(isset($produtoBling->produto->alturaProduto)){
+                    $altura =$produtoBling->produto->alturaProduto;
+                }
 
+                if(isset($produtoBling->produto->larguraProduto)){
+                    $largura = $produtoBling->produto->larguraProduto;  
+                }
+
+                
+                $product = new Products();
+                $resp = $product->where('sku', $produtoBling->produto->codigo)->where('supplier_id', $supplier->id)->first();
                 if (ProductVariants::where('product_id', $resp->id)->count() == 0) {
                     $teste = ProductVariants::where('product_id', $resp->id)->count() == 0;
                     $resp2 = $product->where('sku', $produtoBling->produto->codigo)->where('supplier_id', $supplier->id)->first();
@@ -148,27 +145,20 @@ class ProductsController extends Controller
                         'price' => $produtoBling->produto->preco,
                          //   'cost' => $produtoBling->produto->precoCusto,
                         'weight_in_grams' => $produtoBling->produto->pesoBruto * 1000,
-                        'height' => strip_tags($produtoBling->produto->alturaProduto == '') ? 0 : 0,
-                        'width' => strip_tags($produtoBling->produto->larguraProduto == '') ? 0 : 0,
+                        'height' => $altura,
+                        'width' => $largura,
                         'sku' => $produtoBling->produto->codigo
 
                     ]);
 
 
                 }
-                if (ProductVariants::where('sku', $produtoBling->produto->codigo)->count() <> 0) {
-                    $variant = new ProductVariants();
-                    $respvar = $variant->where('sku', $produtoBling->produto->codigo)->where('product_id', $resp->id)->first();
-                    $respvar->title =  $produtoBling->produto->descricao;
-                    $respvar->weight_in_grams = $produtoBling->produto->pesoBruto * 1000; //pois no bling ta em kilos e na mawa ta em gramas
-                    $respvar->price = $produtoBling->produto->preco;
-                    $respvar->width = $produtoBling->produto->larguraProduto;
-                    $respvar->height = $produtoBling->produto->alturaProduto;
-                    $respvar->depth = $produtoBling->produto->profundidadeProduto;
-                    $respvar->save();
-                }
+                
 
+                $variant = new ProductVariants();
                 $prod = $variant->where('sku', $produtoBling->produto->codigo)->where('product_id', $resp->id)->first();
+				
+				if($prod){
                if (ProductVariantStock::where('product_variant_id', $prod->id)->count() == 0) {
 
                    ProductVariantStock::create([
@@ -176,29 +166,39 @@ class ProductsController extends Controller
                        'quantity'=> $produtoBling->produto->estoqueAtual,
                    ]);
 
-               }
+               }             
 
-               if (ProductVariantStock::where('product_variant_id', $prod->id)->count() <> 0) {
-                   $stock = new ProductVariantStock();
-                   $respvarstock = $stock->where('product_variant_id', $prod->id)->first();
-                   $respvarstock->quantity = $produtoBling->produto->estoqueAtual;
-                   $respvarstock->save();
-               }
+               
+				}	
 
                 if (isset($produtoBling->produto->imagem)) {
                     foreach ($produtoBling->produto->imagem as $key => $link) {
                     if ($link && property_exists($link, 'link')) {
+
                         $productimg = new Products();
                         $respimg = $productimg->where('sku', $produtoBling->produto->codigo)->where('id', $resp->id)->first();
                         $respimg->img_source = $link->link;
+                        $expiracaoimg =  explode("&",$link->link);
+                        $imgvalidacao = explode("=",$link->link);
+                        //dd($imgvalidacao);
+                        if($expiracaoimg){
+                            $dataexpiracao = explode("=", $expiracaoimg[1]);
+                            $data = date("Y/m/d",$dataexpiracao[1]); 
+                            
+                        }
+                       
+                        $respimg->exp_img_bling = $data;
+                        $respimg->valida_img = $imgvalidacao[3];
                         $url = $link->link;
                         $respimg->img_destaque = $link->link;                             
                         $respimg->save();
                         $prodvarimg = new ProductVariants();
                         $respimg2 = $prodvarimg->where('sku', $produtoBling->produto->codigo)->first();
-                        $respimg2->img_source = $link->link;
+						if($respimg2){
+                        $respimg2->img_source = $url;
                         $respimg2->save();
-                                               }
+						}
+					}
                                             }
 
                                         }
@@ -208,6 +208,13 @@ class ProductsController extends Controller
                          
                                     if (isset($produtoBling->produto->imagem)) {
                                         foreach ($produtoBling->produto->imagem as $key => $link) { 
+                                            $expiracaoimg =  explode("&",$link->link);
+                                            $imgvalidacao = explode("=",$link->link);
+                                            if($expiracaoimg){
+                                                $dataexpiracao = explode("=", $expiracaoimg[1]);
+                                                $data = date("Y/m/d",$dataexpiracao[1]); 
+                                                $imgvalida = $imgvalidacao[3]; 
+                                            }
                                             $verificaimagem = ProductImages::where('img_bling', $link->link)->first();
                                                 if (!$verificaimagem) {                                                    
                                                 ProductImages::create([
@@ -215,16 +222,12 @@ class ProductsController extends Controller
                                                     'title' => $link->link,
                                                     'src'=> $link->link,
                                                     'img_bling'=> $link->link,
+                                                    'img_bling_validade'=> $imgvalida,
+                                                    'exp_date_img_bling'=> $data,
+
                                                 ]);
 
-                                            } else{                                                                                                
-                                              
-                                                $productimg4 = new ProductImages();      
-                                                $img = $productimg4->where('src', $link->link,)->first();                                             
-                                                $img->title = $link->link;
-                                                $img->save();
-
-                                            }    
+                                            } 
                                     
                                         }
                                 }
@@ -238,11 +241,13 @@ class ProductsController extends Controller
                                         $respvariants->save();
 
                                 }
+                               // echo $produtoBling->produto->descricao;
                                 } // final loop
 
             }
 
             $page++;
+            //echo $produtoBling->produto->descricao;
            // dd($page);
 
         }
@@ -325,12 +330,13 @@ class ProductsController extends Controller
     }
 
     
-
+   //importacao individual 
     public function importProdutoBlingJson($product_id)
     {
         $supplier = Auth::user();
         $product = new Products();
         $resp = $product->where('id', $product_id)->first();
+        
 
        
        
@@ -369,17 +375,17 @@ class ProductsController extends Controller
                             $productimg = new Products();
                             $urlimg = $link->link;
                             $img4 = substr($urlimg , strrpos($urlimg, '/') + 1);
-                            $file = ProductsService::imgpixelmed($urlimg);                           
-                            $nomeimg = Storage::disk('digitalocean')->putFile('imagemprojectdrop/'.env('PASTASP'), $file, 'public');   
-                            Storage::disk('imgoriginalproduto')->delete($img4);  
+                         //   $file = ProductsService::imgpixelmed($urlimg);                           
+                        //    $nomeimg = Storage::disk('digitalocean')->putFile('imagemprojectdrop/'.env('PASTASP'), $file, 'public');   
+                         //   Storage::disk('imgoriginalproduto')->delete($img4);  
 
-                            $file2 = ProductsService::imgpixelpeq($urlimg);                           
-                            $nomeimg2 = Storage::disk('digitalocean')->putFile('imagemprojectdrop/'.env('PASTASP'), $file2, 'public');   
-                            Storage::disk('imgoriginalproduto')->delete($img4);  
+                         //   $file2 = ProductsService::imgpixelpeq($urlimg);                           
+                         //   $nomeimg2 = Storage::disk('digitalocean')->putFile('imagemprojectdrop/'.env('PASTASP'), $file2, 'public');   
+                      //      Storage::disk('imgoriginalproduto')->delete($img4);  
 
                             $resp2 = $productimg->where('sku', $produtoBling->produto->codigo)->where('id', $resp->id)->first();   
                             $resp2->img_source = $url;
-                            $resp2->img_destaque = env('SPACEDIG').env('PASTASP').'/'.substr($nomeimg2,18,strlen($nomeimg2));
+                        //    $resp2->img_destaque = env('SPACEDIG').env('PASTASP').'/'.substr($nomeimg2,18,strlen($nomeimg2));
                             $resp2->valida_img = $img4;
                             $resp2->save();      
                             
@@ -405,6 +411,8 @@ class ProductsController extends Controller
                     $resp3->save();
                 }    
 
+                $respimg =  $product->where('id', $product_id)->first();
+               
                 if (isset($produtoBling->produto->imagem)) {
                     foreach ($produtoBling->produto->imagem as $key => $link) { 
                         $verificaimagem = ProductImages::where('img_bling', $link->link)->first();
@@ -642,19 +650,19 @@ class ProductsController extends Controller
 
                                 $contents = file_get_contents($url);
                                 $name = substr($url, strrpos($url, '/') + 1);
-                                Storage::disk('upimgprod')->put($name, $contents);
+                              //  Storage::disk('upimgprod')->put($name, $contents);
                
-                                $image_resize = Image::make(public_path().'/imgproduto/'.$name);
+                               // $image_resize = Image::make(public_path().'/imgproduto/'.$name);
                                // $image_resize->pixelate(1);
                                // $image_resize->fit(300);
-                               $image_resize->resize(200, null, function ($constraint) {
-                                   $constraint->aspectRatio();
-                               });
+                              // $image_resize->resize(200, null, function ($constraint) {
+                              //     $constraint->aspectRatio();
+                              // });
                                
-                               $image_resize->save(public_path('imgproduto/'.$name) , 60);
+                              // $image_resize->save(public_path('imgproduto/'.$name) , 60);
                
                                $product->hash = md5(uniqid($product->id, true));
-                               $product->img_destaque = $name;
+                               $product->img_destaque = $url;
 
 
 
@@ -804,10 +812,88 @@ class ProductsController extends Controller
 
     public function create()
     {
+        
         $categories = ProductsService::getCategories();
 
         return view('supplier.products.create', compact('categories'));
     }
+
+    public function register(ProductsCreateRequest $request)
+    {
+
+        
+        $supplier = Auth::user();
+       //dd($supplier);
+         if(!$request->$request->new_variants[0]['sku']){
+            return redirect()->back()->with(['erro' => 'O cadastro e necessario um variação principal.']);
+
+         } 
+        $product = new Products();       
+
+        $product->category_id = $request->category;
+        $product->supplier_id = $supplier->id;
+        $product->title = $request->title;
+        $product->ncm = $request->ncm;
+        $product->ean_gtin = $request->ean_gtin;
+        $product->currency = $request->currency;
+        $product->icms_exemption = $request->icms_exemption;
+        $product->description = $request->description;
+        $product->public = ($request->public == 'on') ? 1 : 0;
+        $product->show_in_products_page = ($request->show_in_products_page == 'on') ? 1 : 0;
+        $product->shipping_method_china_division = $request->shipping_method_china_division;
+        $product->packing_weight = $request->packing_weight;
+        $product->products_from = $request->products_from;
+        $product->sku = $request->new_variants[0]['sku'];
+       
+        if($request->hasFile('img_source')){
+            $name = Str::random(15).$this->supplier->id . '.' . $request->img_source->extension();
+
+            $path = $request->img_source->storeAs(env('PASTASP'), $name, 'digitalocean');
+
+            $product->img_source = env('SPACEDIG', 'PASTASP' ).'/'.$path;
+        }
+
+        if($product->save()){
+            if($request->hasFile('images')){
+                foreach ($request->images as $image) {
+                    $name = Str::random(15).$this->supplier->id . '.' . $image->extension();
+
+                    $path = $image->storeAs(env('PASTASP'), $name, 'digitalocean');
+
+                    $product_image = new ProductImages();
+                    $product_image->product_id = $product->id;
+                    $product_image->title = $name;
+                    $product_image->src = env('SPACEDIG', 'PASTASP' ).'/'.$path;
+
+                    $product_image->save();
+                }
+            }
+
+            $product->hash = md5(uniqid($product->id, true));
+            $product->save();
+
+            $options_ids = null;
+
+            if($request->new_options){
+                $options_ids = $this->createOptions($product, $request->new_options);
+            }
+
+            if($request->new_variants){
+                $this->createVariants($product, $request->new_variants, $options_ids);
+            }
+
+            if($request->new_discounts){
+                $this->createDiscounts($product, $request->new_discounts);
+            }
+
+            Mail::to($product->supplier->email)->send(new ProductSuccessfullyRegistered($product));
+
+            return true;
+        }else{
+            throw new CustomException("Erro ao cadastrar o produto. Tente novamente em alguns minutos.", 500);
+        }
+    }
+    
 
     public function aliexpressLinkProduct($product_id, $ae_product_id)
     {
@@ -840,6 +926,7 @@ class ProductsController extends Controller
 
     public function store(ProductsCreateRequest $request)
     {
+       
         $supplier = Auth::user();
 
         $productsService = new ProductsService($supplier);
@@ -927,6 +1014,8 @@ class ProductsController extends Controller
 
     public function importCsv(Request $request)
     {
+       
+
         $supplier = Auth::user();
         $labels = CsvService::storeFilesProd($request);
         $result = CsvService::Importprodutosupplier($labels);
@@ -937,20 +1026,39 @@ class ProductsController extends Controller
         if (count($result) > 0){
 			foreach ($result as $csv_order) {
                 
+                $especial = env('excelsku');
+                if ($especial == 1){
+                $sku = str_pad($csv_order['SKU'], 5, '0', STR_PAD_LEFT);
+                }else {
+
+                    $sku  = $csv_order['SKU']; 
+                   
+
+                }
                 $title = $csv_order['Produto'];
 
                 if($title){
 
                 
-				$sku = $csv_order['SKU'];
+				
                 $publicar = $csv_order['Publico/Privado'];
                 $preco = $csv_order['Preço'];
+                $qtdestoque = $csv_order['Qtd. em Estoque'];
                 if (isset($preco)){
                     
                     $precov = $preco;
 
                 }else {
                     $precov = '0.00';
+
+                }
+
+                if (isset($qtdestoque)){
+                    
+                    $qtdestoquev = $qtdestoque;
+
+                }else {
+                    $qtdestoquev = '0';
 
                 }
                 
@@ -961,11 +1069,32 @@ class ProductsController extends Controller
                 $product->supplier_id = $supplier->id;
                 $product->title = $csv_order['Produto'];
                 $product->description = strip_tags($csv_order['Descricao']);
-                $product->sku = $csv_order['SKU'];
+                $product->sku = $sku;
                 $product->category_id = $csv_order['Categoria'] ? $csv_order['Categoria'] : '';
                 $product->public = $publicar;
              //   $product->img_source = $csv_order['URL da Imagem'] && $csv_order['URL da Imagem'] ? $csv_order['URL da Imagem'] : '';
-                $product->save();
+                if($csv_order['Gtin_ean'] ){
+                    $product->ean_gtin = $csv_order['Gtin_ean'] ;
+
+                } 
+
+                if($csv_order['Ncm'] ){
+                    $product->ncm = $csv_order['Ncm'] ;
+
+                } 
+
+               
+                if($product->save()){
+                    $product->hash = md5(uniqid($supplier->id, true));                  
+                    $product->save();
+
+
+
+
+
+
+
+                }
 
                  $url = $csv_order['URL da Imagem'];
                          
@@ -974,7 +1103,7 @@ class ProductsController extends Controller
                  if ( $validacaourl == true) {
                     $product->img_destaque =$url;
                     $product->img_source = $url;
-                    $product->hash = md5(uniqid($product->id, true));                  
+                               
                     $product->save();
                    
 
@@ -989,7 +1118,7 @@ class ProductsController extends Controller
                                     $variant->width = $csv_order['Largura (cm)'];
                                     $variant->height = $csv_order['Altura (cm)'];
                                     $variant->depth = $csv_order['Profundidade (cm)'];
-                                    $variant->sku = $csv_order['SKU'];
+                                    $variant->sku = $sku;
                                     $variant->cost = $csv_order['Custo'] ? $csv_order['Custo'] : '0.00';
 
                                     $variant->img_source = $product->img_source;
@@ -1009,7 +1138,7 @@ class ProductsController extends Controller
 
                                 $urlimg2 = $csv_order['URL da Imagem2'];
                                 if($urlimg2){
-                                    dd($urlimg2);
+                                   
                                     $validacaoimg2 = CsvService::validarext($urlimg2);
                                     if ($validacaoimg2 == true) {
                                      $product_image1 = new ProductImages();
@@ -1086,10 +1215,17 @@ class ProductsController extends Controller
 
                                         if ($variant->save()) {
                                             //salva o estoque
+                                            if (ProductVariantStock::where('product_variant_id', $variant->id)->get()->count() <> 0) {
                                             $stock = ProductVariantStock::where('product_variant_id', $variant->id)->first();
-                                            $stock->quantity = $csv_order['Qtd. em Estoque'];;
+                                            $stock->quantity = $qtdestoquev;
                                             $stock->save();  
-    
+                                            }elseif (ProductVariantStock::where('product_variant_id', $variant->id)->get()->count() == 0) {
+
+                                                $stock = ProductVariantStock::firstOrNew(['product_variant_id' => $variant->id]);
+                                                $stock->quantity = $csv_order['Qtd. em Estoque'];;
+                                              $stock->save();
+
+                                            }
     
                                         }
                                   
@@ -1102,7 +1238,7 @@ class ProductsController extends Controller
                                         $product_image1 = ProductImages::where('product_id', $product->id)->where('img_bling', 2)->first();
                                         if($product_image1){
                                         
-                                        $product_image1->title = $img2;
+                                        $product_image1->title = $urlimg2;
                                         $product_image1->src = $urlimg2 ;
                                         $product_image1->save();
                                             }
@@ -1117,7 +1253,7 @@ class ProductsController extends Controller
     
                                     $product_image2 = ProductImages::where('product_id', $product->id)->where('img_bling', 3)->first();
                                     if($product_image2){
-                                    $product_image2->title = $img3;
+                                    $product_image2->title = $urlimg3;
                                     $product_image2->src = $urlimg3;                               
                                     $product_image2->save();
                               
@@ -1134,7 +1270,7 @@ class ProductsController extends Controller
                                 
                                 $product_image3 = ProductImages::where('product_id', $product->id)->where('img_bling', 4)->first();
                                 if($product_image3){
-                                $product_image3->title = $img4;
+                                $product_image3->title =$urlimg4;
                                 $product_image3->src = $urlimg4;
                                 $product_image3->save();
                                 }

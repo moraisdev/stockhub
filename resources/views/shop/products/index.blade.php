@@ -31,7 +31,7 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="mb-0">{{ trans('supplier.products') }}</h3>
+                            <h3 class="mb-0">Produtos</h3>
                         </div>
                         <div class="col">
                             <div class="float-right">
@@ -51,9 +51,9 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">IMAGEM</th>
-                                <th scope="col">{{ trans('supplier.tittle') }}</th>
-                                <th scope="col">{{ trans('supplier.sku') }}/{{ trans('supplier.ean_gtin') }}</th>
-                                <th scope="col">{{ trans('supplier.quantidade') }}</th>
+                                <th scope="col">Título</th>
+                                <th scope="col">SKU/EAN GTIN</th>
+                                <th scope="col">Qtd</th>
                                 <th scope="col" class="actions-th">Visualizar</th>
                             </tr>
                         </thead>
@@ -157,8 +157,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
-                    <button class="btn btn-success">{{ trans('supplier.adicionar_produtos') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-success">Adicionar produto</button>
                 </div>
             </form>
         </div>
@@ -201,7 +201,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.fechar') }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>
@@ -212,30 +212,31 @@
 
 @section('scripts')
 <script>
-    function exportProductShopifyJson(product_id, product_name){
-        $('#product_name').html(product_name)
-        $('#pass_1').html("<img src='{{asset('assets/img/Spinner-1s-200px (1).gif')}}' style='height: 30px;'> Enviando dados para a Shopify...")
-        $('#pass_2').html("")
-        $.ajax({
-            url: '{{ route("shop.products.export_shopify_json") }}',
-            method: 'GET',
-            data: { product_id },
-            beforeSend: function(){
-            },
-            success: function(response){
-                $('#pass_1').html('<span style="color: #2dce89 !important;"><i class="fas fa-check-circle"></i> '+response.msg+'</span>')
-                exportImagesProductShopifyJson(response.shopify_product, response.product_id)
-            },
-            error: function(error){
-                console.log(error.responseJSON)
-                $('#pass_1').html('<span style="color: #f5365c !important;"><i class="fas fa-check-circle"></i> '+error.responseJSON.error+'</span>')
-            }
-        })
-        
-        setTimeout(() => {
-            $('#pass_1').html('<span style="color: #2dce89 !important;"><i class="fas fa-check-circle"></i> Produto exportado para o Shopify com sucesso. Lembre-se de corrigir os valores do produto antes de publica-lo em sua loja.</span>')
-        }, 30000)
-    }
+            function exportProductShopifyJson(product_id, product_name){
+            console.log(product_id)
+            $('#product_name').html(product_name)
+            
+            $('#pass_1').html("<img src='{{asset('assets/img/Spinner-1s-200px (1).gif')}}' style='height: 30px;'> Enviando dados para a Shopify...")
+            $('#pass_2').html("")
+            $.ajax({
+                url: '{{ route("shop.products.export_shopify_json") }}',
+                method: 'GET',
+                data: { product_id },
+                beforeSend: function(){
+                },
+                success: function(response){
+                    console.log("respota1",response)
+                    $('#pass_1').html('<span style="color: #2dce89 !important;"><i class="fas fa-check-circle"></i> '+response.msg+'</span>')
+                   // exportImagesProductShopifyJson(response.shopify_product, response.product_id)
+                },
+                error: function(error){
+                    console.log("respota2", error.responseJSON)
+                    $('#pass_1').html('<span style="color: #f5365c !important;"><i class="fas fa-check-circle"></i> Ocorreu um erro ao exportar o produto para o Shopify. Verifique suas credenciais e tente novamente.</span>')
+                    $('#error-message').html(error.responseJSON.error);
+                }
+            })       
+   
+      }
 
     function exportImagesProductShopifyJson(shopify_product, product_id){
         //$('#pass_2').html("<img src='{{asset('assets/img/Spinner-1s-200px (1).gif')}}' style='height: 30px;'> Enviando imagens do produto para a Shopify...")
@@ -267,6 +268,7 @@
             beforeSend: function(){
             },
             success: function(response){
+                console.log(response)
                 $('#pass_1').html('<span style="color: #2dce89 !important;"><i class="fas fa-check-circle"></i> '+response.msg+'</span>')
                 exportImagesProductWoocommerceJson(response.woocommerce_product, response.product_id)
             },
@@ -274,11 +276,8 @@
                 console.log(error.responseJSON)
                 $('#pass_1').html('<span style="color: #f5365c !important;"><i class="fas fa-check-circle"></i> '+error.responseJSON.error+'</span>')
             }
-        })
-        
-        setTimeout(() => {
-            $('#pass_1').html('<span style="color: #2dce89 !important;"><i class="fas fa-check-circle"></i> Produto exportado para o Woocommerce com sucesso. Lembre-se de corrigir os valores do produto antes de publica-lo em sua loja.</span>')
-        }, 30000)
+        })       
+       
     }
 
     function exportImagesProductWoocommerceJson(woocommerce_product, product_id){

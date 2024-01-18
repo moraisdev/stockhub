@@ -32,11 +32,11 @@
                                      @endif
                                      <p>
                                      @if ($shop_invoice->subscription_status == 'active')
-                                     {{ trans('supplier.situacao') }}: <b>{{ trans('supplier.ativa') }}</b><br>
+                                        Situação: <b>Ativa</b><br>
                                      @else
-                                     {{ trans('supplier.situacao') }}: <b>{{ trans('supplier.inativa') }}</b><br>
+                                     Situação: <b>Inativa</b><br>
                                      @endif
-                                     {{ trans('supplier.price') }}: <b>R$ {{number_format($shop_invoice->valor,2,",",".")}}</b>
+                                        Valor: <b>R$ {{number_format($shop_invoice->valor,2,",",".")}}</b>
                                         <br>
                                         Método de pagamento: <b></b>
                                         <br>
@@ -84,10 +84,10 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Plano</th>
                                 <th scope="col">Vencimento</th>
-                                <th scope="col">{{ trans('supplier.price') }}</th>
+                                <th scope="col">Valor</th>
                                 <th scope="col">Data Pagamento</th>
-                                <th scope="col">{{ trans('supplier.text_status') }}</th>
-                                <th scope="col" class="actions-th">{{ trans('supplier.actions') }}</th>
+                                <th scope="col">Status</th>
+                                <th scope="col" class="actions-th">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -99,7 +99,7 @@
                                 </th>
                                 <td>
                                 @if ($invoice->plan == 'FREE' )     
-                                {{ trans('supplier.gratuito') }}
+                                Gratuito
                                 @else
                                 {{ $invoice->plan }}
                                 @endif
@@ -123,7 +123,7 @@
                                     @if ($invoice->payment == 'paid' )
                                          Pago
                                     @else 
-                                    {{ trans('supplier.pendente') }}
+                                         Pendente
                                     @endif
                                    
                                 </td>

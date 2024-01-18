@@ -243,7 +243,14 @@ class SettingsController extends Controller
                 ]
             );
 
-            if ($woocommerce->get('settings')) { //caso tenha acesso as settings, quer dizer q deu certo
+            try {
+                $response = $woocommerce->get('settings');
+
+            } catch (HttpClientException $e) {
+                return redirect()->back()->with('error', 'Erro ao conectar ao WooCommerce, verifique suas credenciais e tente novamente.');
+            }
+    
+            if (!empty($response)) { // caso tenha acesso as settings, quer dizer q deu certo
                 if ($woocommerce_app->save()) {
                     return redirect()->back()->with('success', 'Dados do APP privado do Woocommerce atualizados com sucesso.');
                 }

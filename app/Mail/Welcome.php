@@ -34,13 +34,8 @@ class Welcome extends Mailable
      */
     public function build()
     {
-        // Define uma mensagem de boas-vindas simples
-        $message = "Bem-vindo! Estamos felizes por você estar aqui.";
-    
-        // Configura o e-mail a ser enviado
-        return $this->subject('Bem-vindo')
-                    ->from('noreply@mawapost.com', config('app.name'))
-                    ->with('msg', $message);
+        $emails = EmailTemplate::find(2);
+        $message = $emails->template; 
+        return $this->subject('Bem-vindo')->from('noreply@mawapost.com', config('app.name'))->view('emails.welcome')->with('msg', $message);
     }
-    
 }

@@ -27,6 +27,7 @@ use App\Models\ProductVariants;
 use App\Models\ProductImages;
 use App\Services\BlingService;
 use App\Models\ProductVariantStock;
+use App\Models\YampiApps;
 
 
 
@@ -89,7 +90,7 @@ class ProductsController extends Controller
 
 
         if($productsService->link($product)){
-            return redirect()->back()->with('success', 'Você foi ligado ao fornecedor '.$product->supplier->name.' com sucesso e o produto '.$product->title.' está disponível para exportação pra sua loja.');
+            return redirect()->back()->with('success', 'O produto ' .$product->title.' foi adicionado ao seu carrinho.');
         }else{
             return redirect()->back()->with('error', 'Aconteceu um erro inesperado. Tente novamente em alguns minutos.');
         }
@@ -117,25 +118,37 @@ class ProductsController extends Controller
         }
     }
 
+  
+        
     public function exportShopifyJson(Request $request){
-        set_time_limit(120);
+        set_time_limit(1200);
         $shop = Auth::guard('shop')->user();
-
+        
+      
         $productsService = new ProductsService($shop);
-        $product = $productsService->find($request->product_id);
+        //$product = $productsService->find($request->product_id);
+        $product = $productsService->find(1661);
+        $shopproduct = ShopProducts::where('shop_id', $shop->id)->where('product_id', $product->id)->first();
 
-        $shopify_product = ShopifyService::registerProductJson($shop, $product);
-      //  dd($shopify_product);
-
-        if($shopify_product){
-            //ShopProducts::where('shop_id', $shop->id)->where('product_id', $product->id)->update(['exported' => 1]);
+        if(!$shopproduct->shopify_product_id || empty($shopproduct->shopify_product_id)){
+            $shopify_product = ShopifyService::registerProductJson($shop, $product);     
+       
+          if(!is_null($shopify_product->id)){
+            ShopProducts::where('shop_id', $shop->id)->where('product_id', $product->id)->update(['exported' => 1, 'shopify_product_id' => $shopify_product->id ]);
             return response()->json([
                 'msg' => 'Produto exportado para o Shopify com sucesso. Lembre-se de corrigir os valores do produto antes de publica-lo em sua loja.',
                 'product_id' => $product->id,
-                'shopify_product' => $shopify_product], 200);
-        }else{
-            return response()->json(['error' => 'Aconteceu um erro inesperado. Tente novamente em alguns minutos.'], 400);
+                'shopify_product' => $shopify_product->id], 200);
+             }else{
+             return response()->json(['error' => 'Aconteceu um erro inesperado. Tente novamente em alguns minutos.'], 400);
+             }
+        }else{    
+            
+            return response()->json(['msg' => 'Erro  Produto ja exportado.'], 200);
+
         }
+        
+        
     }
 
     public function exportImagesProductShopifyJson(Request $request){
@@ -143,7 +156,7 @@ class ProductsController extends Controller
         $shop = Auth::guard('shop')->user();
 
         $productsService = new ProductsService($shop);
-        $product = $productsService->find($request->product_id);
+        $product = $productsService->find(6);
 
         if(ShopifyService::registerImagesProductJson($shop, $request->shopify_product, $product)){
             //ShopProducts::where('shop_id', $shop->id)->where('product_id', $product->id)->update(['exported' => 1]);
@@ -315,50 +328,30 @@ class ProductsController extends Controller
     }
 
     public function exportYampiNovo(Request $request){
+      
+        $shop = Auth::guard('shop')->user();
+        $productsService = new ProductsService($shop);
+        $prod = $productsService->find($request->idproduct);
        
-        try {
-            $shop = Auth::guard('shop')->user();
-           
-           
-            $productsService = new ProductsService($shop);
-            $product = $productsService->find($request->idproduct);
-
-            $product_imagens = ProductImages::where('product_id', $request->idproduct  )->get();
-            
-            $yampi_product = YampiService::registerProductJson($shop, $product);
-           
-            
-
-            
-            if($yampi_product){
-                $shop_product = ShopProducts::where('product_id', $product->id)->where('shop_id', $shop->id)->first();
-                if($shop_product){
-                    $shop_product->yampi_product_id = $yampi_product->data->id;
-                    $shop_product->yampi_merchant_id = $yampi_product->data->merchant_id;
-                    $shop_product->save();
-                    return redirect()->back()->with('success', 'O produto foi exportado para yampi.');
-                 //   $productsService = new ProductsService($shop);
-                 //   $imagem_yampi = YampiService::registerImagesProductJson($shop, $yampi_product, $product, $product_imagens);
-                    
-
-                }
-                
-
-               
-              //  if(YampiService::registerImagesProductJson($shop, $yampi_product, $product)){
-            //        return redirect()->back()->with('success', 'O produto foi exportado para yampi.');
-              //  }else{
-             //       return response()->back()->with('error',  'Produto Exportado, erro em exportar imagens.');
-             //   }
-               
-              
-
-            }else{
-                return response()->back()->with('error',  'Aconteceu um erro inesperado. Tente novamente em alguns minutos.');
-            }
-        } catch (\Throwable $th) {
-           return response()->json($th->getMessage());
+        $shopprod = YampiApps::where('shop_id', $shop->id)->first();
+         if (isset($shopprod->shopify_product_id)) {
+            return redirect()->back()->with('error', 'Produto já foi exportado para yampi ');
         }
+        if($prod){
+            $stock = ProductVariantStock::where('product_variant_id', $prod->id)->first();
+            $imagens = ProductImages::where('product_id', $prod->id)->get();
+            $yampiService = new YampiService();
+            $result = $yampiService->exportProducts($shopprod, $prod, $stock, $imagens);
+            $response = explode(' ', $result);
+            //if($response[1]!= 'Unprocessable'){
+           // if(isset($response) && $response[1] = 'Unprocessable'){
+            return redirect()->back()->with('success', 'O produto foi exportado para Yampi.'
+                    . ' Atenção: A propagação das imagens nos servidores da Yampi pode ser de até 25 minutos.');
+            //}else{
+           ///     return redirect()->back()->with('error', 'Produto já foi exportado para yampi ');
+          //  }
+        }
+        return redirect()->back()->with('error', 'Entre em contato com o suporte. erro');
     }
 
     public function exportImagesProductYampiJson(Request $request){
@@ -452,9 +445,14 @@ class ProductsController extends Controller
            }else{
             
     
+            $searchatribbutesml = MercadolivreService::getAtributos($apimercadolivre);
+            //dd($searchatribbutesml['atributos']); 
             $searchprodutoml =   MercadolivreService::getBuscaCategoria($shop, $apimercadolivre , $product  );
+          // dd($searchprodutoml);
+             $medidas =   MercadolivreService::getmedidas($apimercadolivre);
+           // dd($medidas);
           
-            //dd($searchprodutoml);
+          // dd($searchprodutoml);
     
     
           //  if($searchprodutoml->getCode() == 401){
@@ -471,7 +469,7 @@ class ProductsController extends Controller
             // dd($searchprodutoml);
             
                 $postprodutoml =   MercadolivreService::postProduto($shop, $apimercadolivre , $product ,$searchprodutoml ,$productimagens);
-               
+                //dd($postprodutoml);
                 //dd($postprodutoml);
 				if ($postprodutoml['code'] == 403){
                     $teste = json_encode($postprodutoml['message'], JSON_FORCE_OBJECT);
@@ -553,13 +551,8 @@ class ProductsController extends Controller
        
         
        
-        if (isset($shopprod->shopify_product_id)) {
-            
+        if (isset($shopprod->bling_product_id)) {            
             return redirect()->back()->with('error', 'Produto ja foi exportado para bling ');
-            
-             //dd($produtosBling);
- 
-         
         }else {
 
             if ($prod){
@@ -568,16 +561,10 @@ class ProductsController extends Controller
                 $imagens = ProductImages::where('product_id', $prod->id)->get();                       
                 $produtosBling = $blingService->exportProducts($shop, $prod , $stock, $imagens);
                 return redirect()->back()->with('success', 'O produto foi exportado para Bling.');
-                }
-
-           
+                }          
 
         }
         return redirect()->back()->with('error', 'Entre em contato com o suporte. erro');
-
-
-    }    
-
-        
+    }
 }
 

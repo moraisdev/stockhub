@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-
 //website
 Route::namespace('Site')->as('site.')->group(function () {
     //Route::get('/', 'SiteController@index')->name('index');
@@ -140,6 +138,7 @@ Route::namespace('Supplier')->as('supplier.')->prefix('supplier')->group(functio
         Route::get('settings/discounts/delete/{id}', 'SettingsController@delete_discount')->name('settings.discounts.delete');
         Route::put('settings/correios_contract', 'SettingsController@updateCorreiosContract')->name('settings.correios_contract');
         Route::post('settings/update-etiqueta_ml', 'SettingsController@updateEtiquetaML')->name('settings.update_etiqueta_ml');
+        Route::post('settings/update-autocom', 'SettingsController@updateAutocom')->name('settings.update_autocom');
 
         /* PLANS */
         Route::get('plans', 'PlansController@index')->name('plans.index');

@@ -33,7 +33,15 @@ class ShopsController extends Controller
     }
 
     public function moreDaysFree(Shops $shop){
+        $dataat = date("Y-m-d");
         $shop->created_at = date("Y-m-d H:i:s");
+        $shop->status = 'active';
+
+        $shopplano = ShopContractedPlans::where('shop_id', $shop->id)->first();
+        $shopplano->subscription_status =  'active';
+        $shopplano->due_date = date("Y-m-d", strtotime($dataat.'+ 14 days')); 
+        $shopplano->save();
+
         if($shop->save()){
             return redirect()->back()->with('success', 'O lojista '.$shop->name.' agora tem mais 14 dias grátis.');
         }else{

@@ -74,14 +74,14 @@
                 @method('post')
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title">{{ trans('supplier.escolha_fornecedor') }}</h3>
+                        <h3 class="modal-title">Escolha um fornecedor</h3>
                     </div>
                     <div class="modal-body">
-                        <p>{{ trans('supplier.confirm_excluir_registro') }}</p>
+                        <p>Você tem certeza que deseja excluir este registro?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
-                        <button class="btn btn-danger">{{ trans('supplier.delete') }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-danger">Excluir</button>
                     </div>
                 </div>
             </form>
@@ -95,14 +95,14 @@
                 @method('post')
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title">{{ trans('supplier.excluir_registro') }}</h3>
+                        <h3 class="modal-title">Excluir registro</h3>
                     </div>
                     <div class="modal-body">
-                        <p>{{ trans('supplier.confirm_excluir_registro') }}</p>
+                        <p>Você tem certeza que deseja excluir este registro?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
-                        <button class="btn btn-danger">{{ trans('supplier.delete') }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-danger">Excluir</button>
                     </div>
                 </div>
             </form>
@@ -157,7 +157,7 @@
 
     @if(session('success'))
         <script type="text/javascript">
-            Swal.fire("{{ trans('supplier.text_success_register') }}", "{{ session('success') }}", 'success');
+            Swal.fire("Sucesso", "{{ session('success') }}", 'success');
         </script>
     @endif
     @if(session('error'))
@@ -167,7 +167,7 @@
     @endif
     @if(session('warning'))
         <script type="text/javascript">
-            Swal.fire("{{ trans('supplier.atencao') }}", "{{ session('warning') }}", 'warning');
+            Swal.fire("Atenção!", "{{ session('warning') }}", 'warning');
         </script>
     @endif
     @if(session('info'))
@@ -193,7 +193,7 @@
     @endif
     @if(session('success_notification'))
         <script type="text/javascript">
-            toastr.success("{{ trans('supplier.text_success_register') }}", "{{ session('success_notification') }}");
+            toastr.success("Sucesso", "{{ session('success_notification') }}");
         </script>
     @endif
     @if(session('error_notification'))
@@ -203,7 +203,7 @@
     @endif
     @if(session('warning_notification'))
         <script type="text/javascript">
-            toastr.warning("{{ trans('supplier.atencao') }}", "{{ session('warning_notification') }}");
+            toastr.warning("Atenção!", "{{ session('warning_notification') }}");
         </script>
     @endif
     @if(session('info_notification'))

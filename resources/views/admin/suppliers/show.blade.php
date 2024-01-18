@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <h1 class="display-2 text-white">{{ $supplier->name }}</h1>
-                <a href="{{ route('admin.suppliers.index') }}" class="btn btn-secondary">{{ trans('supplier.back') }}</a>
+                <a href="{{ route('admin.suppliers.index') }}" class="btn btn-secondary">Voltar</a>
             </div>
         </div>
     </div>
@@ -41,37 +41,37 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.nome_no') }} {{config('app.name')}}</label>
+                                        <label class="control-label">Nome no {{config('app.name')}}</label>
                                         <input type="text" class="form-control" name="name" value="{{ $supplier->name }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.text_email') }}</label>
+                                        <label class="control-label">Email</label>
                                         <input type="email" class="form-control" id="email" value="{{ $supplier->email }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.seu_nome_completo') }}</label>
+                                        <label class="control-label">Seu nome completo</label>
                                         <input type="text" class="form-control" name="responsible_name" id="responsible_name" value="{{ $supplier->responsible_name }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.seu_cpf') }}</label>
+                                        <label class="control-label">Seu CPF</label>
                                         <input type="text" class="form-control" name="responsible_document" id="responsible_document" value="{{ $supplier->responsible_document }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.fantasy_name') }}</label>
+                                        <label class="control-label">Nome Fantasia</label>
                                         <input type="text" class="form-control" name="commercial_name" value="{{ $supplier->commercial_name }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.company_name') }}</label>
+                                        <label class="control-label">Razão Social</label>
                                         <input type="text" class="form-control" name="legal_name" value="{{ $supplier->legal_name }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.cnpj') }}</label>
+                                        <label class="control-label">CNPJ</label>
                                         <input type="text" class="form-control" id="document" name="document" value="{{ $supplier->document }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.text_phone') }}</label>
+                                        <label class="control-label">Telefone</label>
                                         <input type="text" class="form-control phone" name="phone" value="{{ $supplier->phone }}" readonly>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
                                 <div class="col-8">
-                                    <h3 class="mb-0">{{ trans('supplier.adress') }}</h3>
+                                    <h3 class="mb-0">Endereço</h3>
                                 </div>
                             </div>
                         </div>
@@ -88,39 +88,39 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.adress') }}</label>
-                                        <input type="text" class="form-control" name="street" placeholder="{{ trans('supplier.adress') }}" value="{{ $supplier->address ? $supplier->address->street : '' }}" readonly>
+                                        <label class="control-label">Endereço</label>
+                                        <input type="text" class="form-control" name="street" placeholder="Endereço" value="{{ $supplier->address ? $supplier->address->street : '' }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.numero') }}</label>
-                                        <input type="text" class="form-control" name="number" placeholder="{{ trans('supplier.numero') }}" value="{{ $supplier->address ? $supplier->address->number : '' }}" readonly>
+                                        <label class="control-label">Número</label>
+                                        <input type="text" class="form-control" name="number" placeholder="Número" value="{{ $supplier->address ? $supplier->address->number : '' }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.brotherhood') }}</label>
-                                        <input type="text" class="form-control" name="address2" placeholder="{{ trans('supplier.brotherhood') }}" value="{{ $supplier->address ? $supplier->address->district : '' }}" readonly>
+                                        <label class="control-label">Bairro</label>
+                                        <input type="text" class="form-control" name="address2" placeholder="Bairro" value="{{ $supplier->address ? $supplier->address->district : '' }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.complemment') }}</label>
+                                        <label class="control-label">Complemento</label>
                                         <input type="text" class="form-control" name="complement" value="{{ $supplier->address ? $supplier->address->complement : '' }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.postal_code') }}</label>
+                                        <label class="control-label">CEP</label>
                                         <input type="text" class="form-control cep" name="zipcode" value="{{ $supplier->address ? $supplier->address->zipcode : '' }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.pais') }}</label>
+                                        <label class="control-label">País</label>
                                         <select class="form-control" name="country" id="country_select" readonly>
                                             <option value="Brasil">Brasil</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.estado') }}</label>
-                                        <input type="text" class="form-control" name="province" placeholder="{{ trans('supplier.estado') }}" value="{{ $supplier->address ? $supplier->address->state_code : '' }}" readonly>
+                                        <label class="control-label">Estado</label>
+                                        <input type="text" class="form-control" name="province" placeholder="Estado" value="{{ $supplier->address ? $supplier->address->state_code : '' }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.city') }}</label>
+                                        <label class="control-label">Cidade</label>
                                         <select class="form-control" name="city" id="city_select" readonly>
                                             <option value="">{{ $supplier->address ? $supplier->address->city : 'Não selecionada.' }}</option>
                                         </select>
@@ -131,7 +131,7 @@
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
                                 <div class="col-8">
-                                    <h3 class="mb-0">{{ trans('supplier.conta_bancara_safe2pay') }}</h3>
+                                    <h3 class="mb-0">Safe2Pay e Conta Bancária</h3>
                                 </div>
                             </div>
                         </div>
@@ -139,27 +139,27 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.metodo_recebimento_pagamento') }}</label>
+                                        <label class="control-label">Método de recebimento/pagamento</label>
                                         <select name="payment_method" class="form-control" readonly>
                                             <option value="Safe2Pay">Safe2Pay</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.nome_responsavel_tecnico') }}</label>
+                                        <label class="control-label">Nome do responsável técnico</label>
                                         <input type="text" class="form-control" name="tech_name" id="tech_name" value="{{ $supplier->tech_name }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.cpf_responsavel_tecnico') }}</label>
+                                        <label class="control-label">CPF do responsável técnico</label>
                                         <input type="text" class="form-control" name="tech_document" id="tech_document" value="{{ $supplier->tech_document }}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.email_reponsavel_tecnico') }}</label>
+                                        <label class="control-label">E-mail do responsável técnico</label>
                                         <input type="text" class="form-control" name="tech_email" id="tech_email" value="{{ $supplier->tech_email }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.banco') }}</label>
+                                        <label class="control-label">Banco</label>
                                         <select class="form-control" name="bank[code]" id="bank_list" readonly>
 
                                         </select>
@@ -167,12 +167,12 @@
                                     <div class="form-group">
                                         <label class="control-label">Tipo de Conta</label>
                                         <select class="form-control" name="bank[account_type]" readonly>
-                                            <option value="cc" {{ $supplier->bank && $supplier->bank->account_type == 'cc' ? 'selected' : '' }}>{{ trans('supplier.conta_corrente') }}</option>
-                                            <option value="pp" {{ $supplier->bank && $supplier->bank->account_type == 'pp' ? 'selected' : '' }}>{{ trans('supplier.conta_poupanca') }}</option>
+                                            <option value="cc" {{ $supplier->bank && $supplier->bank->account_type == 'cc' ? 'selected' : '' }}>Conta Corrente</option>
+                                            <option value="pp" {{ $supplier->bank && $supplier->bank->account_type == 'pp' ? 'selected' : '' }}>Conta Poupança</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.agencia') }}</label>
+                                        <label class="control-label">Agência</label>
                                         <div class="row">
                                             <div class="col-lg-9 col-12">
                                                 <input type="text" class="form-control" name="bank[agency]" value="{{ $supplier->bank ? $supplier->bank->agency : '' }}" readonly>
@@ -183,7 +183,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.conta') }}</label>
+                                        <label class="control-label">Conta</label>
                                         <div class="row">
                                             <div class="col-lg-9 col-12">
                                                 <input type="text" class="form-control" name="bank[account]" value="{{ $supplier->bank ? $supplier->bank->account : '' }}" readonly>

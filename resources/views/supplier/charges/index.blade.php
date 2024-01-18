@@ -1,6 +1,6 @@
 @extends('supplier.layout.default')
 
-@section('title', __('supplier.cobranca'))
+@section('title', 'Cobranças')
 
 @section('content')
 <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.week_earnings') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Ganhos da semana</h5>
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
@@ -30,7 +30,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.taxa') }} {{config('app.name')}}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Taxa {{config('app.name')}}</h5>
                                     <span class="h2 font-weight-bold mb-0">3%</span>
                                 </div>
                                 <div class="col-auto">
@@ -47,7 +47,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ trans('supplier.total_pagar') }}</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Total à pagar</h5>
                                     <span class="h2 font-weight-bold mb-0">R$ 0,00</span>
                                 </div>
                                 <div class="col-auto">
@@ -70,14 +70,14 @@
     			<div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">{{ trans('supplier.cobranca') }}</h2>
+                            <h2 class="mb-0">Cobranças</h2>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="d-flex flex-wrap align-items-center">
                         <p>
-                        {{ trans('supplier.listagem_cobrancas_continuar') }}
+                            Listagem de cobranças. Todas as cobranças pendentes devem ser pagas em até 14 dias para continuar utilizando o {{config('app.name')}} como um fornecedor.
                             
                         </p>
                     </div>
@@ -86,10 +86,10 @@
                     <table class="table table-flush align-items-center">
                         <thead>
                             <tr>
-                                <th>{{ trans('supplier.date') }}</th>
-                                <th>{{ trans('supplier.total_amount') }}</th>
-                                <th>{{ trans('supplier.due_at') }}</th>
-                                <th>{{ trans('supplier.pay') }}</th>
+                                <th>Date</th>
+                                <th>Total amount</th>
+                                <th>Due at</th>
+                                <th>Pay</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -97,7 +97,7 @@
 
                             @empty
                                 <tr>
-                                    <td colspan="4">{{ trans('supplier.nenhuma_cobranca_pendente') }}</td>
+                                    <td colspan="4">Não há nenhuma cobrança pendente no momento.</td>
                                 </tr>
                             @endforelse
                         </tbody>

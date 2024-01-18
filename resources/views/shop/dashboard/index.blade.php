@@ -41,26 +41,33 @@
 <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
-            {{-- <div id="carouselHome" class="carousel slide carousel-home-custom mb-4" data-ride="carousel" data-interval='5000'>
+             <div id="carouselHome" class="carousel slide carousel-home-custom mb-4" data-ride="carousel" data-interval='5000'>
                 <div class="carousel-inner">
+                @if(isset($banners[0]))
                   <div class="carousel-item active">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfS7APOzZ-5mmomnbPrBoFqFwYicWj--z1G2d3z7AMQn2CCdA/viewform" target='_blank'>
-                        <img class="d-block w-100 slide-reponsive-desktop" src="{{asset('assets/static/banners/02banner_desktop_1953x228px.jpg')}}">
-                        <img class="d-block w-100 slide-reponsive-mobile" src="{{asset('assets/static/banners/02banner_mobile_800x800px.jpg')}}">
+                        <img class="d-block w-100 slide-reponsive-desktop" src="{{$banners[0]->img_source}}">
+                        <img class="d-block w-100 slide-reponsive-mobile" src="{{$banners[0]->img_source_mobile}}">
                     </a>
                   </div>
+                  @endif
+                  @if(isset($banners[1]))
                   <div class="carousel-item">
                     <a href="#" target='_blank'>
                         <img class="d-block w-100 slide-reponsive-desktop" src="{{asset('assets/static/banners/03banner_desktop_1953x228px.jpg')}}">
                         <img class="d-block w-100 slide-reponsive-mobile" src="{{asset('assets/static/banners/03banner_mobile_800x800px.jpg')}}">
                     </a>
                   </div>
+                  @endif
+                  @if(isset($banners[2]))
                   <div class="carousel-item">
                     <a href="https://api.whatsapp.com/send?phone=5511987155948&text=Ol%C3%A1%2C%20conheci%20a%20PJ%20Rocks%20pela%20Mawa%20Post%20e%20gostaria%20de%20obter%20mais%20informa%C3%A7%C3%B5es%20por%20favor" target='_blank'>
                         <img class="d-block w-100 slide-reponsive-desktop" src="{{asset('assets/static/banners/banner_desktop_1953x228px.jpg')}}" >
                         <img class="d-block w-100 slide-reponsive-mobile" src="{{asset('assets/static/banners/banner_mobile_800x800px.jpg')}}">
                     </a>
                   </div>
+                
+                @endif
                 </div>
                 <a class="carousel-control-prev" href="#carouselHome" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -70,8 +77,9 @@
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
                 </a>
-            </div> --}}
+            </div> 
             <!-- Card stats -->
+            
             <div class="row">
                 <div class="col-xl-3 col-lg-6 col-12">
                     <div class="card card-stats mb-4 mb-xl-0">
@@ -115,7 +123,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Total no Shopify</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Total Pedidos</h5>
                                     <span class="h2 font-weight-bold mb-0">R$ {{ number_format($dashboard_data['total_earning'],2,',','.') }}</span>
                                 </div>
                                 <div class="col-auto">
@@ -131,6 +139,7 @@
         </div>
     </div>
 </div>
+
 <div class="container-fluid mt--7">
     <div class="row">
         @if(!$authenticated_user->address || !$authenticated_user->document)
@@ -151,6 +160,7 @@
                 </div>
             </div>
         @endif
+        
     	<div class="col-12 mb-3">
     		<div class="card shadow">
     			<div class="card-header bg-transparent">
@@ -172,8 +182,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Data</th>
-                            <th>Ref. Externa</th>
-                            <th>Valor</th>
+                            <th>Ref. Externa/Valor </th>
                             <th>Cliente</th>
                             <th>Ações</th>
                         </tr>
@@ -184,12 +193,15 @@
                                 <td>{{ $order->name }}</td>
                                 <td>{{ date('d/m/Y', strtotime($order->created_at)) }}</td>
                                 @if($order->external_service == 'shopify')
-                                    <td>{{ ucfirst($order->external_service) }}: <a href="https://{{ $authenticated_user->shopify_app->domain }}.myshopify.com/admin/orders/{{ $order->external_id }}" target="_blank">#{{ $order->external_id }}</a></td>
+                                    <td>{{ ucfirst($order->external_service) }}: <br><a href="https://{{ $authenticated_user->shopify_app->domain }}.myshopify.com/admin/orders/{{ $order->external_id }}" target="_blank">#{{ $order->external_id }}</a> <br>
+                                      
+                               
                                 @endif
                                 @if($order->external_service == 'cartx')
-                                    <td>{{ ucfirst($order->external_service) }}: <a href="https://accounts.cartx.io/orders/details/{{ $order->external_id }}" target="_blank">#{{ $order->external_id }}</a></td>
+                                    <td>{{ ucfirst($order->external_service) }}: <br> <a href="https://accounts.cartx.io/orders/details/{{ $order->external_id }}" target="_blank">#{{ $order->external_id }}</a></td>
                                 @endif
-                                <td>R$ {{ number_format($order->amount, 2, ',', '.') }} ({{ ucfirst($order->external_service) }}: R$ {{ number_format($order->external_price, 2, ',', '.') }})</td>
+                                </td>
+                                <td>R$ {{ number_format($order->amount, 2, ',', '.') }} <br> ({{ ucfirst($order->external_service) }}: R$ {{ number_format($order->external_price, 2, ',', '.') }})</td>
                                 <td class="text-gray">
                                     - {{ ($order->customer) ? $order->customer->first_name.' '.$order->customer->last_name : '???' }}<br>
                                     - {{ ($order->customer) ? $order->customer->email : '???' }}<br>

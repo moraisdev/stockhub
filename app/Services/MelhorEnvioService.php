@@ -415,7 +415,7 @@ class MelhorEnvioService{
         //percorre o array de serviços buscando o menor valor de cotação para os dados passados
         $quotes = json_decode($response->getBody());
         
-        //dd($quotes);
+       
 
         $minQuote = (object)[
             'value' => 9999.99,
@@ -464,6 +464,7 @@ class MelhorEnvioService{
                 
                 'json' => [
                     "service" => $minQuote->service,
+                    'insurance_value' => '1.00',
                     "from" => [
                         "name" => $shop->name,
                         "phone" => $shop->phone ? $shop->phone : '31996980914',
@@ -490,9 +491,11 @@ class MelhorEnvioService{
                         "postal_code" => $customer->zipcode
 
                     ],
+                    
                     'products' => $products,
                     'volumes' => $this->volumes,
                     "options" => [
+                        "insurance_value" => '1.00',
                         "receipt" => false,
                         "own_hand" => false,
                         "reverse" => false,
@@ -543,9 +546,11 @@ class MelhorEnvioService{
                         "country_id" => 'BR',
                         "postal_code" => $customer->zipcode
                     ],
+                    
                     'products' => $this->products,
                     'volumes' => $this->volumes,
                     "options" => [
+                        "insurance_value" => '1.00',
                         "receipt" => false,
                         "own_hand" => false,
                         "reverse" => false,
@@ -580,7 +585,6 @@ class MelhorEnvioService{
         return $responseFreight;
     }catch(\Exception $e){
         Log::error('quoteBuyFreight error', [$e]);
-      
         return false;
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Products;
 
 class Suppliers extends Authenticatable
 {
@@ -31,8 +32,8 @@ class Suppliers extends Authenticatable
     }
 
     public function products(){
-    	return $this->hasMany(Products::class, 'product_id');
-    }
+        return $this->hasMany(Products::class, 'supplier_id');
+    }    
 
     public function mp_account(){
         return $this->hasOne(MercadoPagoAccounts::class, 'supplier_id');

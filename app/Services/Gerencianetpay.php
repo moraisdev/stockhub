@@ -7,11 +7,12 @@ use Gerencianet\Exception\GerencianetException;
 use Gerencianet\Gerencianet;
 use App\Models\SupplierOrderGroup;
 use App\Models\SupplierOrders;
+use App\Models\Admins;
 
 class Gerencianetpay{
 
     public function pay($supplier , $group , $metododepg , $orders , $shop){
-      
+        $admin = Admins::find(2);
 
         $cert = "certsger/".$supplier->geren_pem;
         $credenciais = array(
@@ -22,18 +23,21 @@ class Gerencianetpay{
             'timeout'=> 30
         );
 
-     
+      
        $file = file_get_contents(public_path('certsger/config.json'));
        $credenciais = json_encode($credenciais);
        $options = json_decode($credenciais, true);
-       
-      //dd($shop);
-
-
-      $cpfcnpj =  mb_strlen($shop->document);
      
-      $totalamotx = round($orders->total_amount + ($orders->total_amount / 100 * 1.192), 2) +  0.01;
-      //dd($totalamotx);
+       $cpfcnpj =  mb_strlen($shop->document);
+     
+    if($admin->taxapix == 1 ){
+       $totalamotx  = number_format($group->orders->sum('total_amount'), 2, '.', '');
+    }else{
+       $totalamotx = round($group->orders->sum('total_amount') + ($group->orders->sum('total_amount') / 100 * 1.192), 2) +  0.01;
+       $totalamotx = number_format($totalamotx, 2, '.', '' );
+    } 
+    
+    //dd($totalamotx);
       //(round($countPixValue * 0.01, 2) + 0.01);
       if ($cpfcnpj <= 13){
         
@@ -157,7 +161,7 @@ class Gerencianetpay{
         $item_1 = [
             'name' => "Pedido Order Nº".$orders->id,
             'amount' => 1,
-            'value' => (int)  number_format($orders->total_amount, 2, '', '') + 345
+            'value' => (int)  $group->orders->sum('total_amount') + 345
         ];
     
         $items = [

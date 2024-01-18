@@ -27,10 +27,12 @@ class ShopifyService
     public static function getPaidOrders($shop, $limit = 250)
     {
 
-        echo '<pre>';
+       // echo '<pre>';
         //15
         $productsService = new ProductsService($shop);
+       
         $product = $productsService->find(15);
+        //dd($product);
         ShopifyService::registerProductJson($shop,$product);
 
 
@@ -51,10 +53,11 @@ class ShopifyService
         }*/
     }
 
-    public static function getPaidOrdersLimit($shop, $limit)
+    public static function getPaidOrdersLimit($shop)
     {
         try {
 
+            $limit = 100;  
             if ($limit <= 0)
                 $limit = 100;
 
@@ -112,28 +115,28 @@ class ShopifyService
                 return false;
             }
 
-            $order = Orders::firstOrNew(['shop_id' => $shop->id, 'external_id' => $shopify_order->id]);
-
-            if ($order->id != null) {
-                return false;
-            }
-
-
+            $order = new Orders();
+            $order->shop_id = $shop->id;
+            $order->external_id = $shopify_order->id;
             $order->external_service = 'shopify';
-            $order->name = $shopify_order->name;
-            $order->email = $shopify_order->email;
+            $order->email = $shopify_order->contact_email;
             $order->external_price = $shopify_order->total_price;
-            $order->external_usd_price = $shopify_order->total_price_usd;
             $order->landing_site = $shopify_order->landing_site;
             $order->status = 'pending';
             $order->external_created_at = date('Y-m-d h:i:s', strtotime($shopify_order->created_at));
-
-            if (!$order->save()) {
+            $order->name = $shopify_order->customer->first_name .' ' .$shopify_order->customer->last_name ;
+            $order->save();
+            if ($order->save()) {
+                // Salvo com sucesso
+            } else {
+                // Ocorreu um erro ao salvar
                 return null;
             }
 
+            
             $items = self::registerItems($order, $shopify_order->line_items);
             $customer = self::registerCustomer($shop, $shopify_order->customer, $shopify_order->shipping_address);
+            dd($customer);
             $shipping = self::registerShipping($order, $items['items'], $customer, $shop);
 
             if (!$customer || !$items || !$shipping || $items['total_amount'] == 0) {
@@ -489,12 +492,13 @@ class ShopifyService
     public static function registerCustomer($shop, $shopify_customer, $shopify_address)
     {
         try {
-            $customer = Customers::firstOrCreate(['shop_id' => $shop->id, 'external_id' => $shopify_customer->id]);
+            $customer = new Customers();
+            $customer->shop_id = $shop->id; 
+            $customer->external_id = $shopify_customer->id;
             $customer->external_service = 'shopify';
             $customer->first_name = $shopify_customer->first_name;
             $customer->last_name = $shopify_customer->last_name;
             $customer->email = $shopify_customer->email;
-            $customer->total_spent = $shopify_customer->total_spent;
             if (!$customer->save()) {
                 return null;
             }
@@ -754,18 +758,19 @@ class ShopifyService
 
             $response = ShopifyService::GuzzleCalls($shop, 'POST', 'products.json', false, false, $data);
             //dd(json_decode($response->getBody()));
-            //$postproduto = json_decode($response->getBody());
-            dd($response);
+           // $postproduto = json_decode($response->getBody());
+           // dd($response);
             
             if($response->getStatus() == 200 || $response->getStatus() == 201){
                     return json_decode($response->getBody())->product;
                 }
                 return false;
         } catch (\Exception $th) {
-            var_dump(1);
-            var_dump($th);
+           // var_dump(1);
+           // var_dump($th);
             die();
             return false;
+            ErrorLogs::create(['status' => $th->getCode(), 'message' => $th->getMessage(), 'file' => $th->getFile()]);
         }
     }
 

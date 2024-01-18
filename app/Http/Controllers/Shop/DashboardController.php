@@ -13,6 +13,7 @@ use App\Models\SupplierOrderGroup;
 use App\Services\MelhorEnvioService;
 use App\Services\Shop\ShopifyService;
 use App\Models\ShopContractedPlans;
+use App\Models\ShopBanner;
 
 
 
@@ -20,20 +21,24 @@ class DashboardController extends Controller
 {
     public function index(){
         $shop = Auth::guard('shop')->user();
- /*
+
         $plano = ShopContractedPlans::where('shop_id', $shop->id )->first();
+        if ($plano){
         if($plano->subscription_status == 'inactive'){
             $shop->status = 'inactive';
             $shop->save();
 
         }
- */
+
+    }
         $ordersService = new OrdersService($shop);
         $orders = $ordersService->getPendingOrders(10);
 
         $dashboard_data = $ordersService->dashboardData();
+        $banners = ShopBanner::orderBy('id', 'desc')->get();
+       
 
-    	return view('shop.dashboard.index', compact('orders', 'shop', 'dashboard_data'));
+    	return view('shop.dashboard.index', compact('orders', 'shop', 'dashboard_data', 'banners'));
     }
 
     public function redirectMelhorEnvio(){

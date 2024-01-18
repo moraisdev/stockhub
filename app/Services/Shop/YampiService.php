@@ -86,14 +86,16 @@ class YampiService
     {
         try {
             $brandValid = YampiService::getBrands($shop);
-            if ($brandValid != null) {
-                return $brandValid;
-            } else {
-                $data = (object)[
+            if (empty($brandValid)) {
+                
+                    $data = (object)[
                     "active" => true,
                     "featured" => false,
                     "name" => $shop->name,
             ];
+            } else {
+                
+            return $brandValid;
 
                 $client = new \GuzzleHttp\Client();
                 $response = $client->request(
@@ -762,15 +764,11 @@ class YampiService
         //registra um produto na yampi e retorna o id em caso de sucesso ou error em caso de falha
         try {
             //carrega os dados do shop e do produto passados
-            
-            if ($shop->status == 'inactive') {
-                return false;
-            }
-
+          
             $brand = YampiService::createBrands($shop);
             
             $data = (object)[
-                    "simple"=> false,
+                    "simple"=> true,
                     "brand_id" => $brand[0]->id,
                     "active" =>$active,
                     "ncm" => preg_replace('/[\.\-\,\" "]+/', '',$product->ncm),
@@ -783,133 +781,90 @@ class YampiService
                     // 'options' => [],
                     'skus' => [],
                     'images' => [] ,
-                    // 'variations'=>[],
+                    'variations'=>[],
             ];
 
-            if ($product->img_source) {
-                $data->images[] = (object)['url' => $product->img_source];
-            }
+           
+
+           // if ($product->img_source) {
+           //     $data->images[] = (object)['url' => $product->img_source];
+           // }
             
-            foreach ($product->images as $image) {
-                $data->images[] = (object)['url' => $image->src];
-            }
+            
+           // foreach ($product->images as $image) {
+           //     $data->images[] = (object)['url' => $image->src];
+           // }
+            
+           // $productimagens = $product->images;
+           // if(isset($productimagens[0]->src)){
+           //     $dataimagem['images'][1]['url'] = $productimagens[0]->src;
 
-            foreach ($product->options as $option) {
-                $values = [];
+           // }
+            
 
-                foreach ($product->variants as $variant) {
-                    foreach ($variant->options_values->where('product_option_id', $option->id) as $option_value) {
-                        $values[] = $option_value->value;
-                    }
-                }
-                // $data->variations[] = (object)[
-                //     'name' => $option->name
-                // ];
-            }
+           // foreach ($product->options as $option) {
+           //     $values = [];
+
+           //     foreach ($product->variants as $variant) {
+           //         foreach ($variant->options_values->where('product_option_id', $option->id) as $option_value) {
+           //             $values[] = $option_value->value;
+           //         }
+           //     }
+           //      $data->variations[] = (object)[
+            //         'name' => $option->name
+            //     ];
+           // }
+
+           // foreach ($product->variants as $variant){
+            //    $data->skus[] = (object)
+            //    ['sku' => $variant->sku,
+            //     'price_cost' => $variant->price,
+            //     'price_sale' => $variant->price,
+            //     'blocked_sale' => false,
+            //     'weight' => ($variant->weight_in_grams != null) ? $variant->weight_in_grams : 0,
+            //     'quantity_managed' => true,
+            //     "variations_values_ids" => [490],
+                
+            //   ];
+
+
+
+            //}
                          
-            foreach ($product->variants as $variant) {
-                $i = 1;
-                $variant_data = [];
-                $variantions = [];
+           // foreach ($product->variants as $variant) {
+           //     $i = 1;
+           //    $variant_data = [];
+           //     $variantions = [];
 
-                foreach ($variant->options_values as $option_value) {
-                    $variantions['name'] = $option_value->value;
-                    $i++;
-                }
+          //      foreach ($variant->options_values as $option_value) {
+          //          $variantions['name'] = $option_value->value;
+          //          $i++;
+          //      }
 
-                if ($variant->internal_cost != null) {
-                    $price = $variant->internal_cost;
-                } else {
-                    $price = $variant->price;
-                }
+           //     if ($variant->internal_cost != null) {
+           //         $price = $variant->internal_cost;
+           //     } else {
+           //         $price = $variant->price;
+           //     }
 
-                $variant_data['title'] = $variant->title;
-                $variant_data['price_cost'] = $price;
-                $variant_data['price_sale'] = $variant->price;
-                $variant_data['blocked_sale'] = false;
-                $variant_data['sku'] =  $variant->sku;
-                $variant_data['weight'] = ($variant->weight_in_grams != null) ? $variant->weight_in_grams : 0;
-                $variant_data['variations'] = $variantions;
-                $variant_data['quantity_managed'] = true;
-     
+           //     $variant_data['title'] = $variant->title;
+           //     $variant_data['price_cost'] = $price;
+           //     $variant_data['price_sale'] = $variant->price;
+           //     $variant_data['blocked_sale'] = false;
+           //     $variant_data['sku'] =  $variant->sku;
+           //     $variant_data['weight'] = ($variant->weight_in_grams != null) ? $variant->weight_in_grams : 0;
+           //     $variant_data['variations'] = $variantions;
+           //     $variant_data['quantity_managed'] = true;
+
+
+           //     $variant_data['variations'] = $variant_data;
+                 
+           //     $dados = array_merge($data , $variant_data);
+           // }   
 
           
-                
-
-                             
-                $client = new \GuzzleHttp\Client();
-
-                if (isset($variantions['name'])) {
-                    $dataResponse = $client->request(
-                        'GET',
-                        'https://api.dooki.com.br/v2/'.$shop->yampi_app->domain.'/catalog/variations?q='.$variantions['name'],
-                        [
-                                            'headers' => [
-                                            'User-Token' => $shop->yampi_app->app_key,
-                                            'User-Secret-Key' => $shop->yampi_app->app_password,
-                                            'Content-Type' => 'application/json',
-                                            ]
-                    
-                                ]
-                    );
-                } else {
-                    $dataResponse = $client->request(
-                        'GET',
-                        'https://api.dooki.com.br/v2/'.$shop->yampi_app->domain.'/catalog/variations?q='.$variant->title,
-                        [
-                            'headers' => [
-                                'User-Token' => $shop->yampi_app->app_key,
-                                'User-Secret-Key' => $shop->yampi_app->app_password,
-                                'Content-Type' => 'application/json',
-                            ]
-            
-                        ]
-                    );
-                }
-                    
-                $variationYampi = json_decode($dataResponse->getBody())->data;
-
-                if (count($variationYampi) > 0) {
-                    $variationYampiId[] = $variationYampi[0]->id;
-                } else {
-                    $client = new \GuzzleHttp\Client();
-    
-                    $dataParameter = (object)[
-                            "name"=> $variant->title,
-                        ];
-   
-                    $dataResponse = $client->request(
-                        'POST',
-                        'https://api.dooki.com.br/v2/'.$shop->yampi_app->domain.'/catalog/variations/',
-                        [   'json' => $dataParameter,
-                            'headers' => [
-                            'User-Token' => $shop->yampi_app->app_key,
-                            'User-Secret-Key' => $shop->yampi_app->app_password,
-                            'Content-Type' => 'application/json',
-                            ]
-                        ]
-                    );
-                    $variationYampi = json_decode($dataResponse->getBody())->data;
-                    
-                    $variationYampiId[] = $variationYampi->id;
-                }
-    
-                $variant_data['variations_values_ids'] = $variationYampiId;
-                
-                // $variant_data['weight_unit'] = 'g';
-                // $variant_data['fulfillment_service'] = 'manual';
-
-                $data->skus[] = (object)$variant_data;
-
-                if ($variant->img_source) {
-                    $data->images[] = (object)['url' => $variant->img_source];
-                }
-                
-            }
-
-            //  return response()->json($data);
-            $client = new \GuzzleHttp\Client();
-            $response = $client->request(
+             $client = new \GuzzleHttp\Client();
+             $response = $client->request(
                 'POST',
                 'https://api.dooki.com.br/v2/'.$shop->yampi_app->domain.'/catalog/products/',
                 [
@@ -922,47 +877,16 @@ class YampiService
                 ]
             );
 
+            
+            
             if ($response->getStatusCode() == 200 || $response->getStatusCode() == 201) {
                 return json_decode($response->getBody());
             }
-
-            // atualizar estoque
-            $variant_estoque = [];
-            $variant_estoque['stock_id'] = 1;
-            $variant_estoque['quantity'] = 100;
-            $variant_estoque['min_quantity'] = 1;
-
-            $data_estoque = (object)$variant_estoque;
-
-
-            $client = new \GuzzleHttp\Client();
-            $response = $client->request(
-                'POST',
-                'https://api.dooki.com.br/v2/'.$shop->yampi_app->domain.'/catalog/skus/STO1201/stocks',
-                [
-                    'json' => $data_estoque,
-                    'headers' => [
-                        'User-Token' => $shop->yampi_app->app_key,
-                        'User-Secret-Key' => $shop->yampi_app->app_password,
-                        'Content-Type' => 'application/json',
-                    ]
-                ]
-            );
-
-            if ($response->getStatusCode() == 200 || $response->getStatusCode() == 201) {
-                return json_decode($response->getBody());
-            }
-
-
-
-
-
-
-
             return false;
-        } catch (\Exception $th) {
+        } catch (\Exception $e) {
             Log::error($e);
-            return $th->getMessage();
+           
+            return $e->getMessage();
         }
     }
 
@@ -971,6 +895,7 @@ class YampiService
         try {
             // Upload images
             $yampi_product = (object)$yampi_product;
+           
             
             $client = new \GuzzleHttp\Client();
 
@@ -995,8 +920,177 @@ class YampiService
 
             return true;
         } catch (\Exception $e) {
+           
             Log::error($e);
             return false;
         }
+    }
+
+
+    public function exportProducts($shopprod, $prod, $stock, $imagens) {
+
+       
+        $img_file = $this->saveImage($prod['img_source']);
+        try {
+            $slug_randon = (new \DateTime())->format('YmdHis');
+            $alias = $shopprod['domain'];
+
+            // Brand
+            $img = 'img_icon_erro.jpg';
+            $url_img = 'https://' . $_SERVER['SERVER_NAME'];
+            $img = $url_img . '/public/imgproduto/' . $img;
+            $arr_brand = array(
+                'active' => false,
+                'featured' => false,
+                'name' => 'integracao',
+                'description' => 'Integração entre sistemas',
+                'logo_url' => '$img',
+            );
+            $data_brand_json = json_encode($arr_brand);
+            $url_brand = "https://api.dooki.com.br/v2/$alias/catalog/brands";
+            $this->saveBrand($shopprod, $url_brand, $data_brand_json);
+            sleep(2);
+            $url_brand_list = "https://api.dooki.com.br/v2/$alias/catalog/brands";
+            $arr_brand_product_json = $this->searchBrand($shopprod, $url_brand_list, false);
+            $arr_brand_product = json_decode($arr_brand_product_json);
+            $brand = array('integracao', $arr_brand_product->data[0]);
+            $brand_id = $brand[1]->id;
+            //=======================                        
+            foreach ($imagens as $img) {
+                sleep(1);
+                $img_file = $this->saveImage($img->src);
+                $image[] = array('url' => $img_file);
+            }
+            $img_source[] = array('url' => $img_file);
+            $image = array_merge($img_source, $image);
+            $url = "https://api.dooki.com.br/v2/$alias/catalog/products?include=skus,images";
+            $arr_product = array(
+                'simple' => true,
+                'brand_id' => $brand_id,
+                'active' => true,
+                'name' => $prod['title'],
+                'slug' => $slug_randon,
+                'video' => 'https://youtube.com',
+                'description' => $prod['description'],
+                'specifications' => 'Especificação',
+                'measures' => 'Medidas',
+                'gift_value' => 1.0,
+                'seo_title' => $prod['tile'],
+                'seo_description' => 'Descriçao com palavras chaves',
+                'seo_keywords' => 'Palavras chaves',
+                'canonical_url' => 'https://youtube.com',
+                'search_terms' => 'Palavras chaves',
+                'skus' =>
+                array(
+                    0 =>
+                    array(
+                        'sku' => $prod['sku'],
+                        'erp_id' => '01-753',
+                        'barcode' => '7898185414131',
+                        'price_cost' => 0,
+                        'price_sale' => 0,
+                        'price_discount' => 0,
+                        'weight' => floatval($prod['variants'][0]['weight_in_grams']),
+                        'height' => floatval($prod['variants'][0]['height']),
+                        'width' => floatval($prod['variants'][0]['width']),
+                        'length' => floatval($prod['variants'][0]['length']),
+                        'quantity_managed' => false,
+                        'availability' => 1,
+                        'availability_soldout' => 1,
+                        'blocked_sale' => false,
+                        'variations_values_ids' =>
+                        array(
+                            0 => 490,
+                        ),
+                        'images' => $image,
+                    ),
+                ),
+            );
+
+            $data_product_json = json_encode($arr_product);
+            $response = $this->executeInsertProduct($shopprod, $url, $data_product_json);
+            return $response;
+            
+        } catch (\Exception $e) {
+            ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
+            Log::error('Error in YampiService', [$e]);
+        }
+    }
+
+    function executeInsertProduct($shopprod, $url, $data_json) {
+
+        $token = $shopprod['app_key'];
+        $secret_key = $shopprod['app_password'];
+        $headers = [
+            "User-Token: $token",
+            "User-Secret-Key: $secret_key",
+            'Content-Type: application/json; charset=utf-8'
+        ];
+        $curl_handle = curl_init();
+        curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl_handle, CURLOPT_URL, $url);
+        curl_setopt($curl_handle, CURLOPT_POST, 1);
+        curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $data_json);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
+        $response = curl_exec($curl_handle);
+        curl_close($curl_handle);
+        return $response;
+    }
+
+    function saveImage($url) {
+
+        try {
+            $file_name = (new \DateTime())->format('YmdHis');
+            $file_name_encrypt = base64_encode($file_name);
+            $img = str_replace('=', '', $file_name_encrypt) . '.jpeg';
+            $path = public_path() . '/imgproduto/' . $img;
+            file_put_contents($path, file_get_contents($url));
+        } catch (\Exception $e) {
+            $img = url('img_icon_erro.jpg');
+            return $img;
+        }
+        $url = 'https://' . $_SERVER['SERVER_NAME'];
+        $img = $url . '/public/imgproduto/' . $img;
+        return $img;
+    }
+
+    function saveBrand($shopprod, $url, $data_json) {
+
+        $token = $shopprod['app_key'];
+        $secret_key = $shopprod['app_password'];
+        $headers = [
+            "User-Token: $token",
+            "User-Secret-Key: $secret_key",
+            'Content-Type: application/json; charset=utf-8'
+        ];
+        $curl_handle = curl_init();
+        curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl_handle, CURLOPT_URL, $url);
+        curl_setopt($curl_handle, CURLOPT_POST, 1);
+        curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $data_json);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
+        $response = curl_exec($curl_handle);
+        curl_close($curl_handle);
+        return $response;
+    }
+
+    function searchBrand($shopprod, $url, $data_json) {
+
+        $token = $shopprod['app_key'];
+        $secret_key = $shopprod['app_password'];
+        $headers = [
+            "User-Token: $token",
+            "User-Secret-Key: $secret_key",
+            'Content-Type: application/json; charset=utf-8'
+        ];
+        $curl_handle = curl_init();
+        curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl_handle, CURLOPT_URL, $url);
+        //curl_setopt($curl_handle, CURLOPT_POST, 1);
+        //curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $data_json);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
+        $response = curl_exec($curl_handle);
+        curl_close($curl_handle);
+        return $response;
     }
 }

@@ -19,6 +19,7 @@ use App\Models\ProductVariantInventories;
 use App\Models\ProductVariantOptionsValues;
 use App\Models\AliexpressProducts;
 use App\Models\ShopProducts;
+use App\Models\MatchSku;
 
 /* Services */
 use App\Services\ProductOptionsService;
@@ -119,9 +120,9 @@ class ProductsService{
                 $variantVerified = ProductVariants::where('sku', $variantVerify['sku'])
                                                 ->first();
                 if($variantVerified){
-                    throw new CustomException("Erro sku ".$variantVerify['sku']." já utilizada por outro fornecedor.", 500);
-                }
-            }
+                    throw new CustomException("Erro sku ".$variantVerify['sku']." Sku Cadastrada com sucesso.", 500);
+               }
+           }
         }
 
         $product = new Products();
@@ -133,6 +134,8 @@ class ProductsService{
         $product->title = $request->title;
         $product->ncm = $request->ncm;
         $product->ean_gtin = $request->ean_gtin;
+        $product->product_brand = $request->product_brand;
+        $product->sku_secondary = $request->new_variants[0]['sku_secondary'];
         $product->currency = $request->currency;
         $product->icms_exemption = $request->icms_exemption;
         $product->description = $request->description;
@@ -142,7 +145,7 @@ class ProductsService{
         $product->packing_weight = $request->packing_weight;
         $product->products_from = $request->products_from;
         $product->sku = $request->new_variants[0]['sku'];
-       
+
         if($request->hasFile('img_source')){
             $name = Str::random(15).$this->supplier->id . '.' . $request->img_source->extension();
 
@@ -197,13 +200,14 @@ class ProductsService{
         $product->category_id = $request->category[$i] ?  : NULL;
         $product->title = $request->title[$i];
         $product->ncm = $request->ncm[$i];
+        $product->product_brand = $request->product_brand[$i];
         $product->ean_gtin = $request->ean_gtin[$i];
         $product->currency = $request->currency[$i] ? 1 : 0;
         $product->icms_exemption = $request->icms_exemption[$i];
         $product->description = $request->description[$i];
         $product->public = $request->public[$i] ? 1 : 0;
         $product->show_in_products_page = $request->show_in_products_page[$i] ? 1 : 0;
-         $product->products_from = $request->products_from[$i];
+        $product->products_from = $request->products_from[$i];
 
         if(Auth::guard('admin')->id() != NULL){
             $product->ignore_percentage_on_tax = $request->ignore_percentage_on_tax ? NULL : NULL;
@@ -257,19 +261,42 @@ class ProductsService{
                 }
             }
         }
-
-        if(isset($request->new_variants) && count($request->new_variants) > 0){
-            foreach($request->new_variants as $variantVerify){
-                $variantVerified = ProductVariants::where('sku', $variantVerify['sku'])
-                                                ->where('product_id', '!=', $product->id)
-                                                ->first();
-                if($variantVerified){
-                    throw new CustomException("Erro sku ".$variantVerify['sku']." já utilizada por outro fornecedor.", 500);
+        if(isset($request->variants) && count($request->variants) > 0){
+            foreach($request->variants as $variant){
+                if(isset($variant['sku'])){
+                    // Construir uma lista de todos os 'sku_secondary' existentes para este 'sku'
+                    $existingSkuSecondaries = MatchSku::where('sku', $variant['sku'])->pluck('sku_secondary')->toArray();
+                    
+                    if (isset($variant['sku_secondary']) && is_array($variant['sku_secondary'])) {
+                        foreach ($variant['sku_secondary'] as $skuSecondary) {
+                            // Verificar se um registro com o par sku e sku_secondary já existe
+                            $matchSku = MatchSku::where('sku', $variant['sku'])->where('sku_secondary', $skuSecondary)->first();
+                            if(!$matchSku){
+                                // Se não existe, criar um novo registro
+                                MatchSku::create([
+                                    'sku' => $variant['sku'],
+                                    'sku_secondary' => $skuSecondary
+                                ]);
+                            }
+                            // Atualizar a tabela de produtos com base no sku secundário recebido
+                            Products::where('sku', $skuSecondary)->update(['public' => 1]);
+        
+                            // Remover este sku_secondary da lista
+                            if(($key = array_search($skuSecondary, $existingSkuSecondaries)) !== false) {
+                                unset($existingSkuSecondaries[$key]);
+                            }
+                        }
+                    }
+            
+                    // Para quaisquer 'sku_secondary' restantes na lista, removê-los do banco de dados e atualizar a tabela de produtos
+                    foreach($existingSkuSecondaries as $skuSecondary){
+                        MatchSku::where('sku', $variant['sku'])->where('sku_secondary', $skuSecondary)->delete();
+                        Products::where('sku', $skuSecondary)->update(['public' => 0]);
+                    }
                 }
             }
-        }        
+        }
         
-       
         $product->category_id = $request->category;
         $product->title = $request->title;
         $product->ncm = $request->ncm;
@@ -282,7 +309,8 @@ class ProductsService{
         $product->shipping_method_china_division = $request->shipping_method_china_division;
         $product->packing_weight = $request->packing_weight;
         $product->products_from = $request->products_from;
-       
+        $product->product_brand = $request->product_brand;
+        $product->sku_secondary = $request->sku_secondary;
 
         if(Auth::guard('admin')->id() != null){
             $product->ignore_percentage_on_tax = $request->ignore_percentage_on_tax;
@@ -452,6 +480,7 @@ class ProductsService{
         $product->title = $data['title'];
         $product->ncm = $data['ncm'];
         $product->description = $data['description'];
+        $product->product_brand = $data['product_brand'];
         $product->public = $data['public'];
 
         $product->save();

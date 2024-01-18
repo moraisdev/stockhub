@@ -1,6 +1,6 @@
 @extends('shop.layout.default')
 
-@section('title', config('app.name').' - '.trans('supplier.detalhes_compra'))
+@section('title', config('app.name').' - Detalhes da compra')
 
 @section('stylesheets')
     <style>
@@ -147,7 +147,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="mb-0">{{ trans('supplier.solicitacao_estorno_pedido') }} {{ $return->supplier_order->display_id }} do fornecedor {{ $return->supplier_order->supplier->name }}</h2>
+                                <h2 class="mb-0">Solicitação de estorno do pedido F{{ $return->supplier_order->display_id }} do fornecedor {{ $return->supplier_order->supplier->name }}</h2>
                             </div>
                         </div>
                     </div>
@@ -156,11 +156,11 @@
                             <div class="col-xl-4">
                                 <table class="table table-borderless">
                                     <tr>
-                                        <td>{{ trans('supplier.data_solicitacao') }}</td>
+                                        <td>Data da solicitação</td>
                                         <td>{{ date('d/m/Y', strtotime($return->created_at)) }}</td>
                                     </tr>
                                     <tr>
-                                        <td>{{ trans('supplier.text_status') }}</td>
+                                        <td>Status</td>
                                         <td>{{ $return->f_status }}</td>
                                     </tr>
                                 </table>
@@ -174,7 +174,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h4>{{ trans('supplier.chat_estorno') }}</h4>
+                                        <h4>Chat do estorno</h4>
                                     </div>
                                 </div>
                                 <div class="chat-body" id="chat-body">
@@ -189,7 +189,7 @@
                                     @empty
                                         <div class="row h-100">
                                             <div class="col d-flex flex-row align-items-center justify-content-center">
-                                                <span class="badge badge-light align-items-center">{{ trans('supplier.text_chat_estorno') }}</span>
+                                                <span class="badge badge-light align-items-center">Nenhuma mensagem ainda, comece explicando o motivo do estorno</span>
                                             </div>
                                         </div>
                                     @endforelse
@@ -227,11 +227,11 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h4>{{ trans('supplier.options') }}</h4>
+                                        <h4>Opções</h4>
                                         <div class="row">
                                             <div class="col">
                                                 @if($return->shop_return_confirmed == 'no')
-                                                    <a href="{{ route('shop.returns.confirm', [$return->id]) }}" class="btn btn-success">{{ trans('supplier.marcar_como_resolvido') }}</a>
+                                                    <a href="{{ route('shop.returns.confirm', [$return->id]) }}" class="btn btn-success">Marcar como resolvido</a>
                                                 @endif
                                                 @if($return->status == 'pending')
                                                     <a href="{{ route('shop.returns.cancel', [$return->id]) }}" class="btn btn-danger">Cancelar solicitação de estorno</a>
@@ -345,9 +345,9 @@
       
 
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" id="submit" >{{ trans('supplier.save') }}</button>
+        <button type="submit" class="btn btn-primary" id="submit" >Salvar</button>
         </form> 
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.sair') }}</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
       </div>
     </div>
   </div>

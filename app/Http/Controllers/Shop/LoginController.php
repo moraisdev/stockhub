@@ -51,14 +51,13 @@ class LoginController extends Controller
 
     public function index(Request $request){
         $redirect_url = url()->previous();
-        $admins = Admins::find(2);
 
         if(Str::contains($redirect_url, 'login') || !Str::contains($redirect_url, 'shop')){
             $redirect_url = route('shop.dashboard'  );
         }        
 
 
-        return view('shop.login.index', compact('redirect_url' , 'admins'));
+        return view('shop.login.index', compact('redirect_url'));
     }
 
     public function authenticate(AuthenticateRequest $request){

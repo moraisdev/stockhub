@@ -1,6 +1,6 @@
 @extends('supplier.layout.default')
 
-@section('title', __('supplier.pedidos_title'))
+@section('title', 'Pedidos')
 
 @section('content')
     <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
@@ -20,31 +20,31 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="mb-0">{{ trans('supplier.text_orders_export_excel') }}</h2>
+                                <h2 class="mb-0">Exportação de pedidos para planilha</h2>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <p>
-                        {{ trans('supplier.text_orders_escolha_pedidos') }}
+                            Escolha os pedidos desejados para gerar uma planilha de exportação. Você pode utilizar os filtros abaixo para ajudar na escolha dos pedidos.
                         </p>
                         <form action="">
                             <div class="row">
                                 <div class="col-xl-3 col-md-6 col-12">
                                     <div class="form-group">
-                                        <label>{{ trans('supplier.text_status') }}</label>
+                                        <label>Status</label>
                                         <select name="status" class="form-control" required>
-                                            <option value="pending" {{ request()->status == 'pending' ? 'selected' : '' }}>{{ trans('supplier.pendentes_title') }}</option>
-                                            <option value="sent" {{ request()->status == 'sent' ? 'selected' : '' }}>{{ trans('supplier.enviados_title') }}</option>
-                                            <option value="completed" {{ request()->status == 'completed' ? 'selected' : '' }}>{{ trans('supplier.entregues_title') }}</option>
+                                            <option value="pending" {{ request()->status == 'pending' ? 'selected' : '' }}>Pendentes</option>
+                                            <option value="sent" {{ request()->status == 'sent' ? 'selected' : '' }}>Enviados</option>
+                                            <option value="completed" {{ request()->status == 'completed' ? 'selected' : '' }}>Entregues</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-xl-3 col-md-6 col-12">
                                     <div class="form-group">
-                                        <label>{{ trans('supplier.lojistas_title') }}</label>
+                                        <label>Lojistas</label>
                                         <select name="shop_id" class="form-control" required>
-                                            <option value="all">{{ trans('supplier.todos_title') }}</option>
+                                            <option value="all">Todos</option>
                                             @foreach($authenticated_user->shops as $shop)
                                                 <option value="{{ $shop->id }}" {{ request()->shop_id == $shop->id ? 'selected' : '' }}>{{ $shop->name }}</option>
                                             @endforeach
@@ -53,19 +53,19 @@
                                 </div>
                                 <div class="col-xl-3 col-md-6 col-12">
                                     <div class="form-group">
-                                        <label>{{ trans('supplier.date_inicial') }}</label>
-                                        <input type="date" name="start_date" class="form-control datepicker" placeholder="{{ trans('supplier.date_inicial') }}" value="{{ request()->start_date }}">
+                                        <label>Data inicial</label>
+                                        <input type="date" name="start_date" class="form-control datepicker" placeholder="Data inicial" value="{{ request()->start_date }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-3 col-md-6 col-12">
                                     <div class="form-group">
-                                        <label>{{ trans('supplier.date_final') }}</label>
-                                        <input type="date" name="end_date" class="form-control datepicker" placeholder="{{ trans('supplier.date_final') }}" value="{{ request()->end_date }}">
+                                        <label>Data final</label>
+                                        <input type="date" name="end_date" class="form-control datepicker" placeholder="Data final" value="{{ request()->end_date }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 offset-lg-4 col-12">
                                     <div class="form-group mb-0">
-                                        <button class="btn btn-primary btn-block">{{ trans('supplier.text_aplicar_filtro') }}</button>
+                                        <button class="btn btn-primary btn-block">Aplicar filtros</button>
                                     </div>
                                 </div>
                             </div>
@@ -81,14 +81,14 @@
                                     <th style="width:30px" class="no-sort">
                                         <input type="checkbox" class="select_all">
                                     </th>
-                                    <th>{{ trans('supplier.text_id') }}</th>
-                                    <th>{{ trans('supplier.text_id_lojista') }}</th>
-                                    <th>{{ trans('supplier.text_loja') }}</th>
-                                    <th>{{ trans('supplier.date') }}</th>
-                                    <th>{{ trans('supplier.products') }}</th>
-                                    <th>{{ trans('supplier.total_price') }}</th>
-                                    <th>{{ trans('supplier.text_rastreio') }}</th>
-                                    <th class="actions-th">{{ trans('supplier.actions') }}</th>
+                                    <th>ID</th>
+                                    <th>ID Lojista</th>
+                                    <th>Loja</th>
+                                    <th>Data</th>
+                                    <th>Produtos</th>
+                                    <th>Valor total</th>
+                                    <th>Rastreio</th>
+                                    <th class="actions-th">Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -113,21 +113,21 @@
                                         <td>R$ {{ \App\Http\Controllers\Supplier\FunctionsController::supplierOrderAmount($order) }}</td>
                                         <td>{{ $order->shipping && $order->shipping->tracking_number ? $order->shipping->tracking_number : '' }}</td>
                                         <td>
-                                            <a href="{{ route('supplier.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}" target="_blank">
+                                            <a href="{{ route('supplier.orders.show', $order->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes" target="_blank">
                                                 <i class="fas fa-fw fa-eye"></i>
                                             </a>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8">{{ trans('supplier.text_pedido_nao_encontrado') }}</td>
+                                        <td colspan="8">Não foi encontrado nenhum pedido.</td>
                                     </tr>
                                 @endforelse
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary mb-4 float-right"><i class="fas fa-table"></i>{{ trans('supplier.text_gerar_planilha') }}</button>
+                            <button class="btn btn-primary mb-4 float-right"><i class="fas fa-table"></i> Gerar planilha</button>
                         </div>
                     </form>
                 </div>

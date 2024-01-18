@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\ProductVariants;
 
 class Products extends Model
 {
@@ -59,5 +60,9 @@ class Products extends Model
     public function produto(){
 
        // return $this->
+    }
+
+    public function productVariants(){
+        return $this->hasMany(ProductVariants::class, 'product_id');
     }
 }

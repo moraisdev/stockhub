@@ -1,6 +1,6 @@
 @extends('shop.layout.default')
 
-@section('title', config('app.name').' - '.trans('supplier.fornecedores'))
+@section('title', config('app.name').' - Fornecedores')
 
 @section('content')
 <!-- Header -->
@@ -21,7 +21,7 @@
     			<div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">{{ trans('supplier.meus_fornecedores') }}</h2>
+                            <h2 class="mb-0">Meus fornecedores</h2>
                         </div>
                     </div>
                 </div>
@@ -29,9 +29,9 @@
                     <table class="table table-flush align-items-center">
                         <thead>
                             <tr>
-                                <th>{{ trans('supplier.name') }}</th>
+                                <th>Nome</th>
                                 <th>Adicionado em</th>
-                                <th>{{ trans('supplier.actions') }}</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>

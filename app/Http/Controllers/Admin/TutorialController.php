@@ -71,10 +71,12 @@ class TutorialController extends Controller
      */
     public function update(Request $request)
     {
-        
+      
         $tutorial = new Tutorial();
+        
 
         $tutorial = Tutorial::find($request->id);
+       
     	$tutorial->descricao = $request->descricao;
         $tutorial->link = $request->link;
 

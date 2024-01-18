@@ -27,12 +27,12 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                        <h3 class="mb-0">{{ trans('supplier.banners') }}</h3>
+                        <h3 class="mb-0">Banners</h3>
                         </div>
                         <div class="col">
                             <div class="float-right">
-                                {{--<a class="btn btn-success" href="{{ route('admin.banners.import.csv_instructions') }}"><i class="fas fa-file-csv mr-2"></i>{{ trans('supplier.importar_csv') }}</a>--}}
-                            <a class="btn btn-primary" href="{{ route('admin.banners.create') }}"><i class="fas fa-plus mr-2"></i> {{ trans('supplier.novo_banner') }} </a>
+                                {{--<a class="btn btn-success" href="{{ route('admin.banners.import.csv_instructions') }}"><i class="fas fa-file-csv mr-2"></i> Importar CSV</a>--}}
+                            <a class="btn btn-primary" href="{{ route('admin.banners.create') }}"><i class="fas fa-plus mr-2"></i> Novo Banner </a>
                             </div>
                         </div>
                     </div>
@@ -43,11 +43,11 @@
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">{{ trans('supplier.name') }}</th>
-                                <th scope="col">{{ trans('supplier.link') }}</th>
-                                <th scope="col">{{ trans('supplier.imagem') }}</th>
-                                <th scope="col">{{ trans('supplier.atualizado_em') }}</th>
-                                <th scope="col" class="actions-th">{{ trans('supplier.actions') }}</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Link</th>
+                                <th scope="col">Imagem</th>
+                                <th scope="col">Atualizado em</th>
+                                <th scope="col" class="actions-th">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,17 +96,17 @@
                     @csrf
                     @method('DELETE')
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ trans('supplier.apagar_banner') }}</h5>
+                        <h5 class="modal-title">Apagar Banner</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>{{ trans('supplier.certeza_apagar_banner') }}</p>
+                        <p>Tem certeza que deseja apagar o banner?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('supplier.cancel') }}</button>
-                        <button class="btn btn-danger">{{ trans('supplier.apagar') }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-danger">Apagar</button>
                     </div>
                 </form>
             </div>

@@ -75,7 +75,7 @@
     			<div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">{{ trans('supplier.fornecedores') }}</h2>
+                            <h2 class="mb-0">Fornecedores</h2>
                         </div>
                     </div>
                 </div>
@@ -85,23 +85,23 @@
                             <tr>
                                 <th>Dados</th>
                                
-                                <th style="width:50px" class="text-center">{{ trans('supplier.actions') }}</th>
+                                <th style="width:50px" class="text-center">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($suppliers as $supplier)
                                 <tr>
-                                    <td>{{ trans('supplier.name') }}: {{ $supplier->name }}<br>
+                                    <td>Nome: {{ $supplier->name }}<br>
                                         Nome Legal:{{ $supplier->legal_name }}<br>
-                                        {{ trans('supplier.text_email') }} :{{ $supplier->email }}<br>
-                                        {{ trans('supplier.text_phone') }}:  {{ $supplier->phone }}
-                                        {{ trans('supplier.data_cadastro') }}: {{ date('d/m/Y', strtotime($supplier->created_at)) }}
+                                        Email :{{ $supplier->email }}<br>
+                                        Telefone:  {{ $supplier->phone }}
+                                        Data Cadastro: {{ date('d/m/Y', strtotime($supplier->created_at)) }}
                                     </td>
                                   
                                     
                                     <td><span class="d-none">{{ date('Ymd', strtotime($supplier->created_at)) }}</span>{{ date('d/m/Y', strtotime($supplier->created_at)) }}</td>
                                     <td>
-                                        <a href="{{ route('admin.suppliers.show', $supplier->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
+                                        <a href="{{ route('admin.suppliers.show', $supplier->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
                                             <i class="fas fa-fw fa-eye"></i>
                                         </a>
                                         <a href="{{ route('admin.products.import', $supplier->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Cadastro rapido de produtos">

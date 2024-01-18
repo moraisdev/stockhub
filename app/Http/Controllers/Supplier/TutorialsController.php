@@ -9,4 +9,10 @@ class TutorialsController extends Controller
     public function index(){
         return view('supplier.tutorials.index');
     }
+
+
+    
+
+
+
 }

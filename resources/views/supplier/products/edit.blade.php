@@ -90,7 +90,7 @@
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="product_ncm">{{ trans('supplier.ncm') }}</label>
+                                            <label class="form-control-label" for="product_ncm">NCM</label>
                                             <input type="text" id="product_ncm" class="form-control form-control-alternative" name="ncm" placeholder="{{ __('supplier.') }}" value="{{ old('ncm', $product->ncm) }}">
                                         </div>
                                     </div>
@@ -98,6 +98,12 @@
                                         <div class="form-group">
                                             <label class="form-control-label" for="product_ncm">GTIN/EAN</label>
                                             <input type="text" id="product_ean_gtin" class="form-control form-control-alternative" name="ean_gtin" placeholder="{{ __('supplier.') }}" value="{{ old('ean_gtin', $product->ean_gtin) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="product_ncm">MARCA</label>
+                                            <input type="text" id="product_brand" class="form-control form-control-alternative" name="product_brand" placeholder="{{ __('supplier.product_brand') }}" value="{{ old('product_brand', $product->product_brand) }}">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -122,8 +128,8 @@
                                         <div class="form-group">
                                             <label class="form-control-label">Isento ICMS</label>
                                             <select name="icms_exemption" id="icms_exemption" class="form-control">
-                                                <option value="0" {{ $product->icms_exemption == '0' ? 'selected' : '' }}>{{ trans('supplier.nao') }}</option>
-                                                <option value="1" {{ $product->icms_exemption == '1' ? 'selected' : '' }}>{{ trans('supplier.sim') }}</option>
+                                                <option value="0" {{ $product->icms_exemption == '0' ? 'selected' : '' }}>Não</option>
+                                                <option value="1" {{ $product->icms_exemption == '1' ? 'selected' : '' }}>Sim</option>
                                             </select>
                                         </div>
                                     </div>
@@ -156,7 +162,7 @@
                             <div class="col-12">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <h3 class="mb-0">{{ trans('supplier.atributos_obrigatorios') }}</h3>
+                                        <h3 class="mb-0">Atributos Obrigatorios</h3>
                                     </div>                                   
                                 </div>
                             </div>
@@ -164,36 +170,36 @@
                     </div>
                     <div class="card-body">
                          <div class="pl-lg-12">
-                         <h3 class="mb-0">{{ trans('supplier.produto_joia') }}</h3>   
+                         <h3 class="mb-0">Produto Joias</h3>   
                          <div class="row">
                             
                                 <div class="col-2">
                                         <div class="form-group">
-                                            <label class="form-control-label">{{ trans('supplier.joia') }}</label>
+                                            <label class="form-control-label">Joia</label>
                                             <select name="joias" id="joias" class="form-control">
-                                                <option value="0" {{ $product->joias == '0' ? 'selected' : '' }}>{{ trans('supplier.nao') }}</option>
-                                                <option value="1" {{ $product->joias == '1' ? 'selected' : '' }}>{{ trans('supplier.sim') }}</option>
+                                                <option value="0" {{ $product->joias == '0' ? 'selected' : '' }}>Não</option>
+                                                <option value="1" {{ $product->joias == '1' ? 'selected' : '' }}>Sim</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="form-control-label">{{ trans('supplier.tipo') }}</label>
+                                            <label class="form-control-label">Tipo</label>
                                             <select name="atributo_joias" id="atributo_joias" class="form-control">
-                                                <option value="4006364" {{ $product->atributo_joias == '4006364' ? 'selected' : '' }}>{{ trans('supplier.alpaca') }}</option>
-                                                <option value="4837600" {{ $product->atributo_joias == '4837600' ? 'selected' : '' }}>{{ trans('supplier.aco') }}</option>
-                                                <option value="4006367" {{ $product->atributo_joias == '4006367' ? 'selected' : '' }}>{{ trans('supplier.folheado_ouro') }}</option>
-                                                <option value="4006368" {{ $product->atributo_joias == '4006368' ? 'selected' : '' }}>{{ trans('supplier.folheado_prata') }}</option>
-                                                <option value="2431881" {{ $product->atributo_joias == '2431881' ? 'selected' : '' }}>{{ trans('supplier.madeira') }}</option>
-                                                <option value="2481971" {{ $product->atributo_joias == '2481971' ? 'selected' : '' }}>{{ trans('supplier.ouro_amarelo') }}</option>
-                                                <option value="2481973" {{ $product->atributo_joias == '2481973' ? 'selected' : '' }}>{{ trans('supplier.ouro_branco') }}</option>
-                                                <option value="4006366" {{ $product->atributo_joias == '4006366' ? 'selected' : '' }}>{{ trans('supplier.ouro_platina') }}</option>
-                                                <option value="4006365" {{ $product->atributo_joias == '4006365' ? 'selected' : '' }}>{{ trans('supplier.ouro_prata') }}</option>
-                                                <option value="2481972" {{ $product->atributo_joias == '2481972' ? 'selected' : '' }}>{{ trans('supplier.ouro_rose') }}</option>
-                                                <option value="2787783" {{ $product->atributo_joias == '2787783' ? 'selected' : '' }}>{{ trans('supplier.platina') }}</option>
-                                                <option value="2748302" {{ $product->atributo_joias == '2748302' ? 'selected' : '' }}>{{ trans('supplier.plastico') }}</option>
-                                                <option value="2481975" {{ $product->atributo_joias == '2481975' ? 'selected' : '' }}>{{ trans('supplier.prata') }}</option>
-                                                <option value="2832463" {{ $product->atributo_joias == '2832463' ? 'selected' : '' }}>{{ trans('supplier.titanio') }}</option>
+                                                <option value="4006364" {{ $product->atributo_joias == '4006364' ? 'selected' : '' }}>Alpaca</option>
+                                                <option value="4837600" {{ $product->atributo_joias == '4837600' ? 'selected' : '' }}>Aço</option>
+                                                <option value="4006367" {{ $product->atributo_joias == '4006367' ? 'selected' : '' }}>Folheado a ouro</option>
+                                                <option value="4006368" {{ $product->atributo_joias == '4006368' ? 'selected' : '' }}>Folheado a prata</option>
+                                                <option value="2431881" {{ $product->atributo_joias == '2431881' ? 'selected' : '' }}>Madeira</option>
+                                                <option value="2481971" {{ $product->atributo_joias == '2481971' ? 'selected' : '' }}>Ouro amarelo</option>
+                                                <option value="2481973" {{ $product->atributo_joias == '2481973' ? 'selected' : '' }}>Ouro branco</option>
+                                                <option value="4006366" {{ $product->atributo_joias == '4006366' ? 'selected' : '' }}>Ouro e platina</option>
+                                                <option value="4006365" {{ $product->atributo_joias == '4006365' ? 'selected' : '' }}>Ouro e prata</option>
+                                                <option value="2481972" {{ $product->atributo_joias == '2481972' ? 'selected' : '' }}>Ouro rosé</option>
+                                                <option value="2787783" {{ $product->atributo_joias == '2787783' ? 'selected' : '' }}>Platina</option>
+                                                <option value="2748302" {{ $product->atributo_joias == '2748302' ? 'selected' : '' }}>Plástico</option>
+                                                <option value="2481975" {{ $product->atributo_joias == '2481975' ? 'selected' : '' }}>Prata</option>
+                                                <option value="2832463" {{ $product->atributo_joias == '2832463' ? 'selected' : '' }}>Titânio</option>
                                         
                                             </select>
                                         </div>
@@ -206,26 +212,26 @@
                             </div>
 
                         <div class="pl-lg-12">
-                         <h3 class="mb-0">{{ trans('supplier.produto_cabos_entradas') }}</h3>   
+                         <h3 class="mb-0">Produto Cabos/Entrada</h3>   
                          <div class="row">
                             
                                 <div class="col-2">
                                         <div class="form-group">
-                                            <label class="form-control-label">{{ trans('supplier.cabo') }}</label>
+                                            <label class="form-control-label">Cabo</label>
                                             <select name="conexao_cabo" id="conexao_cabo" class="form-control">
-                                                <option value="0" {{ $product->conexao_cabo == '0' ? 'selected' : '' }}>{{ trans('supplier.nao') }}</option>
-                                                <option value="1" {{ $product->conexao_cabo == '1' ? 'selected' : '' }}>{{ trans('supplier.sim') }}</option>
+                                                <option value="0" {{ $product->conexao_cabo == '0' ? 'selected' : '' }}>Não</option>
+                                                <option value="1" {{ $product->conexao_cabo == '1' ? 'selected' : '' }}>Sim</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="form-control-label">{{ trans('supplier.tipo') }}</label>
+                                            <label class="form-control-label">Tipo</label>
                                             <select name="tipo_entrada" id="tipo_entrada" class="form-control">
-                                                <option value="4027342" {{ $product->tipo_entrada == '4027342' ? 'selected' : '' }}>{{ trans('supplier.db25') }}</option>
-                                                <option value="2230456" {{ $product->tipo_entrada == '2230456' ? 'selected' : '' }}>{{ trans('supplier.usb_tipo_c') }}</option>
-                                                <option value="2230458" {{ $product->tipo_entrada == '2230458' ? 'selected' : '' }}>{{ trans('supplier.conector_dock') }}</option>
-                                                <option value="2230457" {{ $product->tipo_entrada == '2230457' ? 'selected' : '' }}>{{ trans('supplier.usb_otg') }}</option>
+                                                <option value="4027342" {{ $product->tipo_entrada == '4027342' ? 'selected' : '' }}>DB25</option>
+                                                <option value="2230456" {{ $product->tipo_entrada == '2230456' ? 'selected' : '' }}>USB Tipo C</option>
+                                                <option value="2230458" {{ $product->tipo_entrada == '2230458' ? 'selected' : '' }}>Conector dock</option>
+                                                <option value="2230457" {{ $product->tipo_entrada == '2230457' ? 'selected' : '' }}>USB OTG</option>
                                               
                                             </select>
                                         </div>
@@ -234,44 +240,44 @@
                             </div>
 
                             <div class="pl-lg-12">
-                         <h3 class="mb-0">{{ trans('supplier.produto_smartphone') }}</h3>   
+                         <h3 class="mb-0">Produto Smartphone</h3>   
                          <div class="row">
                             
                                     <div class="col-2">
                                         <div class="form-group">
-                                            <label class="form-control-label">{{ trans('supplier.smartphone') }}</label>
+                                            <label class="form-control-label">SmartPhone</label>
                                             <select name="smartphone" id="smartphone" class="form-control">
-                                                <option value="0" {{ $product->smartphone == '0' ? 'selected' : '' }}>{{ trans('supplier.nao') }}</option>
-                                                <option value="1" {{ $product->smartphone == '1' ? 'selected' : '' }}>{{ trans('supplier.sim') }}</option>
+                                                <option value="0" {{ $product->smartphone == '0' ? 'selected' : '' }}>Não</option>
+                                                <option value="1" {{ $product->smartphone == '1' ? 'selected' : '' }}>Sim</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="col-2">
                                         <div class="form-group">
-                                            <label class="form-control-label">{{ trans('supplier.dual_sim') }}</label>
+                                            <label class="form-control-label">Dual Sim</label>
                                             <select name="atrib_phone_dualsim" id="atrib_phone_dualsim" class="form-control">
-                                                <option value="242085" {{ $product->tipo_entrada == '242085' ? 'selected' : '' }}>{{ trans('supplier.sim') }}</option>
-                                                <option value="242084" {{ $product->tipo_entrada == '242084' ? 'selected' : '' }}>{{ trans('supplier.nao') }}</option>
+                                                <option value="242085" {{ $product->tipo_entrada == '242085' ? 'selected' : '' }}>Sim</option>
+                                                <option value="242084" {{ $product->tipo_entrada == '242084' ? 'selected' : '' }}>Não</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="col-2">
                                         <div class="form-group">
-                                            <label class="form-control-label">{{ trans('supplier.quantidade_memoria_interna') }}</label>
-                                            <input type="text" id="atrib_qtd_menint" class="form-control form-control-alternative" name="atrib_qtd_menint" placeholder="{{ trans('supplier.quantidade_memoria_interna') }}" value="{{ old('atrib_qtd_menint', $product->atrib_qtd_menint) }}">
+                                            <label class="form-control-label">Qtd Men Interna</label>
+                                            <input type="text" id="atrib_qtd_menint" class="form-control form-control-alternative" name="atrib_qtd_menint" placeholder="Qtd Memoria Interna" value="{{ old('atrib_qtd_menint', $product->atrib_qtd_menint) }}">
                                         </div>
                                     </div>
 
                                     <div class="col-2">
                                         <div class="form-group">
-                                            <label class="form-control-label">{{ trans('supplier.memoria_interna') }}</label>
+                                            <label class="form-control-label">Memoria Interna</label>
                                             <select name="atrib_phone_men_int" id="atrib_phone_men_int" class="form-control">
-                                                <option value="GB" {{ $product->atrib_phone_men_int == 'GB' ? 'selected' : '' }}>{{ trans('supplier.gb') }}</option>
-                                                <option value="MB" {{ $product->atrib_phone_men_int == 'MB' ? 'selected' : '' }}>{{ trans('supplier.mb') }}</option>
-                                                <option value="TB" {{ $product->atrib_phone_men_int == 'TB' ? 'selected' : '' }}>{{ trans('supplier.tb') }}</option>
-                                                <option value="kB" {{ $product->atrib_phone_men_int == 'kB' ? 'selected' : '' }}>{{ trans('supplier.kb') }}</option>
+                                                <option value="GB" {{ $product->atrib_phone_men_int == 'GB' ? 'selected' : '' }}>GB</option>
+                                                <option value="MB" {{ $product->atrib_phone_men_int == 'MB' ? 'selected' : '' }}>MB</option>
+                                                <option value="TB" {{ $product->atrib_phone_men_int == 'TB' ? 'selected' : '' }}>TB</option>
+                                                <option value="kB" {{ $product->atrib_phone_men_int == 'kB' ? 'selected' : '' }}>kB</option>
                                             </select>
                                         </div>
                                     </div>
@@ -279,18 +285,18 @@
 
                                     <div class="col-2">
                                         <div class="form-group">
-                                            <label class="form-control-label">{{ trans('supplier.quantidade_memoria_ram') }}</label>
-                                            <input type="text" id="atrib_qtd_ram" class="form-control form-control-alternative" name="atrib_qtd_ram" placeholder="{{ trans('supplier.memoria_ram') }}" value="{{ old('atrib_qtd_ram', $product->atrib_qtd_ram) }}">
+                                            <label class="form-control-label">Qtd Men Ram</label>
+                                            <input type="text" id="atrib_qtd_ram" class="form-control form-control-alternative" name="atrib_qtd_ram" placeholder="Qtd Memoria Ram" value="{{ old('atrib_qtd_ram', $product->atrib_qtd_ram) }}">
                                         </div>
                                     </div>
 
                                     <div class="col-2">
                                         <div class="form-group">
-                                            <label class="form-control-label">{{ trans('supplier.memoria_ram') }}</label>
+                                            <label class="form-control-label">Memoria Ram</label>
                                             <select name="atrib_phone_ram" id="atrib_phone_ram" class="form-control">
-                                                <option value="GB" {{ $product->atrib_phone_ram == 'GB' ? 'selected' : '' }}>{{ trans('supplier.gb') }}</option>
-                                                <option value="MB" {{ $product->atrib_phone_ram == 'MB' ? 'selected' : '' }}>{{ trans('supplier.mb') }}</option>
-                                                <option value="kB" {{ $product->atrib_phone_ram == 'kB' ? 'selected' : '' }}>{{ trans('supplier.kb') }}</option>
+                                                <option value="GB" {{ $product->atrib_phone_ram == 'GB' ? 'selected' : '' }}>GB</option>
+                                                <option value="MB" {{ $product->atrib_phone_ram == 'MB' ? 'selected' : '' }}>MB</option>
+                                                <option value="kB" {{ $product->atrib_phone_ram == 'kB' ? 'selected' : '' }}>kB</option>
                                            
                                             </select>
                                         </div>
@@ -309,39 +315,39 @@
                             <div class="col-2">
                                     <div class="form-group">
                                        
-                                    <label class="form-control-label">{{ trans('supplier.cor') }}</label>
+                                    <label class="form-control-label">Cor</label>
                                             <select name="atrib_phone_cor" id="atrib_phone_cor" class="form-control">
-                                                <option value="52055"  {{ $product->atrib_phone_cor == '52055' ? 'selected' : '' }}>{{ trans('supplier.branco') }}</option>
-                                                <option value="52028" {{ $product->atrib_phone_cor == '52028' ? 'selected' : '' }}>{{ trans('supplier.azul') }}</option>
-                                                <option value="51993" {{ $product->atrib_phone_cor == '51993' ? 'selected' : '' }}>{{ trans('supplier.vermelho') }}</option>
-                                                <option value="283165" {{ $product->atrib_phone_cor == '283165' ? 'selected' : '' }}>{{ trans('supplier.cinza') }}</option>
-                                                <option value="52049" {{ $product->atrib_phone_cor == '52049' ? 'selected' : '' }}>{{ trans('supplier.preto') }}</option>
-                                                <option value="51994" {{ $product->atrib_phone_cor == '51994' ? 'selected' : '' }}>{{ trans('supplier.rosa') }}</option>
-                                                <option value="52014" {{ $product->atrib_phone_cor == '52014' ? 'selected' : '' }}>{{ trans('supplier.verde') }}</option>
-                                                <option value="283164" {{ $product->atrib_phone_cor == '283164' ? 'selected' : '' }}>{{ trans('supplier.dourado') }}</option>
-                                                <option value="52019" {{ $product->atrib_phone_cor == '52019' ? 'selected' : '' }}>{{ trans('supplier.verde_escuro') }}</option>
-                                                <option value="283160" {{ $product->atrib_phone_cor == '283160' ? 'selected' : '' }}>{{ trans('supplier.azul_turquesa') }}</option>
-                                                <option value="52022" {{ $product->atrib_phone_cor == '52022' ? 'selected' : '' }}>{{ trans('supplier.agua') }}</option>
-                                                <option value="283162" {{ $product->atrib_phone_cor == '283162' ? 'selected' : '' }}>{{ trans('supplier.indigo') }}</option>
-                                                <option value="52036" {{ $product->atrib_phone_cor == '52036' ? 'selected' : '' }}>{{ trans('supplier.lavanda') }}</option>
-                                                <option value="283163" {{ $product->atrib_phone_cor == '283163' ? 'selected' : '' }}>{{ trans('supplier.rosa_chiclete') }}</option>
-                                                <option value="51998" {{ $product->atrib_phone_cor == '51998' ? 'selected' : '' }}>{{ trans('supplier.bordo') }}</option>
-                                                <option value="52003" {{ $product->atrib_phone_cor == '52003' ? 'selected' : '' }}>{{ trans('supplier.nude') }}</option>
-                                                <option value="283161" {{ $product->atrib_phone_cor == '283161' ? 'selected' : '' }}>{{ trans('supplier.azul_marinho') }}</option>
-                                                <option value="52008" {{ $product->atrib_phone_cor == '52008' ? 'selected' : '' }}>{{ trans('supplier.creme') }}</option>
-                                                <option value="52045" {{ $product->atrib_phone_cor == '52045' ? 'selected' : '' }}>{{ trans('supplier.rosa_palido') }}</option>
-                                                <option value="283153" {{ $product->atrib_phone_cor == '283153' ? 'selected' : '' }}>{{ trans('supplier.palha') }}</option>
-                                                <option value="283150" {{ $product->atrib_phone_cor == '283150' ? 'selected' : '' }}>{{ trans('supplier.laranja_claro') }}</option>
-                                                <option value="52043" {{ $product->atrib_phone_cor == '52043' ? 'selected' : '' }}>{{ trans('supplier.rosa_claro') }}</option>
-                                                <option value="283148" {{ $product->atrib_phone_cor == '283148' ? 'selected' : '' }}>{{ trans('supplier.coral_claro') }}</option>
-                                                <option value="283149" {{ $product->atrib_phone_cor == '283149' ? 'selected' : '' }}>{{ trans('supplier.coral') }}</option>
-                                                <option value="52021" {{ $product->atrib_phone_cor == '52021' ? 'selected' : '' }}>{{ trans('supplier.azul_celeste') }}</option>
-                                                <option value="52031" {{ $product->atrib_phone_cor == '52031' ? 'selected' : '' }}>{{ trans('supplier.azul_aco') }}</option>
-                                                <option value="283156" {{ $product->atrib_phone_cor == '283156' ? 'selected' : '' }}>{{ trans('supplier.caqui') }}</option>
-                                                <option value="52001" {{ $product->atrib_phone_cor == '52001' ? 'selected' : '' }}>{{ trans('supplier.bege') }}</option>
-                                                <option value="52035" {{ $product->atrib_phone_cor == '52035' ? 'selected' : '' }}>{{ trans('supplier.violeta') }}</option>
-                                                <option value="283154" {{ $product->atrib_phone_cor == '283154' ? 'selected' : '' }}>{{ trans('supplier.marrom_claro') }}</option>
-                                                <option value="283155" {{ $product->atrib_phone_cor == '283155' ? 'selected' : '' }}>{{ trans('supplier.marrom_escuro') }}</option>
+                                                <option value="52055"  {{ $product->atrib_phone_cor == '52055' ? 'selected' : '' }}>Branco</option>
+                                                <option value="52028" {{ $product->atrib_phone_cor == '52028' ? 'selected' : '' }}>Azul</option>
+                                                <option value="51993" {{ $product->atrib_phone_cor == '51993' ? 'selected' : '' }}>Vermelho</option>
+                                                <option value="283165" {{ $product->atrib_phone_cor == '283165' ? 'selected' : '' }}>Cinza</option>
+                                                <option value="52049" {{ $product->atrib_phone_cor == '52049' ? 'selected' : '' }}>Preto</option>
+                                                <option value="51994" {{ $product->atrib_phone_cor == '51994' ? 'selected' : '' }}>Rosa</option>
+                                                <option value="52014" {{ $product->atrib_phone_cor == '52014' ? 'selected' : '' }}>Verde</option>
+                                                <option value="283164" {{ $product->atrib_phone_cor == '283164' ? 'selected' : '' }}>Dourado</option>
+                                                <option value="52019" {{ $product->atrib_phone_cor == '52019' ? 'selected' : '' }}>Verde Escuro </option>
+                                                <option value="283160" {{ $product->atrib_phone_cor == '283160' ? 'selected' : '' }}>Azul Turquesa</option>
+                                                <option value="52022" {{ $product->atrib_phone_cor == '52022' ? 'selected' : '' }}>Agua</option>
+                                                <option value="283162" {{ $product->atrib_phone_cor == '283162' ? 'selected' : '' }}>Indigo</option>
+                                                <option value="52036" {{ $product->atrib_phone_cor == '52036' ? 'selected' : '' }}>Lavanda</option>
+                                                <option value="283163" {{ $product->atrib_phone_cor == '283163' ? 'selected' : '' }}>Rosa Chiclete</option>
+                                                <option value="51998" {{ $product->atrib_phone_cor == '51998' ? 'selected' : '' }}>Bordo</option>
+                                                <option value="52003" {{ $product->atrib_phone_cor == '52003' ? 'selected' : '' }}>Nude</option>
+                                                <option value="283161" {{ $product->atrib_phone_cor == '283161' ? 'selected' : '' }}>Azul Marinho</option>
+                                                <option value="52008" {{ $product->atrib_phone_cor == '52008' ? 'selected' : '' }}>Creme</option>
+                                                <option value="52045" {{ $product->atrib_phone_cor == '52045' ? 'selected' : '' }}>Rosa Palido</option>
+                                                <option value="283153" {{ $product->atrib_phone_cor == '283153' ? 'selected' : '' }}>Palha</option>
+                                                <option value="283150" {{ $product->atrib_phone_cor == '283150' ? 'selected' : '' }}>laranja Claro</option>
+                                                <option value="52043" {{ $product->atrib_phone_cor == '52043' ? 'selected' : '' }}>Rosa Claro</option>
+                                                <option value="283148" {{ $product->atrib_phone_cor == '283148' ? 'selected' : '' }}>Cloral Claro</option>
+                                                <option value="283149" {{ $product->atrib_phone_cor == '283149' ? 'selected' : '' }}>Coral</option>
+                                                <option value="52021" {{ $product->atrib_phone_cor == '52021' ? 'selected' : '' }}>Azul Celeste</option>
+                                                <option value="52031" {{ $product->atrib_phone_cor == '52031' ? 'selected' : '' }}>Azul Aço</option>
+                                                <option value="283156" {{ $product->atrib_phone_cor == '283156' ? 'selected' : '' }}>Caqui</option>
+                                                <option value="52001" {{ $product->atrib_phone_cor == '52001' ? 'selected' : '' }}>Bege</option>
+                                                <option value="52035" {{ $product->atrib_phone_cor == '52035' ? 'selected' : '' }}>Violeta</option>
+                                                <option value="283154" {{ $product->atrib_phone_cor == '283154' ? 'selected' : '' }}>Marom Claro</option>
+                                                <option value="283155" {{ $product->atrib_phone_cor == '283155' ? 'selected' : '' }}>Marom Escuro</option>
                                               
                                             </select>
 
@@ -354,14 +360,14 @@
 
                                 <div class="col-3">
                                         <div class="form-group">
-                                            <label class="form-control-label">{{ trans('supplier.operadora') }}</label>
+                                            <label class="form-control-label">Operadora</label>
                                             <select name="atrib_phone_oper" id="atrib_phone_oper" class="form-control">
-                                                <option value="298335" {{ $product->atrib_phone_oper == '298335' ? 'selected' : '' }}>{{ trans('supplier.desbloqueado') }}</option>
-                                                <option value="298333" {{ $product->atrib_phone_oper == '298333' ? 'selected' : '' }}>{{ trans('supplier.claro') }}</option>
-                                                <option value="303172" {{ $product->atrib_phone_oper == '303172' ? 'selected' : '' }}>{{ trans('supplier.nextel') }}</option>
-                                                <option value="298334" {{ $product->atrib_phone_oper == '298334' ? 'selected' : '' }}>{{ trans('supplier.tim') }}</option>
-                                                <option value="298331" {{ $product->atrib_phone_oper == '298331' ? 'selected' : '' }}>{{ trans('supplier.oi') }}</option>
-                                                <option value="298332" {{ $product->atrib_phone_oper == '298332' ? 'selected' : '' }}>{{ trans('supplier.vivo') }}</option>
+                                                <option value="298335" {{ $product->atrib_phone_oper == '298335' ? 'selected' : '' }}>Desbloqueado</option>
+                                                <option value="298333" {{ $product->atrib_phone_oper == '298333' ? 'selected' : '' }}>Claro</option>
+                                                <option value="303172" {{ $product->atrib_phone_oper == '303172' ? 'selected' : '' }}>Nextel</option>
+                                                <option value="298334" {{ $product->atrib_phone_oper == '298334' ? 'selected' : '' }}>TIM</option>
+                                                <option value="298331" {{ $product->atrib_phone_oper == '298331' ? 'selected' : '' }}>Oi</option>
+                                                <option value="298332" {{ $product->atrib_phone_oper == '298332' ? 'selected' : '' }}>Vivo</option>
                                             
 
 
@@ -383,7 +389,7 @@
                                     <div class="flex-grow-1">
                                         <h3 class="mb-0">{{ __('supplier.options') }}</h3>
                                     </div>
-                                    <a href="#!" class="btn btn-sm btn-primary" onclick="add_option()"><i class="fas fa-plus mr-1"></i> {{ trans('supplier.adicionar') }} {{ __('supplier.options') }}</a>
+                                    <a href="#!" class="btn btn-sm btn-primary" onclick="add_option()"><i class="fas fa-plus mr-1"></i> Adicionar {{ __('supplier.options') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -416,7 +422,7 @@
                                     <div class="flex-grow-1">
                                         <h3 class="mb-0">{{ __('supplier.variants') }}</h3>
                                     </div>
-                                    <a href="#!" class="btn btn-sm btn-primary" onclick="add_variant()"><i class="fas fa-plus mr-1"></i> {{ trans('supplier.adicionar') }} {{ __('supplier.variants') }}</a>
+                                    <a href="#!" class="btn btn-sm btn-primary" onclick="add_variant()"><i class="fas fa-plus mr-1"></i> Adicionar {{ __('supplier.variants') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -445,12 +451,12 @@
                                 <div class="table-responsive">
                                     <table class="table table-borderless variant-fields-table">
                                         <thead>
-                                            <th>{{ trans('supplier.sku') }}</th>
+                                            <th>SKU</th>
                                             <th>{{ __('supplier.stock') }}</th>
                                             @foreach($product->options as $option)
                                                 <th class="option_{{ $option->id }}_th">{{ $option->name }}</th>
                                             @endforeach
-                                            <th class="after_option_th" variant_id="{{ $variant->id }}">{{ trans('supplier.money_price') }}</th>
+                                            <th class="after_option_th" variant_id="{{ $variant->id }}">Preço</th>
                                             @if($authenticated_user->id == 56)
                                                 <th>{{ __('supplier.factory_price') }}</th>
                                             @endif
@@ -463,7 +469,7 @@
                                         <tbody>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control-alternative" name="variants[{{ $variant->id }}][sku]" value="{{ $variant->sku }}" placeholder="{{ trans('supplier.sku') }}" required>
+                                                    <input type="text" class="form-control form-control-alternative" name="variants[{{ $variant->id }}][sku]" value="{{ $variant->sku }}" placeholder="SKU" required>
                                                 </div>
                                             </td>
                                             <td>
@@ -618,7 +624,7 @@
                                         <div class="flex-grow-1">
                                             <h3 class="mb-0">{{ __('supplier.automatic_discounts') }}</h3>
                                         </div>
-                                        <a href="#!" class="btn btn-sm btn-primary" onclick="add_discount()"><i class="fas fa-plus mr-1"></i> {{ trans('supplier.adicionar') }} {{ __('supplier.discount') }}</a>
+                                        <a href="#!" class="btn btn-sm btn-primary" onclick="add_discount()"><i class="fas fa-plus mr-1"></i> Adicionar {{ __('supplier.discount') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -631,20 +637,20 @@
                                             <table class='table table-borderless variant-fields-table'>
                                                 <thead>
                                                     <tr>
-                                                        <th>{{ trans('supplier.quantidade') }}</th>
-                                                        <th>{{ trans('supplier.discount') }}(%)</th>
+                                                        <th>Quantidade</th>
+                                                        <th>Desconto(%)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>                                                    
                                                     <tr>
                                                         <td>
                                                             <div class='form-group'>
-                                                                <input type="number" class='form-control form-control-alternative' name='new_discounts[{{$discount->id}}][quantity]' placeholder="{{ trans('supplier.quantidade') }}" value='{{$discount->quantity}}'>
+                                                                <input type="number" class='form-control form-control-alternative' name='new_discounts[{{$discount->id}}][quantity]' placeholder="Quantidade" value='{{$discount->quantity}}'>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class='form-group'>
-                                                                <input type="number" step="0.01" class='form-control form-control-alternative' name='new_discounts[{{$discount->id}}][value]' placeholder="{{ trans('supplier.discount') }}" value='{{$discount->value}}'>
+                                                                <input type="number" step="0.01" class='form-control form-control-alternative' name='new_discounts[{{$discount->id}}][value]' placeholder="Desconto" value='{{$discount->value}}'>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -688,20 +694,20 @@
                 <table class='table table-borderless variant-fields-table'>
                     <thead>
                         <tr>
-                            <th>{{ trans('supplier.quantidade') }}</th>
-                            <th>{{ trans('supplier.discount') }}(%)</th>
+                            <th>Quantidade</th>
+                            <th>Desconto(%)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>
                                 <div class='form-group'>
-                                    <input type="number" class='form-control form-control-alternative' name='new_discounts[0][quantity]' placeholder="{{ trans('supplier.quantidade') }}">
+                                    <input type="number" class='form-control form-control-alternative' name='new_discounts[0][quantity]' placeholder="Quantidade">
                                 </div>
                             </td>
                             <td>
                                 <div class='form-group'>
-                                    <input type="number" step="0.01" class='form-control form-control-alternative' name='new_discounts[0][value]' placeholder="{{ trans('supplier.discount') }}">
+                                    <input type="number" step="0.01" class='form-control form-control-alternative' name='new_discounts[0][value]' placeholder="Desconto">
                                 </div>
                             </td>
                             <td>
@@ -742,7 +748,7 @@
             <div class="table-responsive">
                 <table class="table table-borderless variant-fields-table">
                     <thead>
-                        <th>{{ trans('supplier.sku') }}</th>
+                        <th>SKU</th>
                         <th>{{ __('supplier.stock') }}</th>
                         @foreach($product->options as $option)
                             <th class="option_{{ $option->id }}_th">{{ $option->name }}</th>
@@ -760,7 +766,7 @@
                     <tbody>
                         <td>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-alternative" name="new_variants[0][sku]" placeholder="{{ trans('supplier.sku') }}" required>
+                                <input type="text" class="form-control form-control-alternative" name="new_variants[0][sku]" placeholder="SKU" required>
                             </div>
                         </td>
                         <td>

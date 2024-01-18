@@ -6,6 +6,8 @@ use App\Models\Shopplano;
 use Illuminate\Http\Request;
 use App\Models\Fornecedorplano;
 use App\Models\Admins;
+use App\Models\Store_invoice; 
+use App\Models\Supplier_invoice;
 
 class ShopplanoController extends Controller
 {
@@ -87,7 +89,7 @@ class ShopplanoController extends Controller
         $Shopplano = Shopplano::find($request->id);
     	$Shopplano->descricao = $request->descricao;
         $Shopplano->titulo = $request->titulo;
-        $Shopplano->valor = $request->valor;
+        $Shopplano->valor = strtr($request->valor, ',', '.');
         $Shopplano->ciclo = $request->ciclo;
         $Shopplano->status = $request->status;
         $Shopplano->destaque = $request->destaque;
@@ -108,7 +110,7 @@ class ShopplanoController extends Controller
         $forplano = Fornecedorplano::find($request->id);
     	$forplano->descricao = $request->descricao;
         $forplano->titulo = $request->titulo;
-        $forplano->valor = $request->valor;
+        $forplano->valor = strtr($request->valor, ',', '.');
         $forplano->ciclo = $request->ciclo;
         $forplano->status = $request->status;
         $forplano->destaque = $request->destaque;
@@ -191,8 +193,12 @@ class ShopplanoController extends Controller
 
     public function paid()   
     {
-
-        return view('admin.planos.paid');
+        $mes = date("m");
+        $admins = Admins::find(2);
+        $assinaturashop = Store_invoice::where('plan','<>' ,'FREE')->whereMonth('updated_at', $mes)->where('payment','paid')->orderBy('updated_at','desc')->get();
+        $assinaturafor = Supplier_invoice::where('plan','<>' ,'FREE')->whereMonth('updated_at', $mes)->where('payment','paid')->orderBy('updated_at','desc')->get();
+       
+        return view('admin.planos.paid', compact('assinaturashop', 'assinaturafor', 'admins' ) );
 
 
     }    

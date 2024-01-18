@@ -94,7 +94,7 @@
                 </div>
                 <div class="card-body">
                     <p class="mb-0">
-                        <b>{{ trans('supplier.id_document') }}:</b> {{ $supplier->document }} <br>
+                        <b>Documento de identificação:</b> {{ $supplier->document }} <br>
                         <b>Data de cadastro no {{ config('app.name') }}:</b> {{ date('d/m/Y', strtotime($supplier->created_at)) }}
                     </p>
                 </div>
@@ -110,9 +110,9 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>{{ trans('supplier.name') }}</th>
+                                <th>Nome</th>
                                 <th>Vendas na minha loja</th>
-                                <th>{{ trans('supplier.actions') }}</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,7 +122,7 @@
                                     <td>{{ $product->title }}</td>
                                     <td>0</td>
                                     <td>
-                                        <a href="{{ route('shop.products.show', $product->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="{{ trans('supplier.details') }}">
+                                        <a href="{{ route('shop.products.show', $product->id) }}" class="btn btn-primary btn-sm" tooltip="true" title="Detalhes">
                                             <i class="fas fa-fw fa-info"></i>
                                         </a>
                                     </td>

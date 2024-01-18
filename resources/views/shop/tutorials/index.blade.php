@@ -17,13 +17,13 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">{{ trans('supplier.tutoriais_title') }}</h3>
+                                <h3 class="mb-0">Tutoriais</h3>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                     @foreach($tutorial as $tuto)
-                        <h4>{{$tuto->descricao}} : <a href="{{$tuto->link}}" target="_blank">{{ trans('supplier.assistir_tutorial') }}</a></h4>                        
+                        <h4>{{$tuto->descricao}} : <a href="{{$tuto->link}}" target="_blank">Assitir tutorial</a></h4>                        
                      
                        @endforeach 
                     </div>

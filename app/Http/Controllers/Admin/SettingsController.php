@@ -64,7 +64,6 @@ class SettingsController extends Controller
 
         $admins = new Admins();
 
-        $admins = Admins::find(2);
         $admins->plano_f = $request->plano_f;
         $admins->plano_shop = $request->plano_shop;
         $admins->free_shop = $request->free_shop;
@@ -75,6 +74,8 @@ class SettingsController extends Controller
         $admins->pg_boleto = $request->pg_boleto;
         $admins->pg_cartao = $request->pg_cartao;
         $admins->bloq_acesso = $request->bloq_acesso;
+        $admins->price_catalog = $request->price_catalog; 
+        $admins->taxapix = $request->taxapix; 	
         
 
          

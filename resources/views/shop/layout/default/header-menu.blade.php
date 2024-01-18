@@ -29,7 +29,7 @@
         </div>
         <a href="{{ route('shop.profile') }}" class="dropdown-item">
             <i class="fas fa-user"></i>
-            <span>{{ trans('supplier.perfil_title') }}</span>
+            <span>Perfil</span>
         </a>
         <!-- <a href="{{ asset('examples/profile.html') }}" class="dropdown-item">
             <i class="ni ni-support-16"></i>
@@ -38,7 +38,7 @@
         <div class="dropdown-divider"></div>
         <a href="{{ route('shop.logout') }}" class="dropdown-item">
             <i class="fas fa-sign-out-alt"></i>
-            <span>{{ trans('supplier.logout_title') }}</span>
+            <span>Logout</span>
         </a>
     </div>
 </li>

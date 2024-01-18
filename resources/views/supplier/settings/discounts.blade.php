@@ -1,6 +1,6 @@
 @extends('supplier.layout.default')
 
-@section('title', __('supplier.configuracoes_descontos'))
+@section('title', 'Configurações - Descontos')
 
 @section('stylesheets')
     <style type="text/css">
@@ -27,7 +27,7 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">{{ trans('supplier.cadastrar_cupom') }}</h3>
+                                <h3 class="mb-0">Cadastrar cupom</h3>
                             </div>
                         </div>
                     </div>
@@ -37,29 +37,29 @@
                             <div class="row">
                                 <div class="col-lg-3 col-12">
                                     <div class="form-group">
-                                        <label>{{ trans('supplier.porcetagem_desconto') }}</label>
+                                        <label>% desconto</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-percentage"></i></span>
                                             </div>
-                                            <input type="number" name="percentage" id="percentage" placeholder="{{ trans('supplier.porcentagem') }}" class="form-control" min="0" max="100" value="" step=".01">
+                                            <input type="number" name="percentage" id="percentage" placeholder="Porcentagem" class="form-control" min="0" max="100" value="" step=".01">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-12">
                                     <div class="form-group">
-                                        <label>{{ trans('supplier.codigo') }}</label>
-                                        <input type="text" name="code" id="code" placeholder="{{ trans('supplier.codigo') }}" class="form-control" value="">
+                                        <label>Código</label>
+                                        <input type="text" name="code" id="code" placeholder="Código" class="form-control" value="">
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-12">
                                     <div class="form-group">
-                                        <label>{{ trans('supplier.product') }} (variante)</label>
+                                        <label>Produto (variante)</label>
                                         <select name="variant_id" id="variant_id" class="form-control">
                                             @forelse($variants as $var)
                                                 <option value="{{ $var->id }}">{{ $var->product->title }} - {{ $var->title }}</option>
                                             @empty
-                                                <option value="">{{ trans('supplier.nenhum_variante_cadastrada') }}</option>
+                                                <option value="">Nenhuma variante cadastrada</option>
                                             @endforelse
                                         </select>
                                     </div>
@@ -80,7 +80,7 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">{{ trans('supplier.cupons_cadastrados') }}</h3>
+                                <h3 class="mb-0">Cupons cadastrados</h3>
                             </div>
                         </div>
                     </div>
@@ -89,9 +89,9 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>{{ trans('supplier.codigo') }}</th>
-                                        <th>{{ trans('supplier.porcentagem') }}</th>
-                                        <th>{{ trans('supplier.variante') }}</th>
+                                        <th>Código</th>
+                                        <th>Porcentagem</th>
+                                        <th>Variante</th>
                                         <td></td>
                                     </tr>
                                 </thead>
@@ -107,7 +107,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4">{{ trans('supplier.nenhum_cupom_cadastrado') }}</td>
+                                            <td colspan="4">Nenhum cupom cadastrado</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

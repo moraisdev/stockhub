@@ -71,7 +71,7 @@
                                     <div class="col-lg-8 col-12">
                                         <div class="form-group">
                                             <label class="form-control-label" for="product_title">{{ __('supplier.tittle') }}</label>
-                                            <input type="text" id="product_title" class="form-control form-control-alternative" name="title" placeholder="{{ __('supplier.tittle') }}" value="{{ old('title') }}" required>
+                                            <input type="text" id="product_title" class="form-control form-control-alternative" name="title" placeholder="{{ __('supplier.tittle') }}" value="{{ old('title') }}">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -84,6 +84,12 @@
                                         <div class="form-group">
                                             <label class="form-control-label" for="product_ncm">EAN GTIN</label>
                                             <input type="text" id="product_ean_gtin" class="form-control form-control-alternative" name="ean_gtin" placeholder="{{ __('supplier.ean_gtin') }}" value="{{ old('ean_gtin') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="product_ncm">MARCA</label>
+                                            <input type="text" id="product_brand" class="form-control form-control-alternative" name="product_brand" placeholder="{{ __('supplier.product_brand') }}" value="{{ old('product_brand') }}">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -124,6 +130,7 @@
                                             <input type="checkbox" name="public" {{ (old('public') == 'on') ? 'checked' : '' }}> {{ __('supplier.public_product') }} <sup><i class="fas fa-question-circle" tooltip="true" title="{{ __('supplier.public_product_will_br') }}."></i></sup>
                                         </div>
                                     </div>
+
                                     @if(env('PARTICULAR') == 0)
                                     <div class="col-12">
                                         <div class="form-group">
@@ -131,10 +138,10 @@
                                         </div>
                                     </div>
                                     @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </div>        
+                </div>
+                </div>
+                </div> 
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-12">
@@ -347,6 +354,7 @@
                 <table class="table table-borderless variant-fields-table">
                     <thead>
                         <th>SKU</th>
+                        <th>{{ __('supplier.secondary') }}</th>
                         <th>{{ __('supplier.stock') }}</th>
                         <th class="after_option_th">{{ __('supplier.price') }}</th>
                         @if($authenticated_user->id == 56)
@@ -361,12 +369,17 @@
                     <tbody>
                         <td>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-alternative" name="new_variants[0][sku]" placeholder="SKU" required>
+                                <input type="text" class="form-control form-control-alternative" name="new_variants[0][sku]" placeholder="SKU">
                             </div>
                         </td>
                         <td>
                             <div class="form-group">
-                                <input type="number" class="form-control form-control-alternative" name="new_variants[0][stock]" placeholder="{{ __('supplier.stock_quantity') }}" required>
+                                <input type="text" class="form-control form-control-alternative" name="new_variants[0][sku_secondary]" placeholder="{{ __('supplier.secondary') }}">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <input type="number" class="form-control form-control-alternative" name="new_variants[0][stock]" placeholder="{{ __('supplier.stock_quantity') }}">
                             </div>
                         </td>
                         <td class="after_option_td" variant_id="0">
@@ -375,7 +388,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">$</span>
                                     </div>
-                                    <input type="text" class="form-control form-control-alternative decimal" name="new_variants[0][price]" placeholder="{{ __('supplier.money_price') }}" required>
+                                    <input type="text" class="form-control form-control-alternative decimal" name="new_variants[0][price]" placeholder="{{ __('supplier.money_price') }}">
                                 </div>
                             </div>
                         </td>
@@ -397,7 +410,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">R$</span>
                                     </div>
-                                    <input type="text" class="form-control form-control-alternative decimal" name="new_variants[0][cost]" placeholder="Custo" required>
+                                    <input type="text" class="form-control form-control-alternative decimal" name="new_variants[0][cost]" placeholder="Custo">
                                 </div>
                             </div>
                         </td>--}}
@@ -407,7 +420,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">g</span>
                                     </div>
-                                    <input type="number" class="form-control form-control-alternative" name="new_variants[0][weight_in_grams]" placeholder="{{ __('supplier.weight') }}" required>
+                                    <input type="number" class="form-control form-control-alternative" name="new_variants[0][weight_in_grams]" placeholder="{{ __('supplier.weight') }}">
                                 </div>
                             </div>
                         </td>

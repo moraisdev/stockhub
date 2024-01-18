@@ -36,71 +36,71 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.text_register_supplier_name') }}</label>
-                                        <input type="text" class="form-control" name="name" placeholder="{{ trans('supplier.nome_empresa') }}" value="{{ $authenticated_user->name }}" required>
+                                        <label class="control-label">Nome do Fornecedor</label>
+                                        <input type="text" class="form-control" name="name" placeholder="Nome da sua empresa" value="{{ $authenticated_user->name }}" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Seu nome</label>
-                                        <input type="text" class="form-control" name="responsible_name" placeholder="{{ trans('supplier.nome_responsavel_empresa') }}" value="{{ $authenticated_user->responsible_name }}">
+                                        <input type="text" class="form-control" name="responsible_name" placeholder="Nome do responsável pela empresa" value="{{ $authenticated_user->responsible_name }}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.text_email') }}</label>
-                                        <input type="email" class="form-control" placeholder="{{ trans('supplier.text_email') }}" value="{{ $authenticated_user->email }}" readonly>
+                                        <label class="control-label">Email</label>
+                                        <input type="email" class="form-control" placeholder="Email" value="{{ $authenticated_user->email }}" readonly>
                                     </div>
                                     <div class="form-group company_fields" style="display:none">
-                                        <label class="control-label">{{ trans('supplier.fantasy_name') }}</label>
-                                        <input type="text" class="form-control" name="fantasy_name" placeholder="{{ trans('supplier.fantasy_name') }}" value="{{ $authenticated_user->fantasy_name }}">
+                                        <label class="control-label">Nome Fantasia</label>
+                                        <input type="text" class="form-control" name="fantasy_name" placeholder="Nome Fantasia" value="{{ $authenticated_user->fantasy_name }}">
                                     </div>
                                     <div class="form-group company_fields" style="display:none">
-                                        <label class="control-label">{{ trans('supplier.company_name') }}</label>
-                                        <input type="text" class="form-control" name="corporate_name" placeholder="{{ trans('supplier.company_name') }}" value="{{ $authenticated_user->corporate_name }}">
+                                        <label class="control-label">Razão Social</label>
+                                        <input type="text" class="form-control" name="corporate_name" placeholder="Razão Social" value="{{ $authenticated_user->corporate_name }}">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.text_phone') }}</label>
+                                        <label class="control-label">Telefone</label>
                                         <input type="text" class="form-control phone" name="phone" placeholder="(11) 11111-1111" value="{{ $authenticated_user->phone }}" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Tipo de Documento</label>
                                         <select class="form-control" id="document_type">
                                             <option value="1" {{ strlen($authenticated_user->document) == 11 ? 'selected' : '' }}>CPF</option>
-                                            <option value="2" {{ strlen($authenticated_user->document) != 11 ? 'selected' : '' }}>{{ trans('supplier.cnpj') }}</option>
+                                            <option value="2" {{ strlen($authenticated_user->document) != 11 ? 'selected' : '' }}>CNPJ</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label" id="document_label">{{ trans('supplier.cnpj') }}</label>
-                                        <input type="text" class="form-control" name="document" id="document" placeholder="{{ trans('supplier.numero_documento') }}" value="{{ $authenticated_user->document }}" required>
+                                        <label class="control-label" id="document_label">CNPJ</label>
+                                        <input type="text" class="form-control" name="document" id="document" placeholder="Número do Documento" value="{{ $authenticated_user->document }}" required>
                                         <small class="field_error text-danger" style="display:none">Documento inválido.</small>
                                     </div>
                                     <div class="form-group company_fields" style="display:none">
-                                        <label class="control-label">{{ trans('supplier.state_registration') }}</label>
-                                        <input type="text" class="form-control" name="state_registration" placeholder="{{ trans('supplier.state_registration') }}" value="{{ $authenticated_user->state_registration }}">
+                                        <label class="control-label">Inscrição Estadual</label>
+                                        <input type="text" class="form-control" name="state_registration" placeholder="Inscrição Estadual" value="{{ $authenticated_user->state_registration }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.logradouro') }}</label>
-                                        <input type="text" class="form-control" name="street" placeholder="{{ trans('supplier.logradouro') }}" value="{{ $authenticated_user->address ? $authenticated_user->address->street : '' }}" required>
+                                        <label class="control-label">Logradouro</label>
+                                        <input type="text" class="form-control" name="street" placeholder="Logradouro" value="{{ $authenticated_user->address ? $authenticated_user->address->street : '' }}" required>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.numero') }}</label>
-                                        <input type="text" class="form-control" name="number" placeholder="{{ trans('supplier.numero') }}" value="{{ $authenticated_user->address ? $authenticated_user->address->number : '' }}" required>
+                                        <label class="control-label">Número</label>
+                                        <input type="text" class="form-control" name="number" placeholder="Número" value="{{ $authenticated_user->address ? $authenticated_user->address->number : '' }}" required>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.brotherhood') }}</label>
-                                        <input type="text" class="form-control" name="district" placeholder="{{ trans('supplier.brotherhood') }}" value="{{ $authenticated_user->address ? $authenticated_user->address->district : '' }}" required>
+                                        <label class="control-label">Bairro</label>
+                                        <input type="text" class="form-control" name="district" placeholder="Bairro" value="{{ $authenticated_user->address ? $authenticated_user->address->district : '' }}" required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.postal_code') }}</label>
+                                        <label class="control-label">CEP</label>
                                         <input type="text" class="form-control cep" name="zipcode" placeholder="11111-111" value="{{ $authenticated_user->address ? $authenticated_user->address->zipcode : '' }}" required>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.pais') }}</label>
+                                        <label class="control-label">País</label>
                                         <select class="form-control" name="country" id="country_select" required>
                                             <option value="Brazil" {{ !$authenticated_user->address || ($authenticated_user->address && $authenticated_user->address->country == 'Brasil') ? 'selected' : '' }}>Brasil</option>
                                         </select>
@@ -108,15 +108,15 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.estado') }}</label>
+                                        <label class="control-label">Estado</label>
                                         <select class="form-control" name="state_code" id="state_select" state="{{ $authenticated_user->address ? $authenticated_user->address->state_code : '' }}" required>
-                                            <option value="">{{ trans('supplier.selecione_pais_primeiro') }}</option>
+                                            <option value="">Selecione o país primeiro</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">{{ trans('supplier.city') }}</label>
+                                        <label class="control-label">Cidade</label>
                                         <select class="form-control" name="city" id="city_select" city="{{ $authenticated_user->address ? $authenticated_user->address->city : '' }}" required>
-                                            <option value="">{{ trans('supplier.selecione_estado_primeiro') }}</option>
+                                            <option value="">Selecione o estado primeiro</option>
                                         </select>
                                     </div>
                                 </div>
@@ -150,7 +150,7 @@
                             </div>
                             <div class="w-100 d-flex flex-wrap align-items-center justify-content-end">
                                 <div class="form-group text-center">
-                                    <a href='{{route('supplier.plans.index')}}' class="btn btn-danger" style="color: #fff;"><i class="fas fa-times"></i> {{ trans('supplier.back') }}</a>
+                                    <a href='{{route('supplier.plans.index')}}' class="btn btn-danger" style="color: #fff;"><i class="fas fa-times"></i> Voltar</a>
                                     <button class="btn btn-success" style="color: #fff;"><i class="fas fa-supplierping-cart"></i> Assinar Plano</button>
                                 </div>
                             </div>

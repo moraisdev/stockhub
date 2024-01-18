@@ -65,6 +65,9 @@ use App\Services\Shop\MercadolivreService;
 use App\Models\Mercadolivreapi;
 use App\Models\Products;
 use App\Models\ShopProducts;
+use Dsc\MercadoLivre\Resources\Order\Order;
+
+use App\Services\CitelService;
 
 class OrdersController extends Controller
 {
@@ -74,32 +77,19 @@ class OrdersController extends Controller
         if($shop->status == 'inactive'){
             return redirect()->back()->with('error', 'O pagamento de sua assinatura está pendente e o acesso ao pedidos foi desativado.');
         }
-
-        //tirei isso aqui por enquanto, vai buscar somente se clicar no botão ou por webhook
-        // if($shop->shopify_app && $shop->shopify_app->automatic_order_update){
-        //     $result = ShopifyService::getPaidOrders($shop);
-
-        //     if($result['status'] == 'success'){
-        //         foreach ($result['data'] as $shopify_order) {
-        //             ShopifyService::registerOrder($shop, $shopify_order);
-        //         }
-        //     }else{
-        //         return redirect()->back()->with($result['status'], $result['message']);
-        //     }
-        // }
         
         $ordersService = new OrdersService($shop);
         $ordersService->clearNoCustomerOrders();
         $orders = $ordersService->getPendingOrders();
         $mercadolivre = self::importOrderMercadolivre2();
-        
-
+        $apimercadolivreapi = Mercadolivreapi::where('shop_id' , $shop->id )->first();
+       
         //carrega o valor do dólar
 //        $dolar_price = CurrencyService::getDollarPrice();
 
         //quantidade total de pedidos pendentes
         $countOrders = $ordersService->getTotalCountPendingOrders();
-        return view('shop.orders.index', compact('orders', 'countOrders'));
+        return view('shop.orders.index', compact('orders', 'countOrders', 'apimercadolivreapi' ));
     }
 
     public function deleteGroup(Request $request){        
@@ -406,19 +396,8 @@ class OrdersController extends Controller
                 $shipping = new OrderShippings();
                 $shipping->supplier_id = $orderReturned->supplier_order->supplier->id;
                 $shipping->order_id = $newOrder->id;
-
-                // if($orderReturned->supplier_order->supplier->id == 56){ //caso seja a s2m2 adiciona os 4% de taxa no frete do produto também
-                //     $shipping_amount = $shipping_amount * 1.05;
-                // }
                 $shipping->amount = $shipping_amount;
                 $shipping->save();
-
-                //dd($newOrder->shippings);
-                //na fatura desconta o valor em produtos e consta somente o valor do frete, tem que fazer assim por conta da declaração de conteúdo da melhor envio
-                //$shop = Auth::guard('shop')->user();
-                //$order_ids = $request->order_ids;
-                //$orders = array($newOrder); //gambiarraça só pra usar essa função, mudar isso no futuro
-                //dd($orders);
 
                 //criar um novo grupo de faturas SupplierOrderGroup com somente essa fatura
                 $return = OrdersService::generate_supplier_orders_individual_order($newOrder);
@@ -478,12 +457,14 @@ class OrdersController extends Controller
 
     public function import(){
     	$shop = Auth::guard('shop')->user();
-
-    	$result = ShopifyService::getPaidOrders($shop);
+       
+    	$result = ShopifyService::getPaidOrdersLimit($shop);
+        
 
         if($result['status'] == 'success'){
             foreach ($result['data'] as $shopify_order) {
-                ShopifyService::registerOrder($shop, $shopify_order);
+               $orders = ShopifyService::registerOrder($shop, $shopify_order);
+            // dd($orders);
             }
         }else{
             return redirect()->back()->with($result['status'], $result['message']);
@@ -496,6 +477,7 @@ class OrdersController extends Controller
     	$shop = Auth::guard('shop')->user();
 
     	$result = WoocommerceService::getPaidOrders($shop);
+        
 
         if($result['status'] == 'success'){
             foreach ($result['data'] as $woocommerce_order) {
@@ -557,6 +539,7 @@ class OrdersController extends Controller
 		
 
         $result = CsvService::importCsvOrder($request);
+        
 	    
        
         $importMsgs = "";
@@ -570,6 +553,11 @@ class OrdersController extends Controller
                 $sku =  $csv_order['SKU'];
 
                 $buscproduct = ProductVariants::where('sku', $sku)->first();
+                if(!$buscproduct){
+                    $buscproduct = Products::where('sku', $sku)->first();
+
+                }
+                
                  
                 
                 
@@ -582,23 +570,23 @@ class OrdersController extends Controller
                     break;
                 }
 
-				if((!$csv_order['CPF']) and (!$csv_order['Rastreio']) ) {
+				if((!$csv_order['CPF'])) {
 				//return $csv_order["Cliente"]." não possui CPF. ";
-				return redirect()->route('shop.orders.index')->with('error', 'Erro planilha não foi importada Pedido com cpf invalido ou sem rastreio, Pedido com codigo: '.$csv_order['Código Pedido']);
+				return redirect()->route('shop.orders.index')->with('error', 'Erro planilha não foi importada Pedido com cpf invalido, Pedido com codigo: '.$csv_order['Código Pedido']);
 				break;
 				}
-				if((!$csv_order['CEP']) and (!$csv_order['Rastreio'])) {
+				if((!$csv_order['CEP'])) {
 				//return $csv_order["Cliente"]." não possui CPF. ";
-				return redirect()->route('shop.orders.index')->with('error', 'Erro planilha não foi importada Pedido com cep invalido ou sem rastreio, Pedido com codigo: '.$csv_order['Código Pedido']);
+				return redirect()->route('shop.orders.index')->with('error', 'Erro planilha não foi importada Pedido com cep invalido, Pedido com codigo: '.$csv_order['Código Pedido']);
 				break;
 				}
-				if(($countcpf <=  9) and (!$csv_order['Rastreio']) ) { 
+				if(($countcpf <=  9)) { 
 				//return $csv_order["Cliente"]." não possui CPF. ";
 				return redirect()->route('shop.orders.index')->with('error', 'Erro planilha não foi importada Pedido com cpf invalido, Pedido com codigo: '.$csv_order['Código Pedido']);
 				break;
 				}
 				
-				if(($countcep <=  7) and (!$csv_order['Rastreio'])) { 
+				if(($countcep <=  7)) { 
 				//return $csv_order["Cliente"]." não possui CPF. ";
 				return redirect()->route('shop.orders.index')->with('error', 'Erro planilha não foi importada Pedido com cep invalido: '.$csv_order['Código Pedido']);
 				break;
@@ -614,8 +602,9 @@ class OrdersController extends Controller
 				//dd($csv_order['CPF']);
 				 
                 $responseCsvOrder = CsvService::registerOrder($shop, $csv_order, $labels);
-                //dd($responseCsvOrder);
+                
                 $importMsgs .= $responseCsvOrder != true && $responseCsvOrder != '' ? $responseCsvOrder : '';
+                
             }
         }else{
             return redirect()->back()->with($result['status'], $result['message']);
@@ -654,7 +643,7 @@ class OrdersController extends Controller
     }
 
     public function paid_groups(){
-        $title = 'Faturas pagas';
+        $title = 'Pedidos pagos';
         $shop_id = Auth::guard('shop')->id();
         $groups = SupplierOrderGroup::with('orders')->where('status', 'paid')->where('shop_id', $shop_id)->orderBy('id', 'desc')->get();
 
@@ -662,7 +651,6 @@ class OrdersController extends Controller
     }
 
     public function group_detail($id){
-        //antes verifica se a fatura ficou vazia, caso tenha ficado, exclui ela tbm e retorna pra tela de faturas pendentes
         $shop = Auth::guard('shop')->user();
         $admins = Admins::find(2);
 
@@ -690,7 +678,6 @@ class OrdersController extends Controller
     public function pay_group($group_id, Request $request){
         $shop = Auth::guard('shop')->user();
         $group = SupplierOrderGroup::with('orders')->find($request->group_id);
-       // $group = SupplierOrderGroup::where('shop_id', $shop->id)->find($request->group_id);
         $service = new OrdersService($shop);
        
 
@@ -733,6 +720,7 @@ class OrdersController extends Controller
         
         if($metododepg == 'pix'){
             $teste = $gerencianet->pay($supplier , $group , $metododepg , $orders , $shop );
+            
             return redirect()->back()->with([$teste['status'] => $teste['message']]);
 
 
@@ -759,6 +747,7 @@ class OrdersController extends Controller
         $suporders = SupplierOrders::where('group_id' , $request->grupo)->first();
         $supplier = Suppliers::where('id' , $suporders->supplier_id)->first(); 
         $orders = Orders::where('id' , $suporders->order_id)->first();
+        $admins = Admins::find(2);
 
         $gerencianet = new Gerencianetpay(); 
        
@@ -782,6 +771,38 @@ class OrdersController extends Controller
             $suporders->save();
             $orders->status =  'paid';
             $orders->save();
+
+            if($admins->citel == 1 ){
+            $order = Orders::where('id' ,$suporders->order_id )->first();
+            $customers = Customers::where('id' ,$order->customer_id )->first();
+            $customersandress = CustomerAddresses::where('customer_id', $customers->id)->first();
+
+            $orderitems = OrderItems::where('order_id' ,$suporders->order_id )->get();
+            
+            $consultaclientecitel = CitelService::getConsCliente($customers->cpf);
+            
+            if($consultaclientecitel['status'] == '200'){
+
+               $dadoscliente =  $consultaclientecitel['resposta'];
+               
+               $codclientecitel = $dadoscliente->codigoCliente;
+               $ordercitel = CitelService::getPaidOrders($codclientecitel, $orderitems, $order );
+               
+            }else {
+                $cadclientecitel = CitelService::getCadCliente($customers , $customersandress );
+                
+                 if ($cadclientecitel['status'] == '200'){
+                    $dadoscliente =  $consultaclientecitel['resposta'];
+               
+                    $codclientecitel = $dadoscliente->codigoCliente;
+                    $ordercitel = CitelService::getPaidOrders( $codclientecitel, $orderitems, $order );
+                    
+
+                 }
+                    
+            }
+        }
+
 
             
         }
@@ -1202,7 +1223,7 @@ public function updateOrderTrackingNumberBling(Request $request , $order_id){
         $apimercadolivre = Mercadolivreapi::where('shop_id',$shop->id )->first();
        
         $order_ml =   MercadolivreService::getOrder($apimercadolivre);
-      
+       
      	
         if ($apimercadolivre->seller_id_ml <> null){
          //   dd($order_ml);
@@ -1256,13 +1277,40 @@ public function updateOrderTrackingNumberBling(Request $request , $order_id){
 		if($shopproduct){
 			if ($ordertag == "not_delivered" ){
 				
-             MercadolivreService::registerOrder($shop, $order);
+                           
+              MercadolivreService::registerOrder($shop, $order);
+             
+
 			}	
 			
 			
 			
 		}	
 		}
+
+       
+        if($order){
+            $orderat =  Orders::where('external_id' , $order->id)->first(); 
+            
+            $gerorder =  MercadolivreService::getAnuncio($apimercadolivre , $orderat );
+            
+            if ($gerorder['status'] == 200){  
+                if(isset($gerorder['anuncio']->tracking_number)){
+                    $orderat->tracking_number = $gerorder['anuncio']->tracking_number;
+                    $orderat->tracking_servico = $gerorder['anuncio']->tracking_method;
+                    $orderat->save();
+
+                }               
+                
+             }
+            }   
+
+
+
+
+
+
+
         }    
 
     }else{
@@ -1279,6 +1327,10 @@ public function updateOrderTrackingNumberBling(Request $request , $order_id){
         }
 
     }     
+
+
+
+
         
             return redirect()->route('shop.orders.index')->with('success', 'Pedidos importados com sucesso.');
        

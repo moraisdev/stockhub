@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Orders;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -16,6 +17,10 @@ use App\Services\Shop\CsvService;
 use App\Models\ProductVariants;
 use App\Models\Suppliers;
 use App\Models\Shops;
+use App\Services\CitelService;
+use App\Models\Customers;
+use App\Models\CustomerAddresses;
+use App\Models\OrderItems;
 
 
 use App\Models\ShopContractedPlans;
@@ -62,18 +67,20 @@ class BlingController extends Controller
 
         $product = new Products();
         $respimg3 = $product->get();
-                                        
-                                                                              
-     //   foreach ($respimg3 as $img){
-     //       $verificaimagem = ProductImages::where('product_id', $img->id)->get(); 
-     //           foreach($verificaimagem as $imagens){
-     //               $validacao = CsvService::validarext($imagens->src);   
-     //                 if ($validacao == false) {
-     //                       $imagens->delete();                                                    
-     //                   }    
-     //               }    
-    //            }
+        $productimg =  ProductImages::all();
+        
+        
     
+        foreach ($productimg as $img){
+            $validacao = CsvService::validarext($img->src);
+            if($validacao == false){
+               
+              
+                  $img->delete();
+            }
+             
+
+        }    
             $suppliers = Suppliers::get();
             
 
@@ -181,11 +188,43 @@ class BlingController extends Controller
 
 
 
+        }   
+
+        
+        public function citel(){
+
+            $id = 66;
+            
+            $order = Orders::where('id' ,$id )->first();
+            $customers = Customers::where('id' ,$order->customer_id )->first();
+            $customersandress = CustomerAddresses::where('customer_id', $customers->id)->first();
+
+            $orderitems = OrderItems::where('order_id' ,$id )->get();
+            
+            $consultaclientecitel = CitelService::getConsCliente($customers->cpf);
+            
+            if($consultaclientecitel['status'] == '200'){
+
+               $dadoscliente =  $consultaclientecitel['resposta'];
+               
+               $codclientecitel = $dadoscliente->codigoCliente;
+               $ordercitel = CitelService::getPaidOrders($codclientecitel, $orderitems, $order );
+               
+            }else {
+                $cadclientecitel = CitelService::getCadCliente($customers , $customersandress );
+                
+                 if ($cadclientecitel['status'] == '200'){
+                    $dadoscliente =  $consultaclientecitel['resposta'];
+               
+                    $codclientecitel = $dadoscliente->codigoCliente;
+                    $ordercitel = CitelService::getPaidOrders( $codclientecitel, $orderitems, $order );
+                    
+
+                 }
+                    
+            }
+            
+           
         }    
-          
-
-
-
-
 
 }

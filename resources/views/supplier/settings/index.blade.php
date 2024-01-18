@@ -1,6 +1,6 @@
 @extends('supplier.layout.default')
 
-@section('title', __('supplier.configuracoes_title'))
+@section('title', 'Configurações')
 
 @section('stylesheets')
 <style type="text/css">
@@ -35,7 +35,7 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="mb-0">{{ trans('supplier.plano') }} {{config('app.name')}}</h3>                                
+                            <h3 class="mb-0">Plano {{config('app.name')}}</h3>                                
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                                 <h3>{{$planoSupplier->Plan->Name}}</h3>
                                 <p>
                                     Situação: <b>{{$planoSupplier->SubscriptionStatus->Name}}</b><br>
-                                    {{ trans('supplier.price') }}: <b>R$ {{ number_format($planoSupplier->Plan->Amount, 2,',','.')}} / {{$planoSupplier->Plan->PlanFrequence->Name}}</b>
+                                    Valor: <b>R$ {{ number_format($planoSupplier->Plan->Amount, 2,',','.')}} / {{$planoSupplier->Plan->PlanFrequence->Name}}</b>
                                     <br>
                                     Método de pagamento: <b>{{$planoSupplier->PaymentMethod->Name}}</b>
                                     <br>
@@ -56,7 +56,7 @@
                                 </p>
                                 {{-- Só exibe caso tenha algum cancelamento e a data ainda não tenha chegado --}}
                                 @if($authenticated_user->canceled_plan && $authenticated_user->canceled_plan->status == 'pending' && strtotime(date('Y-m-d')) <= strtotime($authenticated_user->canceled_plan->change_date))
-                                    <small>* Há um cancelamento agendado para a data <b>{{date("d/m/Y", strtotime($authenticated_user->canceled_plan->change_date))}}</b>, a partir dessa data a sua conta voltará para o plano <b>{{ trans('supplier.gratuito') }}</b></small>
+                                    <small>* Há um cancelamento agendado para a data <b>{{date("d/m/Y", strtotime($authenticated_user->canceled_plan->change_date))}}</b>, a partir dessa data a sua conta voltará para o plano <b>Gratuito</b></small>
                                 @endif                                
                             </div>
                             <div class="form-group text-center">   
@@ -67,7 +67,7 @@
                                 <div class="form-group">
                                     <h3>Plano Gratuito</h3>
                                     <p>
-                                    {{ trans('supplier.situacao') }}: <b>{{ trans('supplier.ativa') }}</b><br>
+                                        Situação: <b>Ativa</b><br>
                                     </p>
                                     {{-- Mensagens do plano gratuito --}}
                                     @if($stringPlanoGratuito != '')
@@ -117,19 +117,19 @@
                                     <div class="form-group">
                                         <label>Gerar código de rastreio automático ao enviar pedido pro bling</label>
                                         <select name="bling_automatic_tracking_code" id="bling_automatic_tracking_code" class="form-control">
-                                            <option value="false" {{ $authenticated_user->bling_automatic_tracking_code == 'false' ? 'selected' : '' }}>{{ trans('supplier.nao') }}</option>
-                                            <option value="true" {{ $authenticated_user->bling_automatic_tracking_code == 'true' ? 'selected' : '' }}>{{ trans('supplier.sim') }}</option>
+                                            <option value="false" {{ $authenticated_user->bling_automatic_tracking_code == 'false' ? 'selected' : '' }}>Não</option>
+                                            <option value="true" {{ $authenticated_user->bling_automatic_tracking_code == 'true' ? 'selected' : '' }}>Sim</option>
                                         </select>
                                     </div>
                                     <div class='form-group'>
                                         <p>Aceitar pedidos mesmo com estoque zerado?</p>
                                         <div class="custom-control custom-radio mb-3">
                                             <input type="radio" id="radio_stock1" name="radio_stock" class="custom-control-input" {{ $authenticated_user->empty_stock_bling == 'sim' ? 'checked' : '' }} value='sim'>
-                                            <label class="custom-control-label" for="radio_stock1">{{ trans('supplier.sim') }}</label>
+                                            <label class="custom-control-label" for="radio_stock1">Sim</label>
                                         </div>
                                         <div class="custom-control custom-radio">
                                             <input type="radio" id="radio_stock2" name="radio_stock" class="custom-control-input"  {{ $authenticated_user->empty_stock_bling == 'nao' ? 'checked' : '' }} value='nao'>
-                                            <label class="custom-control-label" for="radio_stock2">{{ trans('supplier.nao') }}</label>
+                                            <label class="custom-control-label" for="radio_stock2">Não</label>
                                         </div>
                                     </div>
                                 </div>
@@ -296,7 +296,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>{{ trans('supplier.product') }}</label>
+                            <label>Produto</label>
                             <select name="product_id" class="form-control">
                                 @forelse($variants as $v)
                                     <option value="{{ $v->id }}">{{ $v->title }}</option>
@@ -335,7 +335,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label>{{ trans('supplier.text_password') }}</label>
+                                    <label>Senha</label>
                                     <input type="password" name="password" class="form-control" placeholder="Senha de produção" value="{{ $authenticated_user->total_express_settings ? $authenticated_user->total_express_settings->password : '' }}">
                                 </div>
                             </div>
@@ -457,6 +457,47 @@
                 </div>
             </div>
 
+            <br>
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">Configurações Autocom-Citel</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <form method="POST" action="{{ route('supplier.settings.update_autocom') }}">
+                        @csrf
+                        <p>Você pode adicionar login e senha de autenticação</p>
+                        <div class="row">
+                        <div class="col-lg-9 col-12">
+                        <div class="form-group">
+                                    <label>Usuario</label>
+                                    <div class="input-group">
+                                        <input type="text" name="usuario_autocom" placeholder="usuario" class="form-control" value="{{ ($authenticated_user->usuario_autocom) ? $authenticated_user->usuario_autocom : '' }}">
+                                    </div>
+                                </div>
+                        </div>        
+                        <div class="col-lg-9 col-12">
+                                <div class="form-group">
+                                    <label>Senha</label>
+                                    <div class="input-group">
+                                        <input type="text" name="senha_autocom" placeholder="senha" class="form-control" value="{{ ($authenticated_user->senha_autocom) ? $authenticated_user->senha_autocom : '' }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-12">
+                                <div class="form-group">
+                                    <label class="d-block">&nbsp;</label>
+                                    <button class="btn btn-success btn-block pull-right"><i class="fas fa-check"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             
 
 
@@ -482,8 +523,8 @@
                                 <div class="form-group">
                                     <label>Ativar contrato?</label>
                                     <select name="active" id="active" class="form-control">
-                                        <option value="0" {{ old('active') && old('active') == 0 ? 'selected' : ($contract && $contract->active == 0 ? 'selected' : '') }}>{{ trans('supplier.nao') }}</option>
-                                        <option value="1" {{ old('active') && old('active') == 1 ? 'selected' : ($contract && $contract->active == 1 ? 'selected' : '') }}>{{ trans('supplier.sim') }}</option>
+                                        <option value="0" {{ old('active') && old('active') == 0 ? 'selected' : ($contract && $contract->active == 0 ? 'selected' : '') }}>Não</option>
+                                        <option value="1" {{ old('active') && old('active') == 1 ? 'selected' : ($contract && $contract->active == 1 ? 'selected' : '') }}>Sim</option>
                                     </select>
                                 </div>
                             </div>
@@ -495,8 +536,8 @@
                             </div>
                             <div class="col-lg-6 col-12">
                                 <div class="form-group">
-                                    <label>{{ trans('supplier.text_password') }}</label>
-                                    <input type="text" name="sigep_password" placeholder="{{ trans('supplier.text_password') }} SIGEP WEB" class="form-control" value="{{ old('sigep_password') ? old('sigep_password') : ($contract && $contract->sigep_password ? $contract->sigep_password : '') }}">
+                                    <label>Senha</label>
+                                    <input type="text" name="sigep_password" placeholder="Senha SIGEP WEB" class="form-control" value="{{ old('sigep_password') ? old('sigep_password') : ($contract && $contract->sigep_password ? $contract->sigep_password : '') }}">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12">
@@ -553,8 +594,10 @@
                 </div>
             </div>
             @endif
-
-            <div class="card shadow mb-4">
+            
+            <br>
+            <div class="col-lg-12 col-12 mb-6 mb-xl-0">
+            <div class="card shadow">
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
@@ -589,26 +632,9 @@
                     </form>
                 </div>
             </div>
-            
-            <div class="card shadow mb-4">
-                <div class="card-header border-0">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h3 class="mb-0">{{ trans('supplier.button_language_nav') }}</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <p>Escolha o idioma da plataforma.</p>
-                    <div class="form-group mb-0">
-                        <select name="language-selector-name" id="language-selector" class="form-control">
-                            <option value="">{{ trans('supplier.selecione_idioma_title') }}</option>
-                            <option value="pt-br">Português</option>
-                            <option value="zh">普通话</option>
-                        </select>
-                    </div>
-                </div>
             </div>
+
+        
                 
             @if($authenticated_user->id == 56)
             {{-- Caso seja igual ao id da S2M2 --}}
@@ -729,21 +755,4 @@
 
         updateShippingType();
     </script>
-
-
-<script>
-    $(document).ready(function() {
-        $('select[name="language-selector-name"]').on('change', function(event) {
-            event.preventDefault();
-            var lang = $(this).val();
-            var date = new Date();
-            date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
-            var expires = "; expires=" + date.toGMTString();
-            document.cookie = "lang=" + lang + expires + "; path=/";
-            location.reload();
-        });
-    });
-</script>
-
-
 @endsection

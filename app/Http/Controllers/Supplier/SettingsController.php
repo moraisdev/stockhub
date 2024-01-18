@@ -482,4 +482,19 @@ class SettingsController extends Controller
             return redirect()->back()->with('error', 'Erro ao configurar etiqueta, tente novamente mais tarde.');
         }      
     }
+
+    public function updateAutocom(Request $request){
+        //remove as configurações da melhor envio
+        $supplier = Auth::user();
+        
+        
+        $supplier->usuario_autocom = $request->usuario_autocom;
+        $supplier->senha_autocom = $request->senha_autocom;
+
+        if($supplier->update()){
+            return redirect()->back()->with('success', 'Autocom configurada com sucesso.');
+        }else{
+            return redirect()->back()->with('error', 'Erro ao configurar Autocom, tente novamente mais tarde.');
+        }      
+    }
 }

@@ -286,7 +286,6 @@ class OrdersController extends Controller
 
     public static function updateAutomaticShippingMelhorEnvio($order_id, $supplier){
         try {
-            //$supplier = Auth::user();
             $supplier_order = SupplierOrders::where('supplier_id', $supplier->id)->find($order_id);
 
             $shipping = SupplierOrderShippings::firstOrCreate(['supplier_id' => $supplier->id, 'supplier_order_id' => $supplier_order->id]);
@@ -306,36 +305,22 @@ class OrdersController extends Controller
 
             if($supplier_order->order->external_service == 'shopify' /*&& $request->status == 'sent'*/ && $shipping->external_fulfillment_id == null){
                 $response = ShopifyService::updateOrderShipping($supplier_order, $supplier_order->order->external_id, $shipping);
-                //echo $supplier_order->order->name."deu certo<br>";
                 
             }
 
             if($supplier_order->order->external_service == 'shopify' /*&& $request->status != 'pending'*/ && $shipping->external_fulfillment_id != null){
                 $response = ShopifyService::updateFulfillment($supplier_order, $shipping);
-                //echo $supplier_order->order->name."deu certo<br>";
                 
             }
             if($supplier_order->order->external_service == 'woocommerce' /*&& $request->status == 'sent'*/ && $shipping->external_fulfillment_id == null){
                 $response = WoocommerceService::updateOrderShipping($supplier_order, $supplier_order->order->external_id, $shipping);
-                //echo $supplier_order->order->name."deu certo<br>";
                 
             }
 
             if($supplier_order->order->external_service == 'woocommerce' /*&& $request->status != 'pending'*/ && $shipping->external_fulfillment_id != null){
                 $response = WoocommerceService::updateFulfillment($supplier_order, $shipping);
-                //echo $supplier_order->order->name."deu certo<br>";
                 
             }
-
-            // if($supplier_order->order->external_service == 'shopify' && $request->status == 'pending' && $shipping->external_fulfillment_id != null){
-            //     $response = ShopifyService::cancelFulfillment($supplier_order, $shipping);
-
-            //     if(!$response){
-            //         return redirect()->route('supplier.orders.index', ['status' => 'sent'])->with('error', 'Aconteceu algum erro inesperado. Tente novamente em alguns minutos.');
-            //     }
-
-            //     $shipping->external_fulfillment_id = null;
-            // }
 
             //Cartx
             if($supplier_order->order->external_service == 'cartx' /*&& $request->status == 'sent'*/ && $shipping->external_fulfillment_id == null){
@@ -349,36 +334,19 @@ class OrdersController extends Controller
             if($supplier_order->order->external_service == 'cartx' /*&& $request->status != 'pending'*/ && $shipping->external_fulfillment_id != null){
                 $response = CartxService::updateFulfillment($supplier_order, $shipping);
 
-                // if(!$response){
-                //     return redirect()->route('supplier.orders.index', ['status' => 'sent'])->with('error', 'Aconteceu algum erro inesperado. Tente novamente em alguns minutos.');
-                // }
             }
 
-            // if($supplier_order->order->external_service == 'cartx' && $request->status == 'pending' && $shipping->external_fulfillment_id != null){
-            //     $response = CartxService::cancelFulfillment($supplier_order, $shipping);
-
-            //     if(!$response){
-            //         return redirect()->route('supplier.orders.index', ['status' => 'sent'])->with('error', 'Aconteceu algum erro inesperado. Tente novamente em alguns minutos.');
-            //     }
-
-            //     $shipping->external_fulfillment_id = null;
-            // }
 
             if($shipping->save()){
-                //echo $supplier_order->order->name."deu certo<br>";
-                //Mail::to($supplier_order->order->shop->email)->send(new UpdatedTrackingCode($supplier_order->order->shop->email));
-                
-                //return redirect()->route('supplier.orders.index', ['status' => $request->status])->with('success', 'Código de rastreio do pedido atualizado com sucesso.');
+
             }else{
-                //echo $supplier_order->order->name."deu ERRADO<br>";
-                //return redirect()->route('supplier.orders.index', ['status' => $request->status])->with('error', 'Aconteceu algum erro inesperado. Tente novamente em alguns minutos.');
+
                 
             }
         } catch (\Exception $e) {
             report($e);
             ErrorLogs::create(['status' => $e->getCode(), 'message' => $e->getMessage(), 'file' => $e->getFile()]);
-            //echo $supplier_order->order->name."deu ERRADO<br>";
-            //return redirect()->route('supplier.orders.index', ['status' => 'pending'])->with('error', 'Aconteceu algum erro inesperado. Tente novamente em alguns minutos.');
+
         }
         
     }
@@ -396,7 +364,6 @@ class OrdersController extends Controller
 
             $shipping = SupplierOrderShippings::firstOrCreate(['supplier_id' => $supplier->id, 'supplier_order_id' => $supplier_order->id]);
 
-            // Caso o pedido esteja sendo marcado como enviado
             if($shipping->status == null){
                 foreach ($supplier_order->items as $item) {
                     if($item->variant->stock){
@@ -552,9 +519,7 @@ class OrdersController extends Controller
             }
 
             if($shipping->save()){
-                //Mail::to($supplier_order->order->shop->email)->send(new UpdatedTrackingCode($supplier_order->order->shop->email));
-                
-                 // atualizar status do pedido do bling para atendido
+
             if($supplier_order->exported_to_bling == 1){
                 $supplier_order = $supplier_order->display_id;
 
@@ -584,11 +549,6 @@ class OrdersController extends Controller
         $supplier_order = SupplierOrders::where('supplier_id', $supplier->id)->find($order_id);
         $order = Orders::where('id' , $supplier_order->order_id)->first();
         $apimercadolivre = Mercadolivreapi::where('shop_id' , $order->shop_id)->first();
-        
-       
-
-        
-     
         $shipping->external_service = $supplier_order->order->external_service;
 
         
@@ -599,7 +559,6 @@ class OrdersController extends Controller
             if($supplier_order->order->external_service == 'shopify' && $shipping->external_fulfillment_id == null){
                 $response = ShopifyService::updateOrderShipping($supplier_order, $supplier_order->order->external_id, $shipping);
                 if(!$response){
-                    //return redirect()->route('supplier.orders.index', ['status' => 'pending'])->with('error', 'Aconteceu algum erro inesperado. Tente novamente em alguns minutos.');
                     array_push($errorOrders, $supplier_order->f_display_id.' - Erro ao atualizar no Shopify.');
                 }
             }
@@ -609,7 +568,6 @@ class OrdersController extends Controller
                 $response = CartxService::updateOrderShipping($supplier_order, $supplier_order->order->external_id, $shipping);
 
                 if(!$response){
-                    //return redirect()->route('supplier.orders.index', ['status' => 'pending'])->with('error', 'Aconteceu algum erro inesperado. Tente novamente em alguns minutos.');
                     array_push($errorOrders, $supplier_order->f_display_id.' - Erro ao atualizar no Cartx.');
                 }
             }
@@ -619,7 +577,6 @@ class OrdersController extends Controller
                 $response = WoocommerceService::updateOrderShipping($supplier_order, $supplier_order->order->external_id, $shipping);
 
                 if(!$response){
-                    //return redirect()->route('supplier.orders.index', ['status' => 'pending'])->with('error', 'Aconteceu algum erro inesperado. Tente novamente em alguns minutos.');
                     array_push($errorOrders, $supplier_order->f_display_id.' - Erro ao atualizar no Cartx.');
                 }
             }
@@ -788,6 +745,8 @@ class OrdersController extends Controller
 
     public function printTag($order_id){
         $supplier = Auth::user();
+        $mytime = date('Y-m-d H:i:s');
+       
 
         
 
@@ -796,8 +755,8 @@ class OrdersController extends Controller
         }
 
         $supplier_order = SupplierOrders::where('supplier_id', $supplier->id)->find($order_id);
-         $shipping = SupplierOrderShippings::where('supplier_id', $supplier->id)->find($order_id);
-
+         $shipping = SupplierOrderShippings::where('supplier_id', $supplier->id)->where('supplier_order_id' , $order_id )->first();
+        
       
          if ($shipping->external_service == 'bling_service') {
 
@@ -806,17 +765,38 @@ class OrdersController extends Controller
 
         if ($shipping->external_service == 'mercadolivre') {
             $order = Orders::where('id' , $supplier_order->order_id)->first();
-            $apimercadolivre = Mercadolivreapi::where('shop_id' , $order->shop_id)->first();
-		     
+            $apimercadolivre = Mercadolivreapi::where('shop_id' , $order->shop_id)->first();	   
+         
             $gerorder =  MercadolivreService::getAnuncio($apimercadolivre , $order );
            
+            
+           
             if ($order->shipping_ml){
+
+                if ($gerorder['status'] == 401){
+                    $tokenml = MercadolivreService::getToken($order, $apimercadolivre );
+                    $token = Mercadolivreapi::where('shop_id',$apimercadolivre->shop_id)->first();
+                    $token->token = $tokenml;
+                    $token->token_exp = date($mytime, strtotime('+4 Hours'));
+                    $token->save();
+
+                }   
+
              if ($gerorder['status'] == 200){                 
                 $order->tracking_number = $gerorder['anuncio']->tracking_number;
-                $order->tracking_servico = 'MelhorEnvios';
+                $order->tracking_servico = $gerorder['anuncio']->tracking_method;
                 $order->save();
-                
+                if($supplier->imp_etq_ml == 0){
                 $dowalods =  MercadolivreService::imprimirEtiqueta($apimercadolivre , $order );
+               
+                           
+                }elseif ($supplier->imp_etq_ml == 1){
+                  $dowalods =  MercadolivreService::imprimirEtiquetatermica($apimercadolivre , $order );
+                 
+                }
+
+
+             }    
                 
             }elseif ($gerorder['status'] == 401) {
                 return redirect()->back()->with('error', 'Arquivo não existe para baixar a etiqueta no mercadolivre.');
@@ -827,21 +807,12 @@ class OrdersController extends Controller
 
         }
 
-          	
-        }
-
-      
-      
-      
-      
-      
         if ($shipping->external_service == 'planilha') {
 
             
            
             $order = Orders::where('id' , $supplier_order->order_id)->first();
-            $dowalods = ShippingLabel::where('id' , $order->shipping_label_id)->first();
-                        
+            $dowalods = ShippingLabel::where('id' , $order->shipping_label_id)->first();                   
         
            
             
@@ -851,7 +822,6 @@ class OrdersController extends Controller
                 return redirect()->back()->with('error', 'Arquivo não existe para baixar a etiqueta e.');
             
             }
-
 
 
             $file= public_path(). "/etiqueta/".$dowalods->url_labels;
@@ -913,19 +883,19 @@ class OrdersController extends Controller
     }
 
     public function printTagsMelhorEnvio(Request $request){
-         $supplier = Auth::user();
+        $supplier = Auth::user();
 
         $arrIds = explode(',', $request->print_tags_melhor_envio);
         $supplierOrders = SupplierOrders::whereIn('id', $arrIds)
                                         ->where('supplier_id', $supplier->id)
                                         ->get();
-
+        
         $melhorenvio = FreteMelhorEnvio::where('supplier_order_id', $supplier->id)->get();    
        
         $orders = SupplierOrders::whereIn('id', $arrIds)
                                         ->where('supplier_id', $supplier->id)
                                         ->first();
-            $order = Orders::where('id', $orders->order_id)->first(); 
+        $order = Orders::where('id', $orders->order_id)->first(); 
                                     
 
         //cria um array com os ids da melhor envio e envia todos em uma única requisição
@@ -935,12 +905,11 @@ class OrdersController extends Controller
                
         //dd($melhorenvio);
         
-        foreach ($supplierOrders as $orderl) {
+        foreach ($supplierOrders as $orders) {
+           
            
             $fretemelhorenvio = false;
-            $orders = SupplierOrders::whereIn('id', $arrIds)
-                                        ->where('supplier_id', $supplier->id)
-                                        ->first();
+            
             $order = Orders::where('id', $orders->order_id)->first();  
             $customer = CustomerAddresses::where('customer_id', $order->customer_id)->first(); 
             $shop = Shops::where('id', $order->shop_id)->first(); 
@@ -953,6 +922,7 @@ class OrdersController extends Controller
             if (FreteMelhorEnvio::where('order_id', $orders->order_id)->count() == 0) {
             $fretemelhorenvio = $melhorEnvioService->quoteBuyFreight($supplier, $shop, $customer, $order , $customerd );
             
+           
             if ($fretemelhorenvio != false) {
             FreteMelhorEnvio::create([
                 'order_id' => $orders->order_id,

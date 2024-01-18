@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{config('app.name')}} - {{ trans('supplier.tag_pedido') }} #{{ $supplier_order->id }}</title>
+    <title>{{config('app.name')}} - Tag do pedido #{{ $supplier_order->id }}</title>
 
     <style type="text/css">
         body{
@@ -158,7 +158,7 @@
         <div class="row" style="margin-top: 5px">
             <div class="w-100 small">
                 {{--Nota fiscal: 12345678910<br>--}}
-                {{ trans('supplier.pedido') }}: #{{ $order_id }} <br>
+                Pedido: #{{ $order_id }} <br>
                 {{--PLP: 1234567890--}}
             </div>
             <div class="w-160 small">
@@ -176,13 +176,13 @@
         </div>
         <div class="row" style="margin-top: 20px">
             <div class="small">
-                <span style="display: block; margin-bottom: 10px;">{{ trans('supplier.recebedor') }}: __________________________________________________________________</span>
-                <span style="display: block">{{ trans('supplier.assinatura_title') }}: _____________________________ {{ trans('supplier.documento') }}: __________________________</span>
+                <span style="display: block; margin-bottom: 10px;">Recebedor: __________________________________________________________________</span>
+                <span style="display: block">Assinatura: _____________________________ Documento: __________________________</span>
             </div>
         </div>
     </div>
     <div style="background-color: black; padding: 2px 10px; color: white; font-weight: bold; width: 85px; position: absolute">
-    {{ trans('supplier.destinatario') }}
+        Destinatário
     </div>
     <div class="second-block">
         <div class="row medium">
