@@ -423,31 +423,32 @@
                         $("#content-form-1-load").html("<img style='height: 80px;' src='{{asset('assets/img/Spinner-1s-200px (1).gif')}}'>")
                     },
                     success: function(response){
+                        console.log("AJAX Success Response:", response);
                         $("#page-1-form").hide();
                         $("#page-4-form").show();
                         $('#personal').addClass('active')
                         emailNewUser = email
                     },
-                    error: function(response){
-                        if(response.responseJSON.message == 'The given data was invalid.'){
-                            $("#content-form-1-load").html(
-                            "<div class='alert alert-danger alert-dismissible fade show' role='alert'>"+
-                                "<span class='alert-text'><strong>Erro</strong> Dados inválidos</span>"+
-                                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
-                                    "<span aria-hidden='true'>&times;</span>"+
-                                "</button>"+
-                            "</div>");    
-                        }else{
-                            $("#content-form-1-load").html(
-                            "<div class='alert alert-danger alert-dismissible fade show' role='alert'>"+
-                                "<span class='alert-text'><strong>Erro</strong> "+response.responseJSON.msg+"</span>"+
-                                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
-                                    "<span aria-hidden='true'>&times;</span>"+
-                                "</button>"+
-                            "</div>");
+                    error: function(xhr, status, error) {
+                        console.log("AJAX Error: ", status, error);
+                        console.log("Response Text: ", xhr.responseText);
+
+                        var errorMsg = "An unknown error occurred";
+                        if (xhr.responseJSON && xhr.responseJSON.msg) {
+                            errorMsg = xhr.responseJSON.msg;
+                        } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMsg = xhr.responseJSON.message;
                         }
-                        
-                    }
+
+                        $("#content-form-1-load").html(
+                            "<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
+                                "<span class='alert-text'><strong>Error:</strong> " + errorMsg + "</span>" +
+                                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                                    "<span aria-hidden='true'>&times;</span>" +
+                                "</button>" +
+                            "</div>"
+                    );
+}
                 });
             })
         })
@@ -768,4 +769,3 @@
         
     </script>
 @endsection   --}}
-

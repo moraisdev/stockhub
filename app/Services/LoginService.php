@@ -62,101 +62,37 @@ class LoginService{
     }
 
     public function register($name, $email, $password, $password_confirmation, $terms_agreed, $phone = NULL, $document = NULL){
+        
         if(($this->guard == 'supplier' || $this->guard == 'shop') && $terms_agreed != 'on'){
             return (object)['status' => 'error', 'message' => 'Você precisa confirmar com os termos e condições de uso do '.config('app.name').' para concluir seu cadastro'];
         }
-
+        
         $already_registered = $this->model::where('email', $email)->first();
-
+        
         if($already_registered){
             return (object)(['status' => 'error', 'message' => 'Este e-mail já foi cadastrado.']);
         }else{
             if(!$phone && $this->guard == 'shop'){
                 return (object)(['status' => 'error', 'message' => 'Telefone inválido.']);
             }
-
             if(!$document && $this->guard == 'shop'){
                 return (object)(['status' => 'error', 'message' => 'CPF ou CNPJ inválido.']);
             }
 
             if($password == $password_confirmation){
+
                 $user = $this->createUser($name, $email, $password, $phone, $document);
-
-                if($admins->free_shop <> '0'){
-               
-                $shop_contrac_plan = new  ShopContractedPlans();
-                $shop_contrac_plan->shop_id = $user->id;
-                $shop_contrac_plan->name_plan ='FREE';
-                $shop_contrac_plan->subscription_status = 'active';
-                $shop_contrac_plan->due_date  = date('Y-m-d', strtotime(+$admins->free_shop.'days', strtotime($user->created_at)));  
-                $shop_contrac_plan->save();  
-               
-                    $store_invoice =  new Store_invoice();
-                $store_invoice->shop_id = $user->id; 
-                $store_invoice->plan = 'FREE';
-                $store_invoice->sub_total = '0.00';
-                $store_invoice->total = '0.00';
-                $store_invoice->status = 'active';
-                $store_invoice->payment = 'paid';
-                $store_invoice->due_date = date('Y-m-d', strtotime(+$admins->free_shop.'days', strtotime($user->created_at)));
-                $store_invoice->save();
-
-                  if(($admins->free_shop == 0) and ($this->guard == 'shop')){
-                        $store_invoice =  new Store_invoice();
-                        $store_invoice->shop_id = $user->id; 
-                        $store_invoice->plan = 'FREE';
-                        $store_invoice->sub_total = '0.00';
-                        $store_invoice->total = '0.00';
-                       $store_invoice->status = 'inactive';
-                        $store_invoice->payment = 'paid';
-                        $store_invoice->due_date = date('Y-m-d', strtotime(+$admins->free_shop.'days', strtotime($user->created_at)));
-                        $store_invoice->save();
-    
-                        $shop_contrac_plan = new  ShopContractedPlans();
-                        $shop_contrac_plan->shop_id = $user->id;
-                        $shop_contrac_plan->name_plan ='FREE';
-                        $shop_contrac_plan->subscription_status = 'inactive';
-                        $shop_contrac_plan->due_date  = date('Y-m-d', strtotime(+$admins->free_shop.'days', strtotime($user->created_at)));  
-                        $shop_contrac_plan->save();
-                        }
-
-                }
                 
-                    if($this->guard == 'supplier'){
-                    $supplier_invoice =  new Supplier_invoice();
-                    $supplier_invoice->supplier_id  = $user->id; 
-                    $supplier_invoice->plan = 'FREE';
-                    $supplier_invoice->sub_total = '0.00';
-                    $supplier_invoice->total = '0.00';
-                    $supplier_invoice->status = 'active';
-                    $supplier_invoice->payment = 'paid';
-                    $supplier_invoice->due_date = date('Y-m-d', strtotime(+$admins->free_shop.'days', strtotime($user->created_at)));
-                    $supplier_invoice->save();
-
-                    $supplier_contrac_plan = new  SupplierContractedPlans();
-                    $supplier_contrac_plan->supplier_id = $user->id;
-                    $supplier_contrac_plan->name_plan ='FREE';
-                    $supplier_contrac_plan->subscription_status = 'active';
-                    $supplier_contrac_plan->due_date  = date('Y-m-d', strtotime(+$admins->free_shop.'days', strtotime($user->created_at)));  
-                    $supplier_contrac_plan->save();                
-                }
-              
-                //if($this->guard == 'shop'){
-                //    Mail::to($user->email)->send(new Welcome($user));
-                //    Mail::to($user->email)->send(new ApprovedRegistration($user));
                 
-               // }
-                
-
-                //if($this->guard == 'supplier'){
-                //    Mail::to($user->email)->send(new Welcome($user));
-                //    Mail::to($user->email)->send(new ApprovedRegistration($user));
-
-                //}
-                
-                return (object)(['status' => 'success', 'message' => 'Você foi cadastrado com sucesso. Seja bem vindo ao '.config('app.name').'!']);
-            }else{
-                return (object)(['status' => 'error', 'message' => 'A senha e a confirmação de senha devem ser iguais.']);
+                return [
+                    'status' => 'success', 
+                    'message' => 'Você foi cadastrado com sucesso. Seja bem vindo ao ' . config('app.name') . '!'
+                ];
+            } else {
+                return [
+                    'status' => 'error', 
+                    'message' => 'A senha e a confirmação de senha devem ser iguais.'
+                ];
             }
         }
     }

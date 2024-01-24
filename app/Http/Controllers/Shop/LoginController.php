@@ -106,20 +106,17 @@ class LoginController extends Controller
     public function postRegister(RegisterRequest $request){
         $register = $this->loginService->register($request->name, $request->email, $request->password, $request->password_confirmation, $request->terms_agreed);
     
-            
-
-
         if($register->status == 'success'){
-            return redirect()->route('shop.login')->with(['success' => $register->message]);
+            return response()->json(['status' => 'success', 'message' => $register->message]);
         }else{
-            return redirect()->back()->with(['error' => $register->message])->withInput($request->except(['password', 'password_confirmation']));
-        }
+            return response()->json(['status' => 'error', 'message' => $register->message], 400);
+    }
     }
 
     public function postRegisterJson(RegisterRequest $request){
         $register = $this->loginService->register($request->name, $request->email, $request->password, $request->password_confirmation, $request->terms_agreed, $request->phone, $request->document);        
 
-        if($register->status == 'success'){
+        if ($register['status'] == 'success'){
             //vincula o token ao usuário, caso exista
             $tokenInd = Cookie::get('_ind_mawa_register') ? Cookie::get('_ind_mawa_register') : NULL;
             
@@ -146,9 +143,9 @@ class LoginController extends Controller
                 session(['_mawa_new_user' => $shopNew->id]);
             }
 
-            return response()->json(['msg' => $register->message], 200);
+            return response()->json(['msg' => $register['message']], 200);
         }else{
-            return response()->json(['msg' => $register->message], 400);
+            return response()->json(['msg' => $register['message']], 400);
         }
     }
 
