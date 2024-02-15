@@ -7,26 +7,15 @@ use App\Models\Products;
 
 class CatalogService{
 	public static function getPublicProducts($shop){
-		if($shop->products){
-			$products_ids = $shop->products->pluck('id')->toArray();
-		}else{
-			$products_ids = [];
-		}
-
-		return Products::with('variants', 'supplier')->whereHas('supplier', function($q){
-		    $q->where('status', 'active')->where('login_status', 'authorized');
-        })->where('public', 1)->whereNotIn('id', $products_ids)->get();
-	}
+		return Products::with('variants', 'supplier')
+        ->whereHas('supplier', function($q){
+            $q->where('status', 'active')->where('login_status', 'authorized');
+        })->where('public', 1)->get();
+}
 
 	public static function getProductCategories($shop){
-        if($shop->products){
-            $products_ids = $shop->products->pluck('id')->toArray();
-        }else{
-            $products_ids = [];
-        }
-
-	    return Categories::whereHas('products', function($q) use ($products_ids){
-	        $q->where('public', 1)->whereNotIn('id', $products_ids);
-        })->get();
-    }
+		return Categories::whereHas('products', function($q){
+			$q->where('public', 1);
+		})->get();
+}
 }

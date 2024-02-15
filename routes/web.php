@@ -16,7 +16,7 @@ Route::namespace('Site')->as('site.')->group(function () {
 });
 
 Route::get('shop/catalog/index', 'shop\CatalogoController@catolog')->name('catalogindex');
-
+Route::post('shop/products/rate/{product}', 'Shop\ProductsController@rate')->name('shop.products.rate');
 
 Route::namespace('Supplier')->as('supplier.')->prefix('supplier')->group(function () {
     // consulta pagamento plano pix
@@ -201,6 +201,8 @@ Route::namespace('Shop')->as('shop.')->prefix('shop')->group(function () {
         Route::put('profile/update', 'ProfileController@update')->name('profile.update');
         /* PROFILE  UPDATE BLING*/
         Route::put('profile/updatebling', 'ProfileController@updatebling')->name('profile.updatebling');
+        Route::get('profile/business', 'BusinessController@index')->name('profile.business');
+        Route::get('profile/business/update', 'BusinessController@update')->name('profile.business.update');
 
         /* PARTNERS */
         Route::get('partners', 'PartnersController@index')->name('partners.index');
@@ -318,8 +320,6 @@ Route::namespace('Shop')->as('shop.')->prefix('shop')->group(function () {
         Route::get('payment/pay/{id}', 'PlansController@paymentpay')->name('plans.pay');
         Route::get('invoices/pay/{id}/{payment_method}', 'PlansController@planspay')->name('plans.planspay');
       
-    
-
         /* TUTORIALS */
         Route::get('tutorials', 'TutorialsController@index')->name('tutorials.index');
 

@@ -103,15 +103,11 @@
                         <i class="fas fa-user-cog text-gray"></i> Meu Perfil
                     </a>
                 </li>
-                   
                 <li class="nav-item">
                     <a class=" nav-link {{ ($uri_1 == 'assinatura') ? 'active' : '' }}" href="{{ route('supplier.plans.invoice') }}">
                         <i class="ni ni-ui-04 text-success"></i> Assinatura
                     </a>
                 </li>
-
-              
-
                 <li class="nav-item">
                     <a class=" nav-link {{ ($uri_1 == 'settings' && $uri_2 != 'discounts') ? 'active' : '' }}" href="{{ route('supplier.settings.index') }}">
                         <i class="fas fa-cogs text-gray"></i> Configurações

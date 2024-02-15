@@ -1,10 +1,9 @@
 @extends('shop.layout.default')
 
-@section('title', config('app.name').' - Pedidos')
-
 @section('content')
 <!-- Header -->
 <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
+    <span class="mask bg-gradient-default"></span>
     <div class="container-fluid">
         <div class="header-body">
             <!-- Card stats -->
@@ -31,7 +30,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Total pendente</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Valor Total</h5>
                                     <span class="h2 font-weight-bold mb-0">R$ {{ number_format($orders->sum('amount'), 2, ',','.') }}</span>
                                 </div>
                                 <div class="col-auto">
@@ -67,43 +66,7 @@
 
                         <div class="w-100 d-flex flex-wrap align-items-center justify-content-end mt-3">
 
-                            <!-- CSV -->
-                            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#CsvModal">Importar Planilha</a>
-                            
-                            <!-- Shopify -->
-                            @if($authenticated_user->shopify_app)
-                                <a href="{{ route('shop.orders.import') }}" class="btn btn-success">Importar do Shopify</a>
-                            @endif
-                            
-                            {{-- @if($authenticated_user->shopify_app && !$authenticated_user->shopify_app->automatic_order_update)
-                                <a href="{{ route('shop.orders.import') }}" class="btn btn-success">Importar do Shopify</a>
-                            @else
-                                <p>Seus pedidos do shopify são atualizados automaticamente.</p>
-                            @endif
-                             --}}
-                            <!-- WooCommerce -->
-                            @if($authenticated_user->woocommerce_app)
-                                <a href="{{ route('shop.orders.importWoo') }}" class="btn btn-primary" style="background-color: #d442f5; color:#FFF; border-color: #a774b3">Importar do Woocommerce</a>
-                            @endif
-                            <!-- Cartx -->
-                            @if($authenticated_user->cartx_app)
-                                <a href="{{ route('shop.orders.import_cartx') }}" class="btn btn-primary">Importar do Cartx</a>
-                            @endif
-                             <!-- Yampi -->
-
-                             @if($authenticated_user->yampi_app)
-
-                                <a href="{{ route('shop.orders.import_yampi') }}" class="btn btn-primary" style="background-color: #352c73;">Importar da Yampi</a>
-
-                            @endif
-                            
-                            <!-- bling -->
-                            
-                            @if($authenticated_user->bling_apikey)
-                            <a href="{{ route('shop.orders.import_pedido_bling') }}" class="btn btn-primary" style="background-color: #77d77;">Importar Bling</a>
-                            @endif  
-                            
-                           
+                         
                             @if(isset($apimercadolivreapi))
                             <br>                             
                             <a href="{{ route('shop.orders.mercadolivre') }}" class="btn btn-primary" style="background-color: #77d77;">Importar Mercadolivre</a>

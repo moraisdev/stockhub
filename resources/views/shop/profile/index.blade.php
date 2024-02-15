@@ -1,17 +1,28 @@
 @extends('shop.layout.default')
+<style>
+.status-dot {
+    height: 10px;
+    width: 10px;
+    background-color: #ee3a1f;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left:5px;
+}
 
-@section('title', 'Meu perfil')
+.status-text {
+    color: #ee3a1f;
+}
+
+</style>
 
 @section('content')
-<div class="header pb-6 pt-4 pt-lg-6 d-flex align-items-center" style="min-height: 400px; background-image: url(https://wallpapertag.com/wallpaper/full/5/9/b/664802-vertical-flat-design-wallpapers-1920x1080.jpg); background-size: cover; background-position: center top;">
+<div class="header pb-6 pt-4 pt-lg-6 d-flex align-items-center" style="min-height: 400px;">
     <!-- Mask -->
-    <span class="mask {{env('PAINELCOR')}} opacity-8"></span>
-    <!-- Header container -->
+    <span class="mask bg-gradient-default"></span>
     <div class="container-fluid d-flex align-items-center">
         <div class="row">
             <div class="col-lg-12 col-md-12">
-                <h1 class="display-2 text-white">Bem vindo, {{ $authenticated_user->name }}</h1>
-                <a href="{{ route('shop.products.index') }}" class="btn btn-secondary">Voltar</a>
+                <h1 class="display-2 text-white">Perfil</h1>
             </div>
         </div>
     </div>
@@ -25,33 +36,27 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <div class="col-8">
-                                <h3 class="mb-0">Mantenha seus dados atualizados</h3>
-                            </div>
+                        <h5 class="mb-0" style="padding-left: 15px;">Status da Conta: 
+                            <span class="status-dot"></span>
+                            <span class="status-text">Dados Incompletos</span>
+                        </h5>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="control-label">Nome da Loja</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Nome da sua empresa" value="{{ $authenticated_user->name }}" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Nome Responsavel</label>
-                                    <input type="text" class="form-control" name="responsible_name" placeholder="Nome do responsável pela empresa" value="{{ $authenticated_user->responsible_name }}" required>
+                                    <label class="control-label">Nome</label>
+                                    <input type="text" class="form-control" name="responsible_name" placeholder="Nome completo" value="{{ $authenticated_user->responsible_name }}" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Email</label>
                                     <input type="email" class="form-control" placeholder="Email" value="{{ $authenticated_user->email }}" readonly>
                                 </div>
-                                <div class="form-group company_fields" style="display:none">
-                                    <label class="control-label">Nome Fantasia</label>
-                                    <input type="text" class="form-control" name="fantasy_name" placeholder="Nome Fantasia" value="{{ $authenticated_user->fantasy_name }}">
-                                </div>
-                                <div class="form-group company_fields" style="display:none">
-                                    <label class="control-label">Razão Social</label>
-                                    <input type="text" class="form-control" name="corporate_name" placeholder="Razão Social" value="{{ $authenticated_user->corporate_name }}">
+                                <div class="form-group">
+                                    <label for="img_profile">Imagem de Perfil</label>
+                                    <input type="file" class="form-control-file" id="img_profile" name="img_profile" accept="image/*" onchange="validateImage()">
+                                    <small class="form-text text-muted">A imagem deve ser de 500x500 pixels.</small>
                                 </div>
                             </div>
                             <div class="col">
@@ -63,17 +68,12 @@
                                     <label class="control-label">Tipo de Documento</label>
                                     <select class="form-control" id="document_type">
                                         <option value="1" {{ strlen($authenticated_user->document) == 11 ? 'selected' : '' }}>CPF</option>
-                                        <option value="2" {{ strlen($authenticated_user->document) != 11 ? 'selected' : '' }}>CNPJ</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" id="document_label">CNPJ</label>
+                                    <label class="control-label" id="document_label">CPF</label>
                                     <input type="text" class="form-control" name="document" id="document" placeholder="Número do Documento" value="{{ $authenticated_user->document }}" required>
                                     <small class="field_error text-danger" style="display:none">Documento inválido.</small>
-                                </div>
-                                <div class="form-group company_fields" style="display:none">
-                                    <label class="control-label">Inscrição Estadual</label>
-                                    <input type="text" class="form-control" name="state_registration" placeholder="Inscrição Estadual" value="{{ $authenticated_user->state_registration }}">
                                 </div>
                             </div>
                         </div>

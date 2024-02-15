@@ -84,10 +84,6 @@ class OrdersController extends Controller
         $mercadolivre = self::importOrderMercadolivre2();
         $apimercadolivreapi = Mercadolivreapi::where('shop_id' , $shop->id )->first();
        
-        //carrega o valor do dólar
-//        $dolar_price = CurrencyService::getDollarPrice();
-
-        //quantidade total de pedidos pendentes
         $countOrders = $ordersService->getTotalCountPendingOrders();
         return view('shop.orders.index', compact('orders', 'countOrders', 'apimercadolivreapi' ));
     }
@@ -643,7 +639,7 @@ class OrdersController extends Controller
     }
 
     public function paid_groups(){
-        $title = 'Pedidos pagos';
+        $title = 'Pedidos Pagos';
         $shop_id = Auth::guard('shop')->id();
         $groups = SupplierOrderGroup::with('orders')->where('status', 'paid')->where('shop_id', $shop_id)->orderBy('id', 'desc')->get();
 

@@ -140,6 +140,12 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="general_information">Informações Gerais</label>
+                                        <textarea id="general_information" class="form-control form-control-alternative" name="general_information">{{ old('general_information') }}</textarea>
+                                    </div>
+                                    </div>
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <label class="form-control-label" for="product_hash">Hash</label>
                                             <input type="text" id="product_hash" class="form-control form-control-alternative" value="{{ $product->hash }}" readonly>
@@ -1134,5 +1140,7 @@
         $("#new_discounts_count").val(countDiscount);
         $(button).parent().parent().parent().parent().remove();
     }
+    CKEDITOR.replace('general_information');
+
 </script>
 @endsection
