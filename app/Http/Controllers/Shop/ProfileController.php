@@ -4,15 +4,13 @@ namespace App\Http\Controllers\Shop;
 use Illuminate\Http\Request;
 
 use App\Models\ShopAddress;
-use App\Models\Admins;
-
 
 use Auth;
 
 class ProfileController extends Controller
 {
     public function index(){
-        
+
         return view('shop.profile.index');
     }
 
@@ -20,12 +18,14 @@ class ProfileController extends Controller
         $shop = Auth::user();
 
         $shop->name = $request->name;
-        $shop->responsible_name = $request->responsible_name;
         $shop->phone = preg_replace('/\D/', '', $request->phone);
-        $shop->document = preg_replace('/\D/', '', $request->document);
-        $shop->fantasy_name = $request->fantasy_name;
-        $shop->corporate_name = $request->corporate_name;
-        $shop->state_registration = $request->state_registration;
+        $shop->responsible_document = preg_replace('/\D/', '', $request->responsible_document);
+
+        if ($request->hasFile('img_profile')) {
+            $imageData = file_get_contents($request->img_profile->getRealPath());
+            $encodedData = base64_encode($imageData);
+            $shop->img_profile = $encodedData;
+        }
 
         $shop->save();
 

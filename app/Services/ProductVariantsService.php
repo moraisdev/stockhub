@@ -135,11 +135,10 @@ class ProductVariantsService{
         $variant->title = $this->product->title;
         $variant->price = $fields->price;
 
-        if($variant->product->supplier->id == 56){ //caso seja a conta da s2m2
+        if($variant->product->supplier->id == 56){ 
             $variant->internal_cost = $fields->internal_cost;
         }
 
-        /*$variant->cost = $fields->cost;*/
         $variant->weight_in_grams = $fields->weight_in_grams;
         $variant->width = $fields->width;
         $variant->height = $fields->height;
@@ -148,14 +147,13 @@ class ProductVariantsService{
 
         if(isset($fields->img_source) && $fields->img_source){
             $img_source = $fields->img_source;
-
-            $name = Str::random(15).$this->product->supplier_id . '.' . $img_source->extension();
-
-            $path = $img_source->storeAs(env('PASTASP'), $name, 'digitalocean' , 'public' );
-
-            $variant->img_source = env('SPACEDIG', 'PASTASP' ).'/'.$path;
+    
+            $imageData = file_get_contents($img_source->getRealPath());
+            $encodedData = base64_encode($imageData);
+    
+            $variant->img_source_data = $encodedData;
         }else{
-            $variant->img_source = $this->product->img_source;
+            $variant->img_source_data = $this->product->img_source_data;
         }
 
         if($variant->save()){
@@ -188,25 +186,25 @@ class ProductVariantsService{
         $variant = $this->find($variant_id);
 
         $variant->price = $fields->price;
-        if($this->product->supplier_id == 56){ //caso seja a conta da s2m2
+        if($this->product->supplier_id == 56){ 
             $variant->internal_cost = $fields->internal_cost;
         }
 
-        /*$variant->cost = $fields->cost;*/
         $variant->weight_in_grams = $fields->weight_in_grams;
         $variant->width = $fields->width;
         $variant->height = $fields->height;
         $variant->depth = $fields->depth;
         $variant->sku = $fields->sku;
 
-        if(isset($fields->img_source)){
+        if(isset($fields->img_source) && $fields->img_source){
             $img_source = $fields->img_source;
-
-            $name = Str::random(15).$this->product->supplier_id . '.' . $img_source->extension();
-
-            $path = $img_source->storeAs(env('PASTASP'), $name, 'digitalocean' ,  'public' );
-
-            $variant->img_source = env('SPACEDIG', 'PASTASP' ).'/'.$path;
+    
+            $imageData = file_get_contents($img_source->getRealPath());
+            $encodedData = base64_encode($imageData);
+    
+            $variant->img_source_data = $encodedData;
+        }else{
+            $variant->img_source_data = $this->product->img_source_data;
         }
 
         if($variant->save()){

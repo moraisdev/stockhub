@@ -1,10 +1,8 @@
 @extends('shop.layout.default')
 
-@section('title', 'Pedidos')
-
 @section('content')
     <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
-
+    <span class="mask bg-gradient-default"></span>
     </div>
     <div class="container-fluid mt--7">
         <div class="row">
@@ -13,7 +11,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="mb-0">Pedidos devolvidos</h2>
+                                <h2 class="mb-0">Pedidos Devolvidos</h2>
                             </div>
                         </div>
                     </div>

@@ -823,8 +823,8 @@ class ProductsController extends Controller
 
         
         $supplier = Auth::user();
-       //dd($supplier);
-         if(!$request->$request->new_variants[0]['sku']){
+
+        if(!$request->$request->new_variants[0]['sku']){
             return redirect()->back()->with(['erro' => 'O cadastro e necessario um variação principal.']);
 
          } 
@@ -845,26 +845,23 @@ class ProductsController extends Controller
         $product->products_from = $request->products_from;
         $product->sku = $request->new_variants[0]['sku'];
        
-        if($request->hasFile('img_source')){
-            $name = Str::random(15).$this->supplier->id . '.' . $request->img_source->extension();
-
-            $path = $request->img_source->storeAs(env('PASTASP'), $name, 'digitalocean');
-
-            $product->img_source = env('SPACEDIG', 'PASTASP' ).'/'.$path;
+        if ($request->hasFile('img_source')) {
+            $imageData = file_get_contents($request->img_source->getRealPath());
+            $encodedData = base64_encode($imageData);
+            $product->img_source_data = $encodedData;
         }
 
-        if($product->save()){
-            if($request->hasFile('images')){
+        if ($product->save()) {
+            if ($request->hasFile('images')) {
                 foreach ($request->images as $image) {
-                    $name = Str::random(15).$this->supplier->id . '.' . $image->extension();
-
-                    $path = $image->storeAs(env('PASTASP'), $name, 'digitalocean');
-
                     $product_image = new ProductImages();
                     $product_image->product_id = $product->id;
-                    $product_image->title = $name;
-                    $product_image->src = env('SPACEDIG', 'PASTASP' ).'/'.$path;
-
+                    $product_image->title = $image->getClientOriginalName();
+    
+                    $imageData = file_get_contents($image->getRealPath());
+                    $encodedData = base64_encode($imageData);
+                    $product_image->image_data = $encodedData;
+    
                     $product_image->save();
                 }
             }
@@ -885,8 +882,6 @@ class ProductsController extends Controller
             if($request->new_discounts){
                 $this->createDiscounts($product, $request->new_discounts);
             }
-
-            Mail::to($product->supplier->email)->send(new ProductSuccessfullyRegistered($product));
 
             return true;
         }else{

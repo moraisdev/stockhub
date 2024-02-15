@@ -15,11 +15,8 @@
         }
 
         .current {
-background-color: #E4001B !important;
-}
-
-
-
+            background-color: #E4001B !important;
+            }
     </style>
 @endsection
 

@@ -126,6 +126,12 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="general_information">Informações Gerais</label>
+                                        <textarea id="general_information" class="form-control form-control-alternative" name="general_information">{{ old('general_information') }}</textarea>
+                                    </div>
+                                    </div>
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <input type="checkbox" name="public" {{ (old('public') == 'on') ? 'checked' : '' }}> {{ __('supplier.public_product') }} <sup><i class="fas fa-question-circle" tooltip="true" title="{{ __('supplier.public_product_will_br') }}."></i></sup>
                                         </div>
@@ -667,5 +673,7 @@
         $("#new_discounts_count").val(countDiscount);
         $(button).parent().parent().parent().parent().remove();
     }
+
+    CKEDITOR.replace('general_information');
 </script>
 @endsection

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Shop;
 use Auth;
 
 /* Services */
-use File;
 use ZipArchive;
 
 use App\Models\Products;
@@ -13,21 +12,19 @@ use App\Models\Products;
 /* Facades */
 use App\Models\ShopProducts;
 use Illuminate\Http\Request;
-use League\Flysystem\Filesystem;
 use App\Services\Shop\CartxService;
 use App\Services\Shop\ShopifyService;
 use App\Services\Shop\ProductsService;
-use Illuminate\Support\Facades\Storage;
 use App\Services\Shop\WoocommerceService;
 use App\Services\Shop\YampiService;
 use Illuminate\Support\Str;
 use App\Services\Shop\MercadolivreService;
 use App\Models\Mercadolivreapi;
-use App\Models\ProductVariants;
 use App\Models\ProductImages;
 use App\Services\BlingService;
 use App\Models\ProductVariantStock;
 use App\Models\YampiApps;
+use App\Models\Rating;
 
 
 
@@ -35,6 +32,7 @@ class ProductsController extends Controller
 {
     public function index(){
         $shop = Auth::guard('shop')->user();
+
         if($shop->status == 'inactive'){
             return redirect()->back()->with('error', 'O pagamento de sua assinatura está pendente e o acesso ao produtos foi desativado.');
         }
@@ -44,25 +42,45 @@ class ProductsController extends Controller
         $products = $productsService->paginate(10);
         $statistics = $productsService->getProductsStatistics();
         $apimercadolivreapi = Mercadolivreapi::where('shop_id' ,$shop->id)->first();
-
-       // $products2 = ShopProducts::select('users.id', 'users.name', 'users.email', 'Products.name as country_name')
-       // 	->join('countries', 'countries.id', '=', 'users.country_id')
-        //	->get();
         
-       // dd($products);
-
-
         return view('shop.products.index', compact('products', 'statistics', 'apimercadolivreapi' , 'shop' ));
     }
+    public function getOtherProducts($currentProductId, $limit = 4) {
+        return Products::where('id', '!=', $currentProductId)
+                       ->take($limit)
+                       ->get();
+    }
+    
+    public function rate(Request $request, Products $product)
+        {
+            $request->validate([
+                'rating' => 'required|integer|min:1|max:5',
+                'comment' => 'nullable|string|max:1000',
+            ]);
+
+            $rating = new Rating();
+            $rating->shop_id = auth('shop')->id();
+            $rating->product_id = $product->id;
+            $rating->rating = $request->rating;
+            $rating->comment = $request->comment;
+            $rating->save();
+
+            return redirect()->back()->with('success', 'Avaliação enviada com sucesso.');
+        }
 
     public function details($product_hash){
         $shop = Auth::guard('shop')->user();
-
+    
         $productsService = new ProductsService($shop);
         $product = $productsService->findByHash($product_hash);
-
-        return view('shop.products.details', compact('product'));
+        $product->load('ratings');
+    
+        // Buscar outros produtos
+        $otherProducts = $this->getOtherProducts($product->id);
+    
+        return view('shop.products.details', compact('product', 'otherProducts'));
     }
+    
 
     public function show($product_id){
         $shop = Auth::guard('shop')->user();
@@ -76,10 +94,6 @@ class ProductsController extends Controller
 
     public function link(Request $request){
         $shop = Auth::guard('shop')->user();
-
-        if($shop->status == 'inactive'){
-            return redirect()->back()->with('error', 'O pagamento de sua assinatura está pendente e a importação de produtos privados foi desativada.');
-        }
 
         try {
             $productsService = new ProductsService($shop);
@@ -117,8 +131,6 @@ class ProductsController extends Controller
             return redirect()->back()->with('error', 'Aconteceu um erro inesperado. Tente novamente em alguns minutos.');
         }
     }
-
-  
         
     public function exportShopifyJson(Request $request){
         set_time_limit(1200);
@@ -189,7 +201,6 @@ class ProductsController extends Controller
     }
 
     public function exportWoocommerceJson(Request $request){
-        //set_time_limit(120);
         $shop = Auth::guard('shop')->user();
 
         $productsService = new ProductsService($shop);
@@ -198,7 +209,6 @@ class ProductsController extends Controller
         $woocommerce_product = WoocommerceService::registerProductJson($shop, $product);
 
         if($woocommerce_product){
-            //ShopProducts::where('shop_id', $shop->id)->where('product_id', $product->id)->update(['exported' => 1]);
             return response()->json([
                 'msg' => 'Produto exportado para o Woocommerce com sucesso. Lembre-se de corrigir os valores do produto antes de publica-lo em sua loja.',
                 'product_id' => $product->id,
@@ -295,8 +305,6 @@ class ProductsController extends Controller
                 }
             }
 
-            // $zip->close();
-            // return response()->download(public_path($fileName))->deleteFileAfterSend(true);
         }
     }
 
@@ -305,14 +313,12 @@ class ProductsController extends Controller
        
         try {
             $shop = Auth::guard('shop')->user();
-          //  dd(request()->all());
            
             $productsService = new ProductsService($shop);
             $product = $productsService->find($request->product_id);
 
             $yampi_product = YampiService::registerProductJson($shop, $product);
 
-           // dd($yampi_product);
             if($yampi_product){
                 return response()->json([
                     'success' => 'Produto exportado para o yampi com sucesso. Lembre-se de corrigir os valores do produto antes de publica-lo em sua loja.',
@@ -343,13 +349,9 @@ class ProductsController extends Controller
             $yampiService = new YampiService();
             $result = $yampiService->exportProducts($shopprod, $prod, $stock, $imagens);
             $response = explode(' ', $result);
-            //if($response[1]!= 'Unprocessable'){
-           // if(isset($response) && $response[1] = 'Unprocessable'){
+
             return redirect()->back()->with('success', 'O produto foi exportado para Yampi.'
                     . ' Atenção: A propagação das imagens nos servidores da Yampi pode ser de até 25 minutos.');
-            //}else{
-           ///     return redirect()->back()->with('error', 'Produto já foi exportado para yampi ');
-          //  }
         }
         return redirect()->back()->with('error', 'Entre em contato com o suporte. erro');
     }
@@ -395,11 +397,6 @@ class ProductsController extends Controller
                 $token->save();
                 
             }
-    
-           
-           // $getatributos=   MercadolivreService::getAtributos($apimercadolivre); 
-   
-           // dd($getatributos['atributos'][22]);
 
             if($shopproduct->ml_product_id <> null){
             $getprodutoml =   MercadolivreService::getProduto($shopproduct, $apimercadolivre , $product  );      
@@ -446,31 +443,13 @@ class ProductsController extends Controller
             
     
             $searchatribbutesml = MercadolivreService::getAtributos($apimercadolivre);
-            //dd($searchatribbutesml['atributos']); 
             $searchprodutoml =   MercadolivreService::getBuscaCategoria($shop, $apimercadolivre , $product  );
-          // dd($searchprodutoml);
-             $medidas =   MercadolivreService::getmedidas($apimercadolivre);
-           // dd($medidas);
-          
-          // dd($searchprodutoml);
-    
-    
-          //  if($searchprodutoml->getCode() == 401){
-                
-    
-         //       $tokenml = MercadolivreService::getToken($shop, $apimercadolivre );
-         //       $token = Mercadolivreapi::where('shop_id',$shop->id)->first();
-         //       $token->token = $tokenml;
-         //       $token->token_exp = date('H:i:s', strtotime('+4 Hours'));
-         //       $token->save();        
-         //   }
-    
+            $medidas =   MercadolivreService::getmedidas($apimercadolivre);
+
             if($searchprodutoml){
-            // dd($searchprodutoml);
             
                 $postprodutoml =   MercadolivreService::postProduto($shop, $apimercadolivre , $product ,$searchprodutoml ,$productimagens);
-                //dd($postprodutoml);
-                //dd($postprodutoml);
+
 				if ($postprodutoml['code'] == 403){
                     $teste = json_encode($postprodutoml['message'], JSON_FORCE_OBJECT);
                     return redirect()->back()->with('error', 'O produto não foi exportado confirme os atributos com o fornecedor.'. $teste);
@@ -509,9 +488,6 @@ class ProductsController extends Controller
                     $vendedorml = Mercadolivreapi::where('shop_id',$shop->id)->first();
                     $vendedorml->seller_id_ml =  $postprodutoml['anuncio']->seller_id;        
                     $vendedorml->save();
-                    // $putprodutoml =   MercadolivreService::putProduto($shopproduct, $apimercadolivre , $product  );
-    
-                   // dd($shopproduct);
     
                     if($shopproduct2){
                         $putprodutoml =   MercadolivreService::putProduto($shopproduct2, $apimercadolivre , $product  );

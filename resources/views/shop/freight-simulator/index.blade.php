@@ -1,10 +1,9 @@
 @extends('shop.layout.default')
 
-@section('title', config('app.name').' - Simulador de Frete')
-
 @section('content')
     <!-- Header -->
     <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
+    <span class="mask bg-gradient-default"></span>
         <div class="container-fluid">
             <div class="header-body">
             </div>

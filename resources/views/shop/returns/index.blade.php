@@ -1,9 +1,9 @@
 @extends('shop.layout.default')
 
-@section('title', 'Reembolsos')
-
 @section('content')
     <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8"></div>
+    <span class="mask bg-gradient-default"></span>
+
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-12 mb-3">

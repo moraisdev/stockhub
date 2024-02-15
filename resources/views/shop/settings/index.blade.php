@@ -1,10 +1,11 @@
 @extends('shop.layout.default')
 
-@section('title', 'Configuraçōes')
+@section('title', 'Integrações')
 
 @section('content')
     <!-- Header -->
     <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
+    <span class="mask bg-gradient-default"></span>
         <div class="container-fluid">
             <div class="header-body">
             </div>

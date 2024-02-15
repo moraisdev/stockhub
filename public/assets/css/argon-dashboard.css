@@ -13766,8 +13766,6 @@ button.section-darker:focus {
 }
 
 .bg-gradient-primary {
-  /*background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;*/
-    /* background: linear-gradient(40deg, #34895B 0, #34895B 40%, #017E5F 90%) !important; */
     background: linear-gradient(40deg, #2464a4 0, #2464a4 40%, #1e5b8e 100%) !important;
 }
 

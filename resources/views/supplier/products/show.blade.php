@@ -42,16 +42,15 @@
                 <div class="card-body">
                     <h6 class="heading-small text-muted mb-4">{{ __('supplier.product_info') }}</h6>
                     <div class="row justify-content-center">
-                        <div class="col-lg-2 col-6">
-                            <div class="d-flex  justify-content-center">
-                            @if ($product->img_destaque != '')   
-                                            <img id="product_img_source" src="{{$product->img_destaque}}" class="img-fluid" style="max-height:150px">
-                                            @else 
-                                            <img id="product_img_source" src="{{asset('assets/img/products/eng-product-no-image.png')}}" class="img-fluid" style="max-height:150px">
-                                            
-                                            @endif 
-                            </div>
+                    <div class="col-lg-2 col-6">
+                        <div class="d-flex justify-content-center">
+                            @if ($product->img_destaque)
+                                <img id="product_img_source" src="data:image/jpeg;base64,{{ $product->img_destaque }}" class="img-fluid" style="max-height:150px">
+                            @else 
+                                <img id="product_img_source" src="{{ asset('assets/img/products/eng-product-no-image.png') }}" class="img-fluid" style="max-height:150px">
+                            @endif 
                         </div>
+                    </div>
                         <div class="col-lg-10">
                             <div class="row">
                                 <div class="col-lg-4 col-12">

@@ -1,7 +1,5 @@
 @extends('shop.layout.default')
 
-@section('title', config('app.name').' - '.$title)
-
 @section('content')
 
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-delete-group">
@@ -27,6 +25,7 @@
 
     <!-- Header -->
     <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
+        <span class="mask bg-gradient-default"></span>
         <div class="container-fluid">
             <div class="header-body">
                 <!-- Card stats -->
