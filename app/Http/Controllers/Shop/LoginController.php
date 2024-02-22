@@ -29,6 +29,7 @@ use App\Models\ProductImages;
 use App\Mail\Welcome;
 use App\Mail\ApprovedRegistration;
 use Mail;
+use App\Mail\ConfirmationEmail;
 
 /* Services */
 use App\Services\LoginService;
@@ -105,8 +106,12 @@ class LoginController extends Controller
 
     public function postRegister(RegisterRequest $request){
         $register = $this->loginService->register($request->name, $request->email, $request->password, $request->password_confirmation, $request->terms_agreed);
-    
+        
+
+        //$user = $this->model::where('email', $email)->first();
+
         if($register->status == 'success'){
+            
             return response()->json(['status' => 'success', 'message' => $register->message]);
         }else{
             return response()->json(['status' => 'error', 'message' => $register->message], 400);
@@ -137,8 +142,16 @@ class LoginController extends Controller
                     }
                 }
             }
+            $remember_token = Str::random(10); // Gera um token único
+            $shopNew->remember_token = $remember_token;
+            $shopNew->save();
 
             if($shopNew){
+                //envia o email de confirmação
+                Mail::to($shopNew['email'])->send(new ConfirmationEmail($shopNew));
+
+                
+
                 //salva o id do usuáio criptografado do usuário logado para ele escolher o plano agora
                 session(['_mawa_new_user' => $shopNew->id]);
             }

@@ -179,7 +179,7 @@ Route::namespace('Shop')->as('shop.')->prefix('shop')->group(function () {
     Route::get('login/define_new_password/{hash}', 'LoginController@defineNewPassword')->name('login.define_new_password');
 
     Route::post('login/authenticate', 'LoginController@authenticate')->name('login.authenticate');
-    Route::post('login/register', 'LoginController@postRegister')->name('login.post_register');
+    Route::post('login/regfister', 'LoginController@postRegister')->name('login.post_register');
     Route::post('login/register/json', 'LoginController@postRegisterJson')->name('login.post_register.json');
     Route::post('login/register/plan/json', 'LoginController@postRegisterShopPlanJson')->name('login.post_register.plan.json');
     Route::post('login/register/card/json', 'LoginController@postRegisterShopCardJson')->name('login.post_register.card.json');
@@ -373,6 +373,7 @@ Route::namespace('Admin')->as('admin.')->prefix('admin')->group(function () {
        
        
         /* SHOPS */
+        Route::get('shops/login/{{token}}', 'ShopsController@confirmEmail')->name('shop.confirmar_email');
         Route::get('shops', 'ShopsController@index')->name('shops.index');
         Route::get('shops/search', 'ShopsController@search')->name('shops.search');
         Route::get('shops/{shop}', 'ShopsController@show')->name('shops.show');
@@ -382,6 +383,7 @@ Route::namespace('Admin')->as('admin.')->prefix('admin')->group(function () {
         Route::get('shops/{shop}/more_days_free', 'ShopsController@moreDaysFree')->name('shops.more_days_free');
         Route::delete('shops/{shop}', 'ShopsController@delete')->name('shops.delete');
         Route::delete('shops/{shop}/delete-card', 'ShopsController@deleteCard')->name('shops.delete.card');
+
 
         Route::get('products/import/{supplier_id}', 'ProductsController@import')->name('products.import');
         Route::get('products/update_descriptions/{supplier_id}', 'ProductsController@updateDescriptions')->name('products.update_descriptions');

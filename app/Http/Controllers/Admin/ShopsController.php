@@ -73,6 +73,23 @@ class ShopsController extends Controller
         return redirect()->back()->with('success', ($shop->login_status == 'authorized') ? 'Login do lojista autorizado com sucesso.' : 'Login do lojista desativado com sucesso.');
     }
 
+    public function confirmEmail($token){
+        console.log("Teste 1");
+        $user = User::where('remember_token', $token)->first();
+
+        if (!$user) {
+            return redirect('http://localhost:8001/shop/login')->with('error', 'O token de confirmação é inválido.');
+        }
+
+        $user->email_verified_at = now(); // Laravel usa esta coluna por padrão para verificar e-mails
+        $user->remember_token = null; // Limpa o token para evitar reuso
+        $user->save();
+
+        // Redireciona o usuário para onde você quiser após a confirmação
+        return redirect('http://localhost:8001/shop/login')->with('success', 'Seu e-mail foi confirmado com sucesso!');
+    }
+
+
     public function delete(Shops $shop){
         if($shop->delete()){
             return redirect()->back()->with('success', 'Lojista deletado com sucesso.');
