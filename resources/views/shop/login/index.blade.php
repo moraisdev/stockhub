@@ -129,11 +129,11 @@
                 <div class="row mt-3">
                     <div class="col-6">
                         <a href="{{ route('shop.login.forgot_password') }}" class="text-light"><small
-                                class='text-login-bold-white'>Esqueci minha senha</small></a>
+                                class='text-login-bold-black'>Esqueci minha senha</small></a>
                     </div>
                     <div class="col-6 text-right">
                         <a href="{{ route('shop.login.register') }}" class="text-light"><small
-                                class='text-login-bold-white'>Criar nova conta</small></a>
+                                class='text-login-bold-black'>Criar nova conta</small></a>
                     </div>
                 </div>
             </div>

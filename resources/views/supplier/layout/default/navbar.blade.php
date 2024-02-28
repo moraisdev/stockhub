@@ -1,3 +1,22 @@
+<style>
+.icon-size {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+}
+.subicon-size {
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+}
+.navbar-brand-img {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -40px;
+}
+
+</style>
+
 <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
         <!-- Toggler -->
@@ -37,43 +56,57 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('supplier.dashboard') }}">
-                        <i class="fas fa-chart-bar text-primary"></i> Dashboard
+                    <img src="{{ asset('assets/img/chart-line-up.svg') }}" class="icon-size"> Dashboard
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.catalog.index') }}">
+                        <img src="{{ asset('assets/img/radar.svg') }}" class="icon-size"> Radar Siscomex
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.catalog.index') }}">
+                        <img src="{{ asset('assets/img/users.svg') }}" class="icon-size"> Compra Coletiva
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a class=" nav-link {{ ($uri_1 == 'partners') ? 'active' : '' }}" href="{{ route('supplier.partners.index') }}">
-                        <i class="fas fa-user text-info"></i> Parceiros
+                    <img src="{{ asset('assets/img/user.svg') }}" class="icon-size"> Clientes
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class=" nav-link {{ ($uri_1 == 'products') ? 'active' : '' }}" href="{{ route('supplier.products.index') }}">
-                        <i class="fas fa-box text-red"></i> Produtos
+                    <img src="{{ asset('assets/img/box.svg') }}" class="icon-size"> Produtos
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#orders-dropdown" data-toggle="collapse" data-target="#orders-dropdown" aria-controls="orders-dropdown" aria-expanded="{{ (($uri_1 == 'products' && $uri_2 != 'shopify_import') || $uri_1 == 'custom_links') ? 'true' : 'false' }}">
-                        <i class="fas fa-pallet text-success"></i> Pedidos
+                    <img src="{{ asset('assets/img/basket-shopping.svg') }}" class="icon-size"> Pedidos
                     </a>
                     <div class="collapse {{ ($uri_1 == 'orders') ? 'show' : '' }}" id="orders-dropdown">
                         <ul class="flex-column nav">
                             <li class="nav-item">
                                 <a class="nav-link py-1 {{ ($uri_1 == 'orders' && (isset($shipping_status) && $shipping_status == 'pending')) ? 'active' : '' }}" href="{{ route('supplier.orders.index', ['status' => 'pending']) }}">
-                                    <i class="fas fa-box-open text-info" style="font-size: 0.7rem; min-width: 1.5rem"></i> Pendentes
+                                <img src="{{ asset('assets/img/clock.svg') }}" class="subicon-size"> Pendentes
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link py-1 {{ ($uri_1 == 'orders' && (isset($shipping_status) && $shipping_status == 'sent')) ? 'active' : '' }}" href="{{ route('supplier.orders.index', ['status' => 'sent']) }}">
-                                    <i class="fas fa-shipping-fast text-warning" style="font-size: 0.7rem; min-width: 1.5rem"></i> Enviados
+                                <img src="{{ asset('assets/img/truck-fast.svg') }}" class="subicon-size">  Enviados
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link py-1 {{ ($uri_1 == 'orders' && (isset($shipping_status) && $shipping_status == 'completed')) ? 'active' : '' }}" href="{{ route('supplier.orders.index', ['status' => 'completed']) }}">
-                                    <i class="fas fa-dolly text-success" style="font-size: 0.7rem; min-width: 1.5rem"></i> Entregues
+                                <img src="{{ asset('assets/img/box-check.svg') }}" class="subicon-size">  Entregues
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link py-1 {{ ($uri_1 == 'orders' && (isset($shipping_status) && $shipping_status == 'returned')) ? 'active' : '' }}" href="{{ route('supplier.orders.index', ['status' => 'returned']) }}">
-                                    <i class="fas fa-undo text-primary" style="font-size: 0.7rem; min-width: 1.5rem"></i> Devolvidos
+                                <img src="{{ asset('assets/img/arrow-right-arrow-left.svg') }}" class="subicon-size"> Devolvidos
                                 </a>
                             </li>
                         </ul>
@@ -81,18 +114,18 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#returns-dropdown" data-toggle="collapse" data-target="#returns-dropdown" aria-controls="returns-dropdown" aria-expanded="{{ ($uri_1 == 'returns') ? 'true' : 'false' }}">
-                        <i class="fas fa-undo text-warning"></i> Reembolsos {!! ($pending_return_messages_count > 0) ? '<span class="badge badge-warning ml-1">'.$pending_return_messages_count.'</span>' : '' !!}
+                    <img src="{{ asset('assets/img/arrow-rotate-left.svg') }}" class="icon-size">Reembolsos {!! ($pending_return_messages_count > 0) ? '<span class="badge badge-warning ml-1">'.$pending_return_messages_count.'</span>' : '' !!}
                     </a>
                     <div class="collapse {{ ($uri_1 == 'returns') ? 'show' : '' }}" id="returns-dropdown">
                         <ul class="flex-column nav">
                             <li class="nav-item">
                                 <a class="nav-link py-1 {{ ($uri_1 == 'returns' && request()->status == 'pending') ? 'active' : '' }}" href="{{ route('supplier.returns.index', ['status' => 'pending']) }}">
-                                    <i class="fas fa-arrow-left text-warning" style="font-size: 0.7rem; min-width: 1.5rem"></i> Pendentes {!! ($pending_return_messages_count > 0) ? '<span class="badge badge-warning ml-1">'.$pending_return_messages_count.'</span>' : '' !!}
+                                    <img src="{{ asset('assets/img/circle-exclamation.svg') }}" class="subicon-size"> Pendentes {!! ($pending_return_messages_count > 0) ? '<span class="badge badge-warning ml-1">'.$pending_return_messages_count.'</span>' : '' !!}
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link py-1 {{ ($uri_1 == 'returns' && request()->status == 'resolved') ? 'active' : '' }}" href="{{ route('supplier.returns.index', ['status' => 'resolved']) }}">
-                                    <i class="fas fa-check text-success" style="font-size: 0.7rem; min-width: 1.5rem"></i> Resolvidos
+                                <img src="{{ asset('assets/img/circle-check.svg') }}" class="subicon-size"> Resolvidos
                                 </a>
                             </li>
                         </ul>
@@ -100,22 +133,18 @@
                 </li>
                 <li class="nav-item">
                     <a class=" nav-link {{ ($uri_1 == 'profile') ? 'active' : '' }}" href="{{ route('supplier.profile') }}">
-                        <i class="fas fa-user-cog text-gray"></i> Meu Perfil
+                    <img src="{{ asset('assets/img/user-gear.svg') }}" class="icon-size"> Meu Perfil
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class=" nav-link {{ ($uri_1 == 'assinatura') ? 'active' : '' }}" href="{{ route('supplier.plans.invoice') }}">
-                        <i class="ni ni-ui-04 text-success"></i> Assinatura
-                    </a>
-                </li>
+ 
                 <li class="nav-item">
                     <a class=" nav-link {{ ($uri_1 == 'settings' && $uri_2 != 'discounts') ? 'active' : '' }}" href="{{ route('supplier.settings.index') }}">
-                        <i class="fas fa-cogs text-gray"></i> Configurações
+                    <img src="{{ asset('assets/img/gear.svg') }}" class="icon-size"> Configurações
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class=" nav-link {{ ($uri_2 == 'discounts') ? 'active' : '' }}" href="{{ route('supplier.settings.discounts') }}">
-                        <i class="fas fa-sticky-note text-gray"></i> Descontos
+                    <img src="{{ asset('assets/img/badge-percent.svg') }}" class="icon-size"> Cupons
                     </a>
                 </li>
                 {{--<li class="nav-item">
@@ -123,16 +152,7 @@
                         <i class="fas fa-cogs text-gray"></i> Configurações
                     </a>
                 </li>--}}
-                <li class="nav-item">
-                    <a class="nav-link" href="https://api.whatsapp.com/send?phone={{ env('SUPPORT_WHATSAPP') }}&text=Ola%2C%20vim%20do%20SAC%20e%20gostaria%20de%20falar%20com%20a%20equipe%20de%20assist%C3%AAncia%20a%20Lojistas" target="_blank">
-                        <i class="fab fa-whatsapp text-success"></i> Suporte
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class=" nav-link {{ ($uri_1 == 'tutorials') ? 'active' : '' }}" href="{{ route('supplier.tutorials.index') }}">
-                        <i class="fas fa-chalkboard-teacher"></i> Tutoriais
-                    </a>
-                </li>
+                
                 {{-- <li class="nav-item">
                     <div class='bg-secondary p-4 text-center'>
                         <a href="https://www.facebook.com/mawapost/" target='_blank'><i  style='font-size: 18pt !important; color: #979797; width: 40px; ' class="fab fa-facebook-square"></i></a>

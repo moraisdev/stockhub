@@ -43,7 +43,7 @@ class SiteController extends Controller
         return redirect()->back()->with(['success' => 'Seu e-mail foi adicionado à nossa newsletter.']);
     }
 	
-	public function catolog(){  
+	public function catalog(){  
 
         $products_ids = [];
         $categories = Categories::get();

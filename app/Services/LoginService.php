@@ -62,6 +62,7 @@ class LoginService{
     }
 
     public function register($name, $email, $password, $password_confirmation, $terms_agreed, $phone = NULL, $document = NULL){
+
         
         if(($this->guard == 'supplier' || $this->guard == 'shop') && $terms_agreed != 'on'){
             return (object)['status' => 'error', 'message' => 'Você precisa confirmar com os termos e condições de uso do '.config('app.name').' para concluir seu cadastro'];

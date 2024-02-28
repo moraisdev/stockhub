@@ -1,5 +1,5 @@
 .bg-body-custom{
-    background: #2464a4 !important;
+    background: #fff !important;
 }
 
 .img-login-custom{
@@ -27,13 +27,18 @@
 }
 
 .card-login-custom{
-    background-color: #2464a4 !important;
+    background-color: #19204D !important;
     box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.15) !important;
 }
 
 .text-login-bold-white{
     font-weight: bold !important;
     color: #fff !important;
+}
+
+.text-login-bold-black{
+    font-weight: bold !important;
+    color: #000 !important;
 }
 
 input[type="text"], textarea, input[type="email"], input[type="password"]{

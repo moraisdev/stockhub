@@ -414,6 +414,7 @@
                                                     '</div>')
                     return false
                 }
+
                 
                 $.ajax({
                     url: '{{ route("shop.login.post_register.json") }}',
@@ -424,6 +425,7 @@
                     },
                     success: function(response){
                         console.log("AJAX Success Response:", response);
+                        
                         $("#page-1-form").hide();
                         $("#page-4-form").show();
                         $('#personal').addClass('active')
