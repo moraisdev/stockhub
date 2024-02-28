@@ -15,6 +15,14 @@
     margin-right: auto;
     margin-bottom: -40px;
 }
+.coming-soon {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.coming-soon:hover {
+    opacity: 1;
+}
 
 </style>
 
@@ -73,22 +81,22 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.catalog.index') }}">
+                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.collective.index') }}">
                         <img src="{{ asset('assets/img/handshake.svg') }}" class="icon-size"> Container Coletivo
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.catalog.index') }}">
+                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.private.index') }}">
                         <img src="{{ asset('assets/img/ship.svg') }}" class="icon-size"> Container Privado
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.catalog.index') }}">
+                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.radar.index') }}">
                         <img src="{{ asset('assets/img/radar.svg') }}" class="icon-size"> Radar Siscomex
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.catalog.index') }}">
+                <li class="nav-item coming-soon" data-toggle="tooltip" data-placement="right" title="Em Breve">
+                    <a class="nav-link">
                         <img src="{{ asset('assets/img/users.svg') }}" class="icon-size"> Compra Coletiva
                     </a>
                 </li>
@@ -189,3 +197,11 @@
         </div>
     </div>
 </nav>
+@section('scripts')
+<script>
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+@endsection

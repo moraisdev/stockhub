@@ -323,6 +323,17 @@ Route::namespace('Shop')->as('shop.')->prefix('shop')->group(function () {
         /* TUTORIALS */
         Route::get('tutorials', 'TutorialsController@index')->name('tutorials.index');
 
+        /* RADAR */
+        Route::get('radar', 'RadarController@index')->name('radar.index');
+        Route::get('radar/buy', 'RadarController@buy')->name('radar.buy');
+        Route::get('radar/activate', 'RadarController@activate')->name('radar.activate');
+
+        /* CONTAINTER PRIVADO */
+        Route::get('private', 'ContainerPrivateController@index')->name('private.index');
+
+        /* CONTAINTER COLETIVO */
+        Route::get('collective', 'CollectiveController@index')->name('collective.index');
+
         /* SIMULADOR DE FRETE */
         Route::get('freight-simulator', 'FreightSimulatorController@index')->name('freight-simulator.index');
         Route::get('freight-simulator/simulate', 'MelhorEnvioController@simulate')->name('freight-simulator.simulate');

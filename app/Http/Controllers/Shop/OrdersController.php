@@ -3,11 +3,7 @@
 namespace App\Http\Controllers\Shop;
 
 use Auth;
-use MPSdk;
-use MPItem;
-use MPPreference;
 use App\Models\Orders;
-use App\Models\Returns;
 use App\Models\Receipts;
 use App\Models\Customers;
 use App\Models\CustomerAddresses;
@@ -16,33 +12,18 @@ use App\Models\Suppliers;
 use App\Models\OrderItems;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Imports\OrdersImport;
 use App\Models\ReceiptOrders;
-use App\Models\ReturnMessages;
 use App\Models\SupplierOrders;
-use App\Models\PaymentGateways;
 use App\Models\ProductVariants;
 use App\Services\CurrencyService;
-use App\Services\PaymentsService;
 use App\Services\Shop\CsvService;
 
-use App\Imports\OrdersItemsImport;
 use App\Models\SupplierOrderGroup;
 use App\Models\CouponOrderReturned;
 
 use App\Models\OrderGroupPayments;
-use App\Models\SupplierOrderItems;
-use App\Exceptions\CustomException;
-
-use App\Services\Shop\CartxService;
-use App\Services\Shop\YampiService;
-use App\Services\MercadoPagoService;
 use App\Services\Shop\OrdersService;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Services\Shop\ShopifyService;
-use App\Models\SupplierOrderShippings;
 use App\Models\OrderShippings;
-use App\Services\Shop\ProductsService;
 use App\Models\SupplierOrdersDiscounts;
 
 use App\Services\Gerencianetpay;
@@ -50,8 +31,6 @@ use App\Services\Gerencianetpay;
 use App\Services\SupplierOrdersService;
 use Illuminate\Support\Facades\Storage;
 use App\Services\ProductVariantsService;
-use App\Services\Shop\WoocommerceService;
-
 use App\Services\Shop\BlingServiceShop;
 
 use App\Services\CorreiosService;
@@ -59,25 +38,17 @@ use App\Services\TotalExpressService;
 use App\Services\MelhorEnvioService;
 use App\Services\ChinaShippingService;
 use Illuminate\Support\Facades\Log;
-use Safe2Pay\Models\Payment\Pix;
 use App\Models\Admins;
 use App\Services\Shop\MercadolivreService;
 use App\Models\Mercadolivreapi;
 use App\Models\Products;
 use App\Models\ShopProducts;
-use Dsc\MercadoLivre\Resources\Order\Order;
-
 use App\Services\CitelService;
 
 class OrdersController extends Controller
 {
     public function index(){
-        set_time_limit(0);
-    	$shop = Auth::guard('shop')->user();
-        if($shop->status == 'inactive'){
-            return redirect()->back()->with('error', 'O pagamento de sua assinatura está pendente e o acesso ao pedidos foi desativado.');
-        }
-        
+
         $ordersService = new OrdersService($shop);
         $ordersService->clearNoCustomerOrders();
         $orders = $ordersService->getPendingOrders();
@@ -88,6 +59,33 @@ class OrdersController extends Controller
         return view('shop.orders.index', compact('orders', 'countOrders', 'apimercadolivreapi' ));
     }
 
+    public static function registerOrder($shop, $order_data, $labels)
+    {
+        $shop = Auth::guard('shop')->user();
+        $shop_id = $shop->id;
+        try {
+            $newExternalId = bin2hex(random_bytes(30));
+    
+            $order = Orders::create(['shop_id' => $shop->id, 'external_id' => $newExternalId]);
+    
+            $order->external_service = 'interno';
+            $order->name = $order_data['Cliente'];
+            $order->email = isset($order_data['E-mail']) ? $order_data['E-mail'] : '';
+            $order->external_price = isset($order_data['Total']) ? $order_data['Total'] : 0.0;
+            $order->status = 'pending';
+            $order->external_created_at = isset($order_data['Paid at']) ? date('Y-m-d h:i:s', strtotime($order_data['Paid at'])) : NULL;
+            $order->tracking_number  = isset($order_data['Rastreio']) ? $order_data['Rastreio'] : '';
+            
+            // Salva o pedido e processa os itens, cliente e envio conforme necessário
+            // ...
+    
+            return 'true';
+        } catch (\Exception $e) {
+            Log::error($e);
+            report($e);
+            return null;
+        }
+    }
     public function deleteGroup(Request $request){        
         $shop = Auth::guard('shop')->user();
         $ordersService = new OrdersService($shop);
@@ -449,82 +447,6 @@ class OrdersController extends Controller
         $order = $ordersService->find($order_id);
 
         return $order;
-    }
-
-    public function import(){
-    	$shop = Auth::guard('shop')->user();
-       
-    	$result = ShopifyService::getPaidOrdersLimit($shop);
-        
-
-        if($result['status'] == 'success'){
-            foreach ($result['data'] as $shopify_order) {
-               $orders = ShopifyService::registerOrder($shop, $shopify_order);
-            // dd($orders);
-            }
-        }else{
-            return redirect()->back()->with($result['status'], $result['message']);
-        }
-
-    	return redirect()->route('shop.orders.index')->with('success', 'Pedidos importados com sucesso.');
-    }
-
-    public function importWoo(){
-    	$shop = Auth::guard('shop')->user();
-
-    	$result = WoocommerceService::getPaidOrders($shop);
-        
-
-        if($result['status'] == 'success'){
-            foreach ($result['data'] as $woocommerce_order) {
-                WoocommerceService::registerOrder($shop, $woocommerce_order);
-            }
-        }else{
-            return redirect()->back()->with($result['status'], $result['message']);
-        }
-
-    	return redirect()->route('shop.orders.index')->with('success', 'Pedidos importados com sucesso.');
-    }
-
-    public function importCartx(){
-    	$shop = Auth::guard('shop')->user();
-
-    	$result = CartxService::getPaidOrders($shop);
-
-        if($result['status'] == 'success'){
-            foreach ($result['data'] as $cartx_order) {
-                CartxService::registerOrder($shop, $cartx_order);
-            }
-        }else{
-            return redirect()->back()->with($result['status'], $result['message']);
-        }
-
-    	return redirect()->route('shop.orders.index')->with('success', 'Pedidos importados com sucesso.');
-    }
-
-
-    public function importYampi(){
-    	$shop = Auth::guard('shop')->user();
-
-    	$result = YampiService::getPaidOrders($shop);
-
-        if($result['status'] == 'success'){
-
-            foreach ($result['data'] as $cartx_order) {
-
-                YampiService::registerOrder($shop, $cartx_order);
-
-            }
-
-        }else{
-
-            return redirect()->back()->with($result['status'], $result['message']);
-
-        }
-
-
-    	return redirect()->route('shop.orders.index')->with('success', 'Pedidos importados com sucesso.');
-
     }
 
     public function OrdersCsvImport(Request $request) 
