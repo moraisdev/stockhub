@@ -193,8 +193,7 @@
 
 
                                 <a href="#" class="btn btn-warning shadow-0"> Comprar agora </a>
-                                <a href="#" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i>
-                                    Adicionar ao carrinho </a>
+                                <a href="#" class="btn btn-primary shadow-0 add-to-cart-btn"> <i class="me-1 fa fa-shopping-basket"></i> Adicionar ao carrinho </a>
                             </div>
                         </main>
                     </div>
@@ -314,5 +313,33 @@
             updateQuantity(true);
         });
     });
+    function addToCart() {
+        var productData = {
+            productId: '{{ $product->id }}',
+            variantId: document.querySelector('.form-select').value,
+            quantity: document.getElementById('quantity-input').value
+            // Adicione outros dados necessários aqui
+        };
+
+        // Envia os dados do produto para o backend
+        fetch('/shop/add-to-cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify(productData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Trate a resposta do backend aqui
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Erro ao adicionar ao carrinho:', error);
+        });
+    }
+    document.querySelector('.add-to-cart-btn').addEventListener('click', addToCart);
+</script>
 </script>
 @endsection
