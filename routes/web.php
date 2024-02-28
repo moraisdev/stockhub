@@ -179,7 +179,7 @@ Route::namespace('Shop')->as('shop.')->prefix('shop')->group(function () {
     Route::get('login/define_new_password/{hash}', 'LoginController@defineNewPassword')->name('login.define_new_password');
 
     Route::post('login/authenticate', 'LoginController@authenticate')->name('login.authenticate');
-    Route::post('login/regfister', 'LoginController@postRegister')->name('login.post_register');
+    Route::post('login/register', 'LoginController@postRegister')->name('login.post_register');
     Route::post('login/register/json', 'LoginController@postRegisterJson')->name('login.post_register.json');
     Route::post('login/register/plan/json', 'LoginController@postRegisterShopPlanJson')->name('login.post_register.plan.json');
     Route::post('login/register/card/json', 'LoginController@postRegisterShopCardJson')->name('login.post_register.card.json');

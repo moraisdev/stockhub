@@ -56,24 +56,14 @@
                     </div>
                     <!-- Navbar items -->
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-icon" href="https://api.whatsapp.com/send?phone={{ env('SUPPORT_WHATSAPP') }}&text=Ola%2C%20vim%20do%20SAC%20e%20gostaria%20de%20falar%20com%20a%20equipe%20de%20assist%C3%AAncia%20a%20Lojistas" target="_blank">
-                                <i class="fa fa-whatsapp"></i>
-                                <span class="nav-link-inner--text">Suporte</span>
-                            </a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link nav-link-icon" href="{{ route('shop.login.register') }}">
                                 <i class="ni ni-circle-08"></i>
                                 <span class="nav-link-inner--text">Criar nova conta</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-icon" href="{{ route('shop.catalogo') }}">
-                                <i class="ni ni-bag-17"></i>
-                                <span class="nav-link-inner--text">Catálogo</span>
-                            </a>
-                        </li>
+                        
 
                     </ul>
                 </div>
@@ -98,8 +88,8 @@
             <div class="container">
                 <div class="row align-items-center justify-content-xl-between">
                     <div class="col-xl-12">
-                        <div class="copyright text-center text-xl-left text-muted">
-                            © 2024 <a href="#" class="font-weight-bold text-white ml-1" target="_blank">{{config('app.name')}}</a>
+                        <div class="copyright text-center text-xl-left text-muted" >
+                            <p style="color: black"> © 2024 <a href="#" class="font-weight-bold ml-1" target="_blank" style="color:black">{{config('app.name')}}</a> </p>
                         </div>
                     </div>
                 </div>

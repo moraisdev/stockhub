@@ -60,6 +60,7 @@ class LoginController extends Controller
 
         return view('shop.login.index', compact('redirect_url'));
     }
+    
 
     public function authenticate(AuthenticateRequest $request){
         $authentication = $this->loginService->authenticate($request->email, $request->password, $request->keep_user_connected, $request);
@@ -421,7 +422,7 @@ class LoginController extends Controller
         return $product;
     }
 
-    public function catolog(){  
+    public function catalog(){  
 
         $admins = Admins::find(2);
         
