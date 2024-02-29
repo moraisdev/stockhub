@@ -652,7 +652,7 @@
     }
 
     function updateCountdown() {
-        var deadline = new Date("2024-02-20T18:00:00").getTime();
+        var deadline = new Date("2024-03-20T11:00:00").getTime();
         var now = new Date().getTime();
         var t = deadline - now;
 

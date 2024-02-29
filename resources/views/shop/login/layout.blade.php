@@ -29,58 +29,6 @@
 </head>
 
 <body class="bg-body-custom">
-    <div class="main-content">
-        <!-- Navbar -->
-        <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
-            <div class="container px-4">
-                <button class="navbar-toggler custom-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbar-collapse-main">
-                    <!-- Collapse header -->
-                    <div class="navbar-collapse-header d-md-none">
-                        <div class="row">
-                            <div class="col-6 collapse-brand">
-                                <a href="{{ route('shop.dashboard') }}">
-                                   
-                                    <img src="{{ asset('assets/img/brand/logo.png?v=2') }}">
-                                </a>
-                            </div>
-                            <div class="col-6 collapse-close">
-                                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
-                                    <span></span>
-                                    <span></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Navbar items -->
-                    <ul class="navbar-nav ml-auto">
-                        
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-icon" href="{{ route('shop.login.register') }}">
-                                <i class="ni ni-circle-08"></i>
-                                <span class="nav-link-inner--text">Criar nova conta</span>
-                            </a>
-                        </li>
-                        
-
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <div class="header bg-gradient-white py-7 pb-lg-8 pt-lg-5">
-            <div class="container">
-                <div class="header-body text-center mb-4">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-5 col-md-6 mb-5">
-                            <img src="{{ asset('assets/img/brand/logo.png?v=2') }}" class="img-fluid img-login-custom" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         @yield('content')
 

@@ -59,10 +59,10 @@
                 <div class="card-body">
                     <div class="d-flex flex-wrap align-items-center justify-content-between">
                         <p>
-                            Para utilizar nosso sistema você precisa ter um radar ativo.<br>
+                            Assista o video abaixo para entender como ativar seu radar<br>
                         </p>
                         <div class="card-body">
-                            <iframe class="video-centered" width="560" height="315" src="https://www.youtube.com/embed/rSri-GH7ZcQ?si=u3wlAlb99cAjOGIv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                        </div>
+                        <img src=https://i.postimg.cc/C5y0f5Cz/Design-sem-nome-2024-02-28-T175742-161.png" alt="Descrição da Imagem" width="560" height="315">
                         <div class="w-100 d-flex flex-wrap align-items-center justify-content-center mt-3">
                             <div class="button-container mx-2">
                                 <a href="/shop/radar/buy" class="btn btn-success">Comprar Radar</a>

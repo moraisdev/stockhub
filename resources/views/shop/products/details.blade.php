@@ -91,6 +91,10 @@
     .icon-hover:hover i {
         color: #3b71ca !important;
     }
+    .general-information {
+        margin-top: 20px;
+        margin: 15px;
+    }
 </style>
 @endsection
 

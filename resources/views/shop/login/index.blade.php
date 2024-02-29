@@ -1,7 +1,287 @@
 @extends('shop.login.layout')
 
 @section('content')
+<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+@section('content')
     <style>
+        html {
+        background-color: #fff;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            height: 100vh;
+            }
+
+        a {
+            color: #92badd;
+            display:inline-block;
+            text-decoration: none;
+            font-weight: 400;
+            }
+
+        h2 {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            display:inline-block;
+            margin: 40px 8px 10px 8px; 
+            color: #cccccc;
+            }
+
+        .wrapper {
+            display: flex;
+            align-items: center;
+            flex-direction: column; 
+            justify-content: center;
+            width: 100%;
+            min-height: 100%;
+            padding: 20px;
+            }
+
+        #formContent {
+            -webkit-border-radius: 10px 10px 10px 10px;
+            border-radius: 10px 10px 10px 10px;
+            background: #fff;
+            padding: 30px;
+            width: 90%;
+            max-width: 360px;
+            position: relative;
+            -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+            box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+            text-align: center;
+            padding-bottom: 30px;
+        }
+
+        #formFooter {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .checkbox-container {
+            align-items: center;
+        }
+
+        .link-container {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                margin-top: 20px;
+                padding: 0 10px;
+            }
+
+        .link-container a, .checkbox-container label {
+            margin: 0 10px;
+            white-space: nowrap;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        h2.inactive {
+            color: #cccccc;
+            }
+
+        h2.active {
+            color: #0d0d0d;
+            border-bottom: 2px solid #02A0FC;
+            }
+
+        input[type=button], input[type=submit], input[type=reset]  {
+            background-color: #02A0FC;
+            border: none;
+            color: white;
+            padding: 15px 80px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: 13px;
+            -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+            box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+            -webkit-border-radius: 5px 5px 5px 5px;
+            border-radius: 5px 5px 5px 5px;
+            margin: 5px 20px 40px 20px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -ms-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            }
+        
+        input[type=submit] {
+            width: auto;
+            max-width: 100%;
+            padding: 15px;
+        }
+        input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+            background-color: #39ace7;
+            }
+
+        input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+            -moz-transform: scale(0.95);
+            -webkit-transform: scale(0.95);
+            -o-transform: scale(0.95);
+            -ms-transform: scale(0.95);
+            transform: scale(0.95);
+            }
+
+        input[type=text], input[type=password] {
+            background-color: #f6f6f6;
+            border: none;
+            color: #0d0d0d;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 5px;
+            width: 85%;
+            border: 2px solid #f6f6f6;
+            -webkit-transition: all 0.5s ease-in-out;
+            -moz-transition: all 0.5s ease-in-out;
+            -ms-transition: all 0.5s ease-in-out;
+            -o-transition: all 0.5s ease-in-out;
+            transition: all 0.5s ease-in-out;
+            -webkit-border-radius: 5px 5px 5px 5px;
+            border-radius: 5px 5px 5px 5px;
+            }
+
+        input[type=text]:focus {
+            background-color: #fff;
+            border-bottom: 2px solid #5fbae9;
+            }
+
+        input[type=text]:placeholder {
+            color: #cccccc;
+            }
+
+        .fadeInDown {
+            -webkit-animation-name: fadeInDown;
+            animation-name: fadeInDown;
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            }
+
+        @-webkit-keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none;
+            }
+            }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none;
+            }
+            }
+
+        @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+        @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        .fadeIn {
+            opacity:0;
+            -webkit-animation:fadeIn ease-in 1;
+            -moz-animation:fadeIn ease-in 1;
+            animation:fadeIn ease-in 1;
+
+            -webkit-animation-fill-mode:forwards;
+            -moz-animation-fill-mode:forwards;
+            animation-fill-mode:forwards;
+
+            -webkit-animation-duration:1s;
+            -moz-animation-duration:1s;
+            animation-duration:1s;
+            }
+
+        .fadeIn.first {
+            -webkit-animation-delay: 0.4s;
+            -moz-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+            }
+
+        .fadeIn.second {
+            -webkit-animation-delay: 0.6s;
+            -moz-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+            }
+
+        .fadeIn.third {
+            -webkit-animation-delay: 0.8s;
+            -moz-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+            }
+
+        .fadeIn.fourth {
+            -webkit-animation-delay: 1s;
+            -moz-animation-delay: 1s;
+            animation-delay: 1s;
+            }
+        #customCheckLogin + label {
+            cursor: pointer;
+        }
+        label[for="customCheckLogin"] {
+            margin-right: 5px;
+            transform: scale(0.9);
+
+        }
+        label[for="customCheckLogin"], .link-container a {
+            font-size: 14px;
+            background
+        }
+        input[type=checkbox] {
+            transform: scale(0.1); /* Reduz um pouco o tamanho do checkbox */
+            margin-right: 5px;
+        }
+            /* Simple CSS3 Fade-in Animation */
+            .underlineHover:after {
+            display: block;
+            left: 0;
+            bottom: -10px;
+            width: 0;
+            height: 2px;
+            background-color: #56baed;
+            content: "";
+            transition: width 0.2s;
+            }
+
+            .underlineHover:hover {
+            color: #0d0d0d;
+            }
+
+            .underlineHover:hover:after{
+            width: 100%;
+            }
+
+            *:focus {
+                outline: none;
+            } 
+
+            #icon {
+            width:60%;
+            }
+
+            * {
+            box-sizing: border-box;
+            }
+
         .cookieConsentContainer {
             z-index: 999;
             width: 350px;
@@ -15,7 +295,10 @@
             right: 30px;
             display: none
         }
-
+        #formContent h2.active,
+        #formContent h2.inactive {
+            font-size: 14px;
+        }
         .cookieConsentContainer .cookieTitle a {
             font-family: OpenSans, arial, sans-serif;
             color: #fff;
@@ -69,76 +352,38 @@
         }
 
     </style>
-    <div class="container mt--8 pb-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7">
-                <div class="card bg-secondary shadow border-0 card-login-custom">
-                    <!-- <div class="card-header bg-transparent pb-5">
-                                        <div class="text-muted text-center mt-2 mb-3"><small>Entrar com</small></div>
-                                        <div class="btn-wrapper text-center">
-                                            <a href="#" class="btn btn-neutral btn-icon">
-                                                <span class="btn-inner--icon"><i class="fab fa-facebook-f"></i></span>
-                                                <span class="btn-inner--text">Facebook</span>
-                                            </a>
-                                            <a href="#" class="btn btn-neutral btn-icon">
-                                                <span class="btn-inner--icon"><i class="fab fa-google"></i></span>
-                                                <span class="btn-inner--text">Google</span>
-                                            </a>
-                                        </div>
-                                    </div> -->
-                    <div class="card-body px-lg-5 py-lg-5">
-                        <!-- <div class="text-center text-muted mb-4">
-                                            <small>Ou entre com suas credenciais</small>
-                                        </div> -->
-                        <div class="text-muted text-center mb-3"><small class='text-login-bold-white'>Login</small></div>
 
-                        <form role="form" method="POST" action="{{ route('shop.login.authenticate') }}">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="redirect_url" value="{{ $redirect_url }}">
-                            <div class="form-group mb-3">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                                    </div>
-                                    <input class="form-control" placeholder="Email" type="email" name="email"
-                                        value="{{ old('email') }}" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                                    </div>
-                                    <input class="form-control" placeholder="Senha" type="password" name="password"
-                                        readonly>
-                                </div>
-                            </div>
-                            <div class="custom-control custom-control-alternative custom-checkbox">
-                                <input class="custom-control-input" id=" customCheckLogin" type="checkbox" value="1"
-                                    name="keep_user_connected" {{ old('keep_user_connected') == 1 ? 'checked' : '' }}>
-                                <label class="custom-control-label" for=" customCheckLogin">
-                                    <span class="text-muted text-login-bold-white">Manter-me conectado</span>
-                                </label>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4 btn-login-custom">Entrar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-6">
-                        <a href="{{ route('shop.login.forgot_password') }}" class="text-light"><small
-                                class='text-login-bold-black'>Esqueci minha senha</small></a>
-                    </div>
-                    <div class="col-6 text-right">
-                        <a href="{{ route('shop.login.register') }}" class="text-light"><small
-                                class='text-login-bold-black'>Criar nova conta</small></a>
-                    </div>
-                </div>
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+
+            <div class="fadeIn first">
+                <img src="{{ asset('assets/img/brand/logo.png?v=2') }}" id="icon" alt="User Icon" />
             </div>
+
+            <h2 class="active">Login</h2>
+            <h2 class="inactive underlineHover"><a href="{{ route('shop.login.register') }}" style="color: inherit;">Nova Conta</a></h2>
+
+            <form method="POST" action="{{ route('shop.login.authenticate') }}">
+            {{ csrf_field() }}
+            <input type="hidden" name="redirect_url" value="{{ $redirect_url }}">
+            <input type="text" id="login" class="fadeIn second" name="email" placeholder="E-mail" value="{{ old('email') }}">
+            <input type="password" id="password" class="fadeIn third" name="password" placeholder="Senha">
+            <input type="submit" class="fadeIn fourth" value="Acessar minha conta">
+
+            <div class="link-container">
+            <div class="checkbox-container">
+                    <input class="custom-control-input" id="customCheckLogin" type="checkbox" value="1" name="keep_user_connected" {{ old('keep_user_connected') == 1 ? 'checked' : '' }}>
+                    <label class="custom-control-label" for="customCheckLogin">Lembrar-me</label>
+                </div>
+                <a class="underlineHover" href="{{ route('shop.login.forgot_password') }}">Esqueci a senha</a>
+            </div>
+        </form>
         </div>
     </div>
+    @endsection
+
+
     <script>
         var purecookieTitle = "Cookies.",
             purecookieDesc = "Ao usar esse site, automaticamente você aceita o uso de cookies.",
