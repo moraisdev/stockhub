@@ -85,7 +85,8 @@
             border-bottom: 2px solid #02A0FC;
             }
 
-            input[type=button], input[type=submit], input[type=reset]  {
+        input[type=button], input[type=submit], input[type=reset]  {
+            
             background-color: #02A0FC;
             border: none;
             color: white;
@@ -95,22 +96,22 @@
             display: inline-block;
             text-transform: uppercase;
             font-size: 13px;
+            margin-right: 15%;
             -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
             box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
             -webkit-border-radius: 5px 5px 5px 5px;
             border-radius: 5px 5px 5px 5px;
-            margin: 5px 20px 40px 20px;
             -webkit-transition: all 0.3s ease-in-out;
             -moz-transition: all 0.3s ease-in-out;
             -ms-transition: all 0.3s ease-in-out;
             -o-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
-            }
+        }
         
         input[type=submit] {
-            width: auto;
+            width: 93%;
             max-width: 100%;
-            padding: 15px;
+            padding: 12px;
         }
         input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
             background-color: #39ace7;
@@ -125,14 +126,14 @@
             }
 
         input[type=text], input[type=password], input[type=email], input[type=tel] {
-            background-color: #f6f6f6;
+            background-color: #fff;
             border: none;
             color: #0d0d0d;
             padding: 15px 32px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            font-size: 16px;
+            font-size: 13px;
             margin: 5px;
             width: 85%;
             border: 2px solid #f6f6f6;
@@ -147,12 +148,12 @@
 
         input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=tel]:focus {
             background-color: #fff;
-            border-bottom: 2px solid #5fbae9;
+            border-bottom: 2px solid #02A0FC;
         }
 
         input[type=text]:focus {
             background-color: #fff;
-            border-bottom: 2px solid #5fbae9;
+            border-bottom: 2px solid #02A0FC;
             }
 
         input[type=text]:placeholder {
@@ -203,6 +204,7 @@
         @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
         .fadeIn {
+            
             opacity:0;
             -webkit-animation:fadeIn ease-in 1;
             -moz-animation:fadeIn ease-in 1;

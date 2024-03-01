@@ -61,12 +61,10 @@ class LoginService{
         }
     }
 
-    public function register($name, $email, $password, $password_confirmation, $terms_agreed, $phone = NULL, $document = NULL){
+    public function register($name, $email, $password, $password_confirmation, $terms_agreed, $phone, $document = NULL){
 
         
-        if(($this->guard == 'supplier' || $this->guard == 'shop') && $terms_agreed != 'on'){
-            return (object)['status' => 'error', 'message' => 'Você precisa confirmar com os termos e condições de uso do '.config('app.name').' para concluir seu cadastro'];
-        }
+        
         
         $already_registered = $this->model::where('email', $email)->first();
         
@@ -76,9 +74,7 @@ class LoginService{
             if(!$phone && $this->guard == 'shop'){
                 return (object)(['status' => 'error', 'message' => 'Telefone inválido.']);
             }
-            if(!$document && $this->guard == 'shop'){
-                return (object)(['status' => 'error', 'message' => 'CPF ou CNPJ inválido.']);
-            }
+            
 
             if($password == $password_confirmation){
 

@@ -111,9 +111,9 @@
             }
         
         input[type=submit] {
-            width: auto;
+            width: 85%;
             max-width: 100%;
-            padding: 15px;
+            padding: 12px;
         }
         input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
             background-color: #39ace7;
@@ -135,7 +135,7 @@
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            font-size: 16px;
+            font-size: 13px;
             margin: 5px;
             width: 85%;
             border: 2px solid #f6f6f6;
@@ -148,9 +148,9 @@
             border-radius: 5px 5px 5px 5px;
             }
 
-        input[type=text]:focus {
+        input[type=text]:focus, input[type=password]:focus {
             background-color: #fff;
-            border-bottom: 2px solid #5fbae9;
+            border-bottom: 2px solid #02A0FC;
             }
 
         input[type=text]:placeholder {

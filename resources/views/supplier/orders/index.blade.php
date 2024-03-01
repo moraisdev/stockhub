@@ -73,10 +73,10 @@
     .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
         z-index: 1;
         color: #fff !important;
-        background-color: #5e72e4 !important;
-        border-color: #5e72e4 !important;
+        background-color: #02A0FC !important;
+        border-color: #02A0FC !important;
         box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08) !important;
-        background: #5e72e4 !important;
+        background: #02A0FC !important;
     }
 </style>
 <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
