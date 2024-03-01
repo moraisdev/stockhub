@@ -106,17 +106,21 @@ class LoginController extends Controller
     }
 
     public function postRegister(RegisterRequest $request){
-        $register = $this->loginService->register($request->name, $request->email, $request->password, $request->password_confirmation, $request->terms_agreed);
+        $register = $this->loginService->register($request->name, $request->email, $request->password, $request->password_confirmation, $request->terms_agreed, $request->phone);
         
 
         //$user = $this->model::where('email', $email)->first();
 
-        if($register->status == 'success'){
-            
-            return response()->json(['status' => 'success', 'message' => $register->message]);
-        }else{
-            return response()->json(['status' => 'error', 'message' => $register->message], 400);
-    }
+        if(is_object($register) && isset($register->status)){
+            if($register->status == 'success'){
+                return response()->json(['status' => 'success', 'message' => $register->message]);
+            } else {
+                return response()->json(['status' => 'error', 'message' => $register->message], 400);
+            }
+        } else {
+            // Trate o caso em que $register não é o que esperávamos
+            return response()->json(['status' => 'error', 'message' => 'Unexpected error occurred'], 500);
+        }
     }
 
     public function postRegisterJson(RegisterRequest $request){
