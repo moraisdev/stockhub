@@ -158,10 +158,12 @@
 
         input[type=text]:placeholder {
             color: #cccccc;
-            }
+
+        }
         
         .terms-text label {
                 font-size: 12px; 
+                margin-right: 10%;
             }
 
         .fadeInDown {
@@ -490,6 +492,8 @@
 }
                 });
             })
+
+            
         
     </script>
 @endsection 
