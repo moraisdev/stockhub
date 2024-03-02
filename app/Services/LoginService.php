@@ -63,42 +63,37 @@ class LoginService{
 
     public function register($name, $email, $password, $password_confirmation, $terms_agreed, $phone, $document = NULL){
 
-        
-        
-        
         $already_registered = $this->model::where('email', $email)->first();
-        
+    
         if($already_registered){
-            return (object)(['status' => 'error', 'message' => 'Este e-mail já foi cadastrado.']);
-        }else{
+            return (object)['status' => 'error', 'message' => 'Este e-mail já foi cadastrado.'];
+        } else {
             if(!$phone && $this->guard == 'shop'){
-                return (object)(['status' => 'error', 'message' => 'Telefone inválido.']);
+                return (object)['status' => 'error', 'message' => 'Telefone inválido.'];
             }
-            
-
+    
             if($password == $password_confirmation){
-
                 $user = $this->createUser($name, $email, $password, $phone, $document);
                 
-                
-                return [
+                return (object)[
                     'status' => 'success', 
                     'message' => 'Você foi cadastrado com sucesso. Seja bem vindo ao ' . config('app.name') . '!'
                 ];
             } else {
-                return [
+                return (object)[
                     'status' => 'error', 
                     'message' => 'A senha e a confirmação de senha devem ser iguais.'
                 ];
             }
         }
     }
+    
 
     public function logout(){
         Auth::guard($this->guard)->logout();
     }
 
-    protected function createUser($name, $email, $password, $phone = NULL, $document = NULL){
+    protected function createUser($name, $email, $password, $phone, $document = NULL){
         $user = new $this->model();
 
         if($this->guard == 'supplier'){ //caso seja fornecedor, gera um código pro nome e salva só o legal name
