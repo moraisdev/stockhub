@@ -6,10 +6,8 @@
             <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle bg-white">
                     @if($authenticated_user->img_profile)
-                        {{-- Se img_profile contém dados base64, os exibe diretamente --}}
                         <img alt="Image placeholder" src="data:image/jpeg;base64,{{ $authenticated_user->img_profile }}">
                     @else
-                        {{-- Caso contrário, usa uma imagem padrão --}}
                         <img alt="Image placeholder" src="{{ asset('assets/img/products/eng-product-no-image.png') }}">
                     @endif
                 </span>

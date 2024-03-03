@@ -33,9 +33,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand pt-0" href="{{ route('shop.dashboard') }}">
             <img src="{{ asset('assets/img/brand/logo.png?v=2') }}" class="navbar-brand-img" alt="...">
-        </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
             @include('shop.layout.default.header-menu')
@@ -58,18 +56,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Form -->
-            {{-- <form class="mt-4 mb-3 d-md-none">
-                <div class="input-group input-group-rounded input-group-merge">
-                    <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span class="fa fa-search"></span>
-                        </div>
-                    </div>
-                </div>
-            </form> --}}
-            <!-- Navigation -->
             @php
                 $uri_1 = request()->segment(2);
                 $uri_2 = request()->segment(3);
