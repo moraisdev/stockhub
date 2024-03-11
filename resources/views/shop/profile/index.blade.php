@@ -34,14 +34,6 @@
                 @csrf
                 @method('PUT')
                 <div class="card bg-secondary shadow">
-                    <div class="card-header bg-white border-0">
-                        <div class="row align-items-center">
-                        <h5 class="mb-0" style="padding-left: 15px;">Status da Conta: 
-                            <span class="status-dot"></span>
-                            <span class="status-text">Dados Incompletos</span>
-                        </h5>
-                        </div>
-                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
@@ -72,7 +64,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" id="document_label">CPF</label>
-                                    <input type="text" class="form-control" name="document" id="document" placeholder="Número do Documento" value="{{ $authenticated_user->document }}" required>
+                                    <input type="text" class="form-control" name="responsible_document" id="document" placeholder="Número do Documento" value="{{ $authenticated_user->document }}" required>
                                     <small class="field_error text-danger" style="display:none">Documento inválido.</small>
                                 </div>
                             </div>

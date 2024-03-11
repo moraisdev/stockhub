@@ -40,14 +40,5 @@ class BusinessController extends Controller
 
         return redirect()->back()->with('success', 'Perfil atualizado com sucesso.');
     }
-    
-     public function updatebling(Request $request){
-        $shop = Auth::user();
-
-        $shop->bling_apikey  = $request->bling_apikey;
-        $shop->save();
-
-        return redirect()->back()->with('success', 'Bling Api atualizado com sucesso.');
-    }
 
 }

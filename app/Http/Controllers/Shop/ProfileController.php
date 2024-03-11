@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Shop;
 use Illuminate\Http\Request;
 
 use App\Models\ShopAddress;
+use App\Models\Shops;
 
 use Auth;
 
@@ -16,42 +17,45 @@ class ProfileController extends Controller
 
     public function update(Request $request){
         $shop = Auth::user();
+        $documentCleaned = preg_replace('/\D/', '', $request->input('responsible_document'));
 
-        $shop->name = $request->name;
-        $shop->phone = preg_replace('/\D/', '', $request->phone);
-        $shop->responsible_document = preg_replace('/\D/', '', $request->responsible_document);
+        $documentExists = Shops::where('responsible_document', $documentCleaned)
+                           ->where('id', '<>', $shop->id) // Exclui a loja atual da verificação
+                           ->exists();
+
+
+        if ($documentExists) {
+            // Retorna para a página anterior com uma mensagem de erro se o responsible_document já existir
+            return redirect()->back()->with('error', 'O documento fornecido já está em uso por outra loja.');
+        }
+
+        $shop->responsible_name = $request->input('responsible_name');
+        $shop->phone = $documentCleaned;
+        $shop->document = $documentCleaned;
 
         if ($request->hasFile('img_profile')) {
-            $imageData = file_get_contents($request->img_profile->getRealPath());
-            $encodedData = base64_encode($imageData);
-            $shop->img_profile = $encodedData;
+            $imageName = $shop->id.'_profile_'.time().'.'.$request->img_profile->extension();
+            $request->img_profile->storeAs('profiles', $imageName, 'public');
+            $shop->img_profile = $imageName;
         }
 
         $shop->save();
 
-        $address = ShopAddress::firstOrNew(['shop_id' => $shop->id]);
-
-        $address->street = $request->street;
-        $address->number = $request->number;
-        $address->district = $request->district;
-        $address->complement = $request->complement;
-        $address->city = $request->city;
-        $address->state_code = $request->state_code;
-        $address->country = $request->country;
-        $address->zipcode = preg_replace('/\D/', '', $request->zipcode);
-
-        $address->save();
+        $address = ShopAddress::updateOrCreate(
+            ['shop_id' => $shop->id],
+            [
+                'street' => $request->input('street'),
+                'number' => $request->input('number'),
+                'district' => $request->input('district'),
+                'complement' => $request->input('complement', ''),
+                'zipcode' => preg_replace('/\D/', '', $request->input('zipcode')),
+                'country' => $request->input('country'),
+                'state_code' => $request->input('state_code'),
+                'city' => $request->input('city')
+            ]
+        );
 
         return redirect()->back()->with('success', 'Perfil atualizado com sucesso.');
-    }
-    
-     public function updatebling(Request $request){
-        $shop = Auth::user();
-
-        $shop->bling_apikey  = $request->bling_apikey;
-        $shop->save();
-
-        return redirect()->back()->with('success', 'Bling Api atualizado com sucesso.');
     }
 
 }
