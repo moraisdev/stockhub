@@ -206,7 +206,7 @@
                     </div>
                     <span class="nav-link-text ms-1"> Configurações</span>
                     </a>
-                    <div class="collapse {{ ($uri_1 == '' || $uri_1 == '') ? 'active' : '' }}" id="config-dropdown">
+                    <div class="collapse {{ ($uri_1 == 'profile' || $uri_1 == 'settings') ? 'show' : '' }}" id="config-dropdown">
                         <ul class="flex-column nav">
                             <li class="nav-item">
                                 <a class="nav-link py-1 {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.profile') }}">
