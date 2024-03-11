@@ -196,8 +196,8 @@
         <!-- Fim da quantidade -->
 
 
-                                <a href="#" class="btn btn-warning shadow-0"> Comprar agora </a>
-                                <a href="#" class="btn btn-primary shadow-0 add-to-cart-btn"> <i class="me-1 fa fa-shopping-basket"></i> Adicionar ao carrinho </a>
+                                <a href="#" class="btn btn-warning shadow-0" id="buy-now-btn"> Comprar agora </a>
+                                <a href="#" class="btn btn-primary shadow-0 add-to-cart-btn" id="add-to-cart-btn"> <i class="me-1 fa fa-shopping-basket"></i> Adicionar ao carrinho </a>
                             </div>
                         </main>
                     </div>
@@ -282,8 +282,10 @@
             </section>
             @endsection
             @section('scripts')
+            @section('scripts')
 <script>
     $(document).ready(function() {
+        // Switching main image with thumbnail image on click
         document.querySelectorAll('.thumbnail-img img').forEach((img, index) => {
             img.addEventListener('click', function() {
                 const mainImage = document.getElementById('main-image');
@@ -294,21 +296,25 @@
             });
         });
 
+        // Toggle tabs without URL change
         $('a[data-toggle="pill"]').on('click', function(e) {
             e.preventDefault();
             $(this).tab('show');
         });
 
+        // Update quantity function
         function updateQuantity(isIncreasing) {
             var quantityInput = document.getElementById('quantity-input');
             var currentQuantity = parseInt(quantityInput.value);
             if (isIncreasing) {
-                quantityInput.value = currentQuantity + 1;
+                currentQuantity++;
             } else if (currentQuantity > 1) {
-                quantityInput.value = currentQuantity - 1;
+                currentQuantity--;
             }
+            quantityInput.value = currentQuantity;
         }
 
+        // Event listeners for quantity update buttons
         document.getElementById('button-addon1').addEventListener('click', function() {
             updateQuantity(false);
         });
@@ -316,34 +322,66 @@
         document.getElementById('button-addon2').addEventListener('click', function() {
             updateQuantity(true);
         });
-    });
-    function addToCart() {
-        var productData = {
-            productId: '{{ $product->id }}',
-            variantId: document.querySelector('.form-select').value,
-            quantity: document.getElementById('quantity-input').value
-            // Adicione outros dados necessários aqui
-        };
 
-        // Envia os dados do produto para o backend
-        fetch('/shop/add-to-cart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify(productData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Trate a resposta do backend aqui
-            console.log(data);
-        })
-        .catch(error => {
-            console.error('Erro ao adicionar ao carrinho:', error);
+        // "Comprar Agora" button click event
+        document.getElementById('buy-now-btn').addEventListener('click', function(event) {
+            event.preventDefault();
+            buyNow();
         });
-    }
-    document.querySelector('.add-to-cart-btn').addEventListener('click', addToCart);
-</script>
+
+        // Buy now function
+        function buyNow() {
+            var productData = {
+                product_hash: '{{ $product->hash }}',
+                quantity: document.getElementById('quantity-input').value,
+                // Additional data can be added here if necessary
+            };
+
+            fetch('{{ route('shop.orders.create') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify(productData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response
+                console.log(data);
+                // Redirect or show success message
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // "Adicionar ao Carrinho" button click event
+        function addToCart() {
+            var productData = {
+                productId: '{{ $product->id }}',
+                variantId: document.querySelector('.form-select').value,
+                quantity: document.getElementById('quantity-input').value
+                // Additional data can be added here if necessary
+            };
+
+            fetch('/shop/add-to-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify(productData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error adding to cart:', error);
+            });
+        }
+
+        document.querySelector('.add-to-cart-btn').addEventListener('click', addToCart);
+    });
 </script>
 @endsection

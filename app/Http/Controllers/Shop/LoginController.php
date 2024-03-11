@@ -63,13 +63,6 @@ class LoginController extends Controller
         if($authentication->status == 'success'){
             //faz a atualização do plano do usuário antes dele entrar
             $shop = Auth::guard('shop')->user();
-            
-            
-
-            //atualiza os dados do plano do usuário, pra não precisa ficar consultando o servidor do gateway de pagamento a cada requisição
-                // $safe2pay = new SafeToPayPlansService();
-
-                // $safe2pay->updateShopSubscription($shop);
 
             return redirect($request->redirect_url)->with(['success_notification' => $authentication->message]);
         }else{

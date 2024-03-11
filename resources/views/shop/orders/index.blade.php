@@ -305,36 +305,6 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{ route('shop.orders.import_order_csv') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group mb-4" style="max-width: 500px; margin: 0 auto;">
-                    <label for="">Pedidos</label>
-                    <div class="custom-file text-left">
-                        <input type="file" name="file" class="custom-file-input" id="customFile">
-                        <label class="custom-file-label order-file" for="customFile">Escolher Arquivo</label>
-                    </div>
-                    <hr>
-                    <label for="">Etiquetas</label>
-                    <div class="custom-file text-left">
-                        <input type="file" name="file_shipping_labels" class="custom-file-input" id="customFileShippingLabels">
-                        <label class="custom-file-label order-file-shipping-label" for="customFileShippingLabels">Escolher Arquivo</label>
-                        <small>** Caso <b>ENVIE</b> as etiquetas, não é necessário fornecer o endereço do cliente, só o nome e e-mail</small><br/>
-                        <small>* Caso <b>NÃO ENVIE</b> as etiquetas, o frete será calculado utilizando o método de envio do respectivo fornecedor(Correios, Total Express ou Melhor Envio)</small>
-                    </div>
-                </div>
-                {{-- <div class="form-group mb-4" style="max-width: 500px; margin: 0 auto;">
-                    <label for="">Items dos pedidos</label>
-                    <div class="custom-file text-left">
-                        <input type="file" name="fileItem" class="custom-file-input" id="customFile">
-                        <label class="custom-file-label order-item" for="customFile">Escolher Arquivo</label>
-                    </div>
-                </div> --}}
-                <div class="modal-footer">
-                <a type="button" class="btn btn-danger" href="{{asset('assets/static/PlanilhaModelo.xlsx')}}" download >Baixar Modelo</a>
-                <button type="submit" class="btn btn-primary">Importar</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                </div>
-            </form>
         </div>
       </div>
     </div>

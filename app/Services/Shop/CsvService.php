@@ -7,28 +7,18 @@ use App\Models\Customers;
 use App\Models\ErrorLogs;
 use App\Models\Suppliers;
 use App\Models\OrderItems;
-use App\Models\ShopProducts;
 use App\Imports\OrdersImport;
 use App\Models\OrderShippings;
 use App\Models\ProductVariants;
 use App\Models\CustomerAddresses;
-use App\Models\Products;
 use App\Models\ShippingLabel;
 use App\Services\CorreiosService;
-use Illuminate\Support\Facades\DB;
 use App\Services\MelhorEnvioService;
 use Illuminate\Support\Facades\Auth;
 use App\Services\TotalExpressService;
-use App\Services\ChinaShippingService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Imports\Importproduto;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Imports\HeadingRowFormatter;
-use Maatwebsite\Excel\Concerns\Excel;
 
 class CsvService{
 
@@ -82,19 +72,6 @@ class CsvService{
       //  if(!$csv_order['CPF']) return $csv_order["Cliente"]." não possui CPF. ";
 
         try {
-            //if ($shop->status == 'inactive') {
-            //    return false;
-           // }
-
-            // if (!$csv_order['E-mail']) {
-            //     return false;
-            // }
-            
-           // if (!self::checkOrderItems($csv_order)) {
-               
-           //     return false;
-           // }
-
             $newExternalId = bin2hex(random_bytes(30));
             
             $order = Orders::create(['shop_id' => $shop->id, 'external_id' => $newExternalId ]); //gerar um random
@@ -147,7 +124,6 @@ class CsvService{
         }
     }
 
-    /* Verify if theres a registered product in the csv order */
     public static function checkOrderItems($csv_line_items)
     {
 
@@ -190,7 +166,6 @@ class CsvService{
         try {
             $items = array();
             $total_amount = 0;
-            //dd($csv_line_items);
             foreach ($csv_line_items as $csv_item) {
                 
                 //antes, verifica se é um kit, caso seja, multiplica pela quantidade que indica na string
@@ -363,25 +338,6 @@ class CsvService{
     public static function calculateShipping($items, $supplier, $customer, $shop = NULL, $order = NULL)
     {
         try {
-            //dd($customer);
-            //caso seja o pessoal da s2m2, verifica o método de envio dos china
-            // if ($supplier->id == 56) {
-            //     $chinaShippingService = new ChinaShippingService();
-
-            //     $address = $customer->address;
-
-            //     $products = $chinaShippingService->prepareOrderProducts($items);
-
-            //     $chinaShippingService->setToZipcode($address->zipcode);
-            //     $chinaShippingService->calcBoxWeight($products);
-
-            //     $valor = $chinaShippingService->getShippingPrice();
-
-            //     if ($valor && $valor > 0) {
-            //         return $valor;
-            //     }
-            // }
-
             if ($supplier->shipping_method == 'correios' && $supplier->correios_settings) {
 
                 $address = $customer->address;
@@ -647,41 +603,8 @@ class CsvService{
             }
 
             $client = new \GuzzleHttp\Client([
-                // Base URI is used with relative requests
                 'base_uri' => $shop->csv_app->domain,
             ]);
-
-            // $response = $client->request('post', '/wp-json/wc/v3/products', [
-            //     'headers' => [
-            //         "Authorization" => "Basic ". base64_encode($shop->csv_app->app_key.':'.$shop->csv_app->app_password)
-            //     ],
-            //     'verify' => false, //only needed if you are facing SSL certificate issue
-            //     'json' => $data,
-            // ]);
-
-            // if($response->getStatusCode() == 200 || $response->getStatusCode() == 201){
-
-            //     $csv_product = json_decode($response->getBody());
-
-            // }
-
-
-            //     $client = new \GuzzleHttp\Client([
-            //         // Base URI is used with relative requests
-            //         'base_uri' => $shop->csv_app->domain,
-            //     ]);
-            //     $response3 = $client->request('GET', '/wp-json/wc/v3/products?limit=1', [
-            //         'headers' => [
-            //             "Authorization" => "Basic ". base64_encode($shop->csv_app->app_key.':'.$shop->csv_app->app_password)
-            //         ],
-            //         'verify' => false, //only needed if you are facing SSL certificate issue
-            //     ]);
-
-            //     if($response3->getStatusCode() == 200){
-
-            //         $productLimit = json_decode($response3->getBody());
-            //     }
-
             $response2 = $client->request('post', '/wp-json/wc/v3/products/340/variations', [
                 'headers' => [
                     "Authorization" => "Basic " . base64_encode($shop->csv_app->app_key . ':' . $shop->csv_app->app_password)
@@ -694,33 +617,6 @@ class CsvService{
 
                 $csv_product = json_decode($response2->getBody());
             }
-
-            // Upload images
-            // foreach ($csv_product as $variant) {
-
-            //     $local_variant = $product->variants->where('sku', $csv_product->sku)->first();
-
-            //     if($local_variant->img_source){
-            //         $data = [
-            //             'image' => (object)[
-            //                 'src' => $local_variant->img_source,
-            //                 'variant_ids' => [
-            //                     $csv_product->id
-            //                 ]
-            //             ]
-            //         ];
-            //         $response = $client->request('post', '/wp-json/wc/v3/products/'.$csv_product->id.'/images.json', [
-            //             'headers' => [
-            //                 "Authorization" => "Basic ". base64_encode($shop->csv_app->app_key.':'.$shop->csv_app->app_password)
-            //             ],
-            //             'verify' => false, //only needed if you are facing SSL certificate issue
-            //             'json' => $data,
-            //             ]);
-            //         // $response = $client->request('POST', 'https://'.$shop->csv_app->app_key.':'.$shop->shopify_app->app_password.'@'.$shop->shopify_app->domain.'.myshopify.com/admin/api/2020-04/products/'.$shopify_product->id.'/images.json');
-            //     }
-            // }
-
-            // ShopProducts::where('shop_id', $shop->id)->where('product_id', $product->id)->update(['csv_product_id' => $csv_product->id]);
 
             return $csv_product;
         } catch (\Exception $e) {

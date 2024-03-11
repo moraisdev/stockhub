@@ -65,9 +65,6 @@ Route::namespace('Supplier')->as('supplier.')->prefix('supplier')->group(functio
         Route::get('orders/{order_id}/print_content_declaration', 'OrdersController@printContentDeclaration')->name('orders.print_content_declaration');
         Route::get('orders/{order_id}/get_json', 'OrdersController@jsonOrder')->name('orders.get_json');
         Route::get('orders/download_receipt/{receipt_id}', 'OrdersController@downloadReceipt')->name('orders.download_receipt');
-
-      
-
         Route::post('orders/generate_spreadsheet', 'OrdersController@generateSpreadsheet')->name('orders.generate_spreadsheet');
         Route::post('orders/{order_id}/cancel', 'OrdersController@cancel')->name('orders.cancel');
         Route::post('orders/{order_id}/upload_receipt', 'OrdersController@uploadReceipt')->name('orders.upload_receipt');
@@ -217,7 +214,9 @@ Route::namespace('Shop')->as('shop.')->prefix('shop')->group(function () {
         Route::get('orders/importWoo', 'OrdersController@importWoo')->name('orders.importWoo');
         Route::get('orders/import-cartx', 'OrdersController@importCartx')->name('orders.import_cartx');
         Route::get('orders/import-yampi', 'OrdersController@importYampi')->name('orders.import_yampi');
-        Route::post('orders/importCsv', 'OrdersController@OrdersCsvImport')->name('orders.import_order_csv');
+
+        Route::post('orders/create', 'OrdersController@createOrder')->name('orders.create');
+        
         Route::get('orders/history', 'OrdersController@history')->name('orders.history');
         Route::get('orders/sent', 'OrdersController@sent')->name('orders.sent');
         Route::get('orders/sent/search', 'OrdersController@sentSearch')->name('orders.sent.search');
