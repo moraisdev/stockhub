@@ -199,7 +199,7 @@ Route::namespace('Shop')->as('shop.')->prefix('shop')->group(function () {
         /* PROFILE  UPDATE BLING*/
         Route::put('profile/updatebling', 'ProfileController@updatebling')->name('profile.updatebling');
         Route::get('profile/business', 'BusinessController@index')->name('profile.business');
-        Route::get('profile/business/update', 'BusinessController@update')->name('profile.business.update');
+        Route::put('profile/business/update', 'BusinessController@update')->name('profile.business.update');
 
         /* PARTNERS */
         Route::get('partners', 'PartnersController@index')->name('partners.index');
