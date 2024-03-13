@@ -71,6 +71,11 @@ class Shops extends Authenticatable
         return $this->hasOne(ShopAddress::class, 'shop_id');
     }
 
+    public function address_business()
+    {
+        return $this->hasOne(ShopAddressBusiness::class, 'shop_id');
+    }
+
     public function contracted_plan()
     {
         return $this->hasOne(ShopContractedPlans::class, 'shop_id');

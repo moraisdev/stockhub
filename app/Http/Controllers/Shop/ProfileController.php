@@ -17,20 +17,20 @@ class ProfileController extends Controller
 
     public function update(Request $request){
         $shop = Auth::user();
-        $documentCleaned = preg_replace('/\D/', '', $request->input('responsible_document'));
+        $documentCleaned = preg_replace('/\D/', '', $request->input('document'));
 
-        $documentExists = Shops::where('responsible_document', $documentCleaned)
+        $documentExists = Shops::where('document', $documentCleaned)
                            ->where('id', '<>', $shop->id) // Exclui a loja atual da verificação
                            ->exists();
 
 
         if ($documentExists) {
             // Retorna para a página anterior com uma mensagem de erro se o responsible_document já existir
-            return redirect()->back()->with('error', 'O documento fornecido já está em uso por outra loja.');
+            return redirect()->back()->with('error', 'O CPF fornecido já está em uso por outra loja.');
         }
 
         $shop->responsible_name = $request->input('responsible_name');
-        $shop->phone = $documentCleaned;
+        $shop->phone = preg_replace('/\D/', '', $request->phone);
         $shop->document = $documentCleaned;
 
         if ($request->hasFile('img_profile')) {

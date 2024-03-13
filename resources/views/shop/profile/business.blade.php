@@ -31,7 +31,7 @@
 <div class="container-fluid mt--7">
     <div class="row">
         <div class="col-xl-12 order-xl-2">
-            <form method="POST" action="{{ route('shop.profile.business') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('shop.profile.business.update') }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="card bg-secondary shadow">
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" id="document_label">CNPJ</label>
-                                    <input type="text" class="form-control" name="document" id="document" placeholder="Número do Documento" value="{{ $authenticated_user->document }}" required>
+                                    <input type="text" class="form-control" name="responsible_document" id="responsible_document" placeholder="Número do Documento" value="{{ $authenticated_user->responsible_document }}" required>
                                     <small class="field_error text-danger" style="display:none">Documento inválido.</small>
                                 </div>
                             </div>
@@ -84,41 +84,41 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="control-label">Logradouro</label>
-                                    <input type="text" class="form-control" name="street_company" placeholder="Logradouro" value="{{ $authenticated_user->address ? $authenticated_user->address->street_company : '' }}" required>
+                                    <input type="text" class="form-control" name="street_company" placeholder="Logradouro" value="{{ $authenticated_user->address_business? $authenticated_user->address_business->street_company : '' }}" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Número</label>
-                                    <input type="text" class="form-control" name="number_company" placeholder="Número" value="{{ $authenticated_user->address ? $authenticated_user->address->number_company : '' }}" required>
+                                    <input type="text" class="form-control" name="number_company" placeholder="Número" value="{{ $authenticated_user->address_business ? $authenticated_user->address_business->number_company : '' }}" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Bairro</label>
-                                    <input type="text" class="form-control" name="district_company" placeholder="Bairro" value="{{ $authenticated_user->address ? $authenticated_user->address->district_company : '' }}" required>
+                                    <input type="text" class="form-control" name="district_company" placeholder="Bairro" value="{{ $authenticated_user->address_business ? $authenticated_user->address_business->district_company : '' }}" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Complemento</label>
-                                    <input type="text" class="form-control" name="complement_company" placeholder="Complemento" value="{{ $authenticated_user->address ? $authenticated_user->address->complement_company : '' }}">
+                                    <input type="text" class="form-control" name="complement_company" placeholder="Complemento" value="{{ $authenticated_user->address_business ? $authenticated_user->address_business->complement_company : '' }}">
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label class="control-label">CEP</label>
-                                    <input type="text" class="form-control cep" name="zipcode_company" placeholder="11111-111" value="{{ $authenticated_user->address ? $authenticated_user->address->zipcode_company : '' }}" required>
+                                    <input type="text" class="form-control cep" name="zipcode_company" placeholder="11111-111" value="{{ $authenticated_user->address_business ? $authenticated_user->address_business->zipcode_company : '' }}" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">País</label>
                                     <select class="form-control" name="country_company" id="country_select" required>
-                                        <option value="Brazil" {{ !$authenticated_user->address || ($authenticated_user->address && $authenticated_user->address->country_company == 'Brasil') ? 'selected' : '' }}>Brasil</option>
+                                        <option value="Brazil" {{ !$authenticated_user->address_business || ($authenticated_user->address_business && $authenticated_user->address_business->country_company == 'Brasil') ? 'selected' : '' }}>Brasil</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Estado</label>
-                                    <select class="form-control" name="state_code_company" id="state_select" state="{{ $authenticated_user->address ? $authenticated_user->address->state_code_company : '' }}" required>
+                                    <select class="form-control" name="state_code_company" id="state_select" state="{{ $authenticated_user->address_business ? $authenticated_user->address_business->state_code_company : '' }}" required>
                                         <option value="">Selecione o país primeiro</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Cidade</label>
-                                    <select class="form-control" name="city_company" id="city_select" city="{{ $authenticated_user->address ? $authenticated_user->address->city_company : '' }}" required>
+                                    <select class="form-control" name="city_company" id="city_select" city="{{ $authenticated_user->address_business ? $authenticated_user->address_business->city_company : '' }}" required>
                                         <option value="">Selecione o estado primeiro</option>
                                     </select>
                                 </div>
@@ -148,7 +148,7 @@
                 $('.company_fields').hide();
             }else{
                 $("#document_label").html('CNPJ');
-                $("#document").mask('00.000.000/0000-00');
+                $("#responsible_document").mask('00.000.000/0000-00');
                 $('.company_fields').show();
             }
         }

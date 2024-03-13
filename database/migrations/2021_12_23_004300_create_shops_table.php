@@ -17,8 +17,8 @@ class CreateShopsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('responsible_name')->nullable();
-            $table->string('responsible_document')->nullable();
-            $table->string('document')->nullable();
+            $table->string('responsible_document')->nullable() -> unique();
+            $table->string('document')->nullable()-> unique();
             $table->string('fantasy_name')->nullable();
             $table->string('corporate_name')->nullable();
             $table->string('state_registration')->nullable();
