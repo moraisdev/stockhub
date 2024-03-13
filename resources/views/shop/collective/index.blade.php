@@ -30,11 +30,11 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-10">
-                                <h3 class="mb-0">Container Coletivo</h3>
+                                <h3 class="mb-0">Importação Coletiva</h3>
                             </div>
                             <div class="col">
                                 <div class="float-right">
-                                    <a class="btn btn-primary" href="{{ route('supplier.products.create') }}"><i
+                                    <a class="btn btn-primary" href="{{ route('shop.collective.new') }}"><i
                                             class="fas fa-plus mr-2"></i> Criar Pedido </a>
                                     <a class="btn btn-warning" href="#" id="massiveEdit"
                                         onclick="document.getElementById('formEdit').submit()"><i

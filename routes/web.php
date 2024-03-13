@@ -111,7 +111,9 @@ Route::namespace('Supplier')->as('supplier.')->prefix('supplier')->group(functio
 
         Route::resource('products', 'ProductsController');
         
-       
+        Route::get('collective', 'CollectiveController@index')->name('collective.index');
+        Route::get('collective/tabelas', 'CollectiveController@tabelas')->name('collective.tabelas');
+        Route::get('collective/edit/{collective_id}', 'CollectiveController@edit')->name('collective.edit');
 
         /* RETURNS */
         Route::get('returns', 'ReturnsController@index')->name('returns.index');
@@ -332,6 +334,8 @@ Route::namespace('Shop')->as('shop.')->prefix('shop')->group(function () {
 
         /* CONTAINTER COLETIVO */
         Route::get('collective', 'CollectiveController@index')->name('collective.index');
+        Route::get('collective/new', 'CollectiveController@new')->name('collective.new');
+        Route::post('collective/store', 'CollectiveController@store')->name('collective.store');
 
         /* SIMULADOR DE FRETE */
         Route::get('freight-simulator', 'FreightSimulatorController@index')->name('freight-simulator.index');
@@ -380,7 +384,6 @@ Route::namespace('Admin')->as('admin.')->prefix('admin')->group(function () {
         Route::get('suppliers/{supplier}/toggle_shipment_address', 'SuppliersController@toggleShipmentAddress')->name('suppliers.toggle_shipment_address');
         Route::get('suppliers/send_to_safe2pay/{supplier}', 'SuppliersController@sendToSafe2Pay')->name('suppliers.send_to_safe2pay');
         Route::post('suppliers/{supplier}', 'SuppliersController@delete')->name('suppliers.delete');
-       
        
         /* SHOPS */
         Route::get('shops/login/{{token}}', 'ShopsController@confirmEmail')->name('shop.confirmar_email');

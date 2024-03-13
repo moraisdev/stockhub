@@ -66,8 +66,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.catalog.index') }}">
-                        <img src="{{ asset('assets/img/users.svg') }}" class="icon-size"> Compra Coletiva
+                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('supplier.collective.index') }}">
+                        <img src="{{ asset('assets/img/users.svg') }}" class="icon-size"> Importação Coletiva
                     </a>
                 </li>
 

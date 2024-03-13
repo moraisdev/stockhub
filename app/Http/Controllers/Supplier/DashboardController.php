@@ -44,52 +44,7 @@ class DashboardController extends Controller
             return redirect('/supplier')->with([$service_response['status'] => $service_response['message']]);
         }
 
-        $dash_data = $service->getDashboardData();
-        
-        
-
-        //CÓDIGO DE TESTES
-        // $group = SupplierOrderGroup::where('transaction_id', 26852273)->first();
-        // if($group){
-        //     OrdersService::paymentReceived($group);
-        // }
-        
-
-        // $china_service = new ChinaDivisionService();
-        // $orders = SupplierOrders::where('status', 'paid')
-        //                         ->where('exported_to_china_division', 0)
-        //                         ->where('supplier_id', 56)
-        //                         ->orderBy('id', 'desc')->get();
-
-        // foreach($orders as $o){
-        //     $idOrder = $china_service->generateOrder($o);
-
-        //     // if($idOrder){ //caso seja um código válido, salva
-        //     //     $shipping = SupplierOrderShippings::where('supplier_id', $o->supplier_id)
-        //     //                                     ->where('supplier_order_id', $o->id)
-        //     //                                     ->first();
-        //     //     if($shipping){
-        //     //         //$shipping->status = 'sent';
-        //     //         //$shipping->tracking_url = "https://www2.correios.com.br/sistemas/rastreamento/default.cfm/";
-        //     //         //$shipping->tracking_number = $idOrder;
-        //     //         //$shipping->save();
-
-        //     //         $o->exported_to_china_division = 1;
-        //     //         $o->save();
-
-        //     //         //echo "código: ".$trackingNumberCorreios."<br>";
-        //     //     }                    
-        //     // }   
-        // }
-
-                                        
-                                        
-
-        
-
-        //FIM CÓDIGO DE TESTES
-        
-        
+        $dash_data = $service->getDashboardData();    
 
     	return view('supplier.dashboard.index', compact('orders', 'dash_data'));
     }

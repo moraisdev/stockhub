@@ -113,7 +113,7 @@
                         <div class="icon-box icon-size icon-shape icon-sm shadow border-box-md bg text-center me-2 d-flex align-items-center justify-content-center">
                             <img src="{{ asset('assets/img/handshake.svg') }}" width="12px" height="12px">
                         </div>
-                        <span class="nav-link-text ms-1"> Container Coletivo</span>
+                        <span class="nav-link-text ms-1"> Importação Coletiva</span>
                     </a>
                 </li>
                 <li class="nav-item">

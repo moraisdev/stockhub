@@ -52,12 +52,7 @@ class ProductsController extends Controller
         $productsService = new ProductsService($supplier);
         $products = $productsService->get();
         $statistics = $reportsService->getProductsStatistics();
-       // dd($statistics);
         $products = Products::select('id','title','img_source', 'public')->get();
-       // dd($products);
-
-
-
         $categories = Categories::all();
 
       
