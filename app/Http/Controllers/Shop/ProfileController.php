@@ -30,7 +30,7 @@ class ProfileController extends Controller
         }
 
         $shop->responsible_name = $request->input('responsible_name');
-        $shop->phone = $documentCleaned;
+        $shop->phone = preg_replace('/\D/', '', $request->phone);
         $shop->document = $documentCleaned;
 
         if ($request->hasFile('img_profile')) {
