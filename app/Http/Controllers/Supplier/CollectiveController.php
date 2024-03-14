@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Supplier;
 
 use Illuminate\Http\Request;
-
+use App\Exceptions\CustomException;
 use App\Models\CollectiveImport;
 use Auth;
 use DataTables;
@@ -19,10 +19,12 @@ class CollectiveController extends Controller
     public function edit($collective_id)
     {
         $supplier = Auth::user();
-
-        $collectiveService = new CollectiveService($supplier);
-        $collective = $collectiveService->find($collective_id);
-
+        $collective = CollectiveImport::with('shop.address')->where('id', $collective_id)->first();
+    
+        if (!$collective) {
+            return redirect()->route('collective.index')->withErrors('Importação coletiva não encontrada.');
+        }
+    
         return view('supplier.collective.edit', compact('collective'));
     }
     
@@ -70,5 +72,18 @@ class CollectiveController extends Controller
 
   return view('supplier.products.index');
 }
+    public function update(Request $request, $collective_id)
+    {
+        $supplier = Auth::user();
+
+        $collectiveService = new CollectiveService($supplier);
+        try {
+            $collectiveService->update($collective_id, $request);
+            return redirect()->route('supplier.collective.index')->with('success', 'Importação coletiva atualizada com sucesso.');
+        } catch (CustomException $e) {
+            return back()->withErrors($e->getMessage())->withInput();
+        }
+    }
+
 
 }

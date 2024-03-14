@@ -12,4 +12,9 @@ class ShopAddress extends Model
     protected $guarded = [];
     protected $table = 'shop_address';
     public $timestamps = true;
+
+    public function shop()
+    {
+        return $this->belongsTo(Shops::class, 'shop_id');
+    }
 }

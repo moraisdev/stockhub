@@ -113,7 +113,11 @@ Route::namespace('Supplier')->as('supplier.')->prefix('supplier')->group(functio
         
         Route::get('collective', 'CollectiveController@index')->name('collective.index');
         Route::get('collective/tabelas', 'CollectiveController@tabelas')->name('collective.tabelas');
+        Route::post('collective/update/{collective_id}', 'CollectiveController@update')->name('collective.update');
         Route::get('collective/edit/{collective_id}', 'CollectiveController@edit')->name('collective.edit');
+        Route::get('download/invoice/{id}', 'FileController@downloadInvoice')->name('download.invoice');
+        Route::get('download/packing-list/{id}', 'FileController@downloadPackingList')->name('download.packingList');
+        Route::get('download/pdf-import-collective/{id}', 'FileController@downloadPdfImportCollective')->name('download.pdfImportCollective');
 
         /* RETURNS */
         Route::get('returns', 'ReturnsController@index')->name('returns.index');
