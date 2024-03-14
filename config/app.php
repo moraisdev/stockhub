@@ -187,7 +187,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-    
+
     ],
 
     /*
@@ -248,7 +248,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
     ],
 
 ];

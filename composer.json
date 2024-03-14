@@ -11,6 +11,7 @@
         "php": "^7.3|^8.0",
         "ext-soap": "*",
         "automattic/woocommerce": "^3.0",
+        "barryvdh/laravel-dompdf": "^2.1",
         "carbonphp/carbon-doctrine-types": "^1.0",
         "doctrine/annotations": "^1.14",
         "doctrine/collections": "1.8.0",
