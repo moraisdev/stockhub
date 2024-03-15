@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" id="document_label">CNPJ</label>
-                                    <input type="text" class="form-control" name="responsible_document" id="responsible_document" placeholder="Número do Documento" value="{{ $authenticated_user->responsible_document }}" required>
+                                    <input type="text" class="form-control" name="document" id="document" placeholder="Número do Documento" value="{{ $authenticated_user->document }}" required>
                                     <small class="field_error text-danger" style="display:none">Documento inválido.</small>
                                 </div>
                             </div>

@@ -21,7 +21,7 @@ class BusinessController extends Controller
         $shop = Auth::user();
     
         // Validação para verificar se o CNPJ já existe para outro usuário
-        $existingCnpj = Shops::where('responsible_document', preg_replace('/\D/', '', $request->responsible_document))
+        $existingCnpj = Shops::where('document', preg_replace('/\D/', '', $request->document))
                      ->where('id', '!=', $shop->id)
                      ->first();
 
@@ -31,7 +31,7 @@ class BusinessController extends Controller
         }
     
         $shop->phone = preg_replace('/\D/', '', $request->phone);
-        $shop->responsible_document = preg_replace('/\D/', '', $request->responsible_document);
+        $shop->document = preg_replace('/\D/', '', $request->document);
         $shop->fantasy_name = $request->fantasy_name;
         $shop->corporate_name = $request->corporate_name;
         $shop->state_registration = $request->state_registration;

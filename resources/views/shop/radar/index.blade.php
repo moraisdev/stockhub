@@ -1,23 +1,30 @@
 @extends('shop.layout.default')
 <style>
-.video-centered {
-    display: block;
-    margin: auto;
-}
-.status-dot {
-    height: 8px;
-    width: 8px;
-    background-color: #ee3a1f;
-    border-radius: 50%;
-    display: inline-block;
-    margin-left:0px;
-}
+    .video-centered {
+        display: block;
+        margin: auto;
+        max-width: 70%; /* Adicionado para garantir que a imagem não ultrapasse a largura máxima da tela */
+        height: auto; /* Adicionado para manter a proporção da imagem */
+    }
 
-.status-text {
-    color: #ee3a1f;
-    font-size: 14px;
-}
+    .status-dot {
+        height: 8px;
+        width: 8px;
+        background-color: #ee3a1f;
+        border-radius: 50%;
+        display: inline-block;
+        margin-left: 0px;
+    }
 
+    .status-text {
+        color: #ee3a1f;
+        font-size: 14px;
+    }
+
+    /* Adicionado para centralizar o texto */
+    .video-text {
+        text-align: center;
+    }
 </style>
 @section('content')
 <!-- Header -->
@@ -34,7 +41,6 @@
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">STATUS</h5>
                                     <span class="status-dot"></span>
-
                                     <span class="status-text">Desativado</span>
                                 </div>
                             </div>
@@ -57,19 +63,20 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="video-text"> <!-- Adicionado para centralizar o texto -->
                         <p>
-                            Assista o video abaixo para entender como ativar seu radar<br>
+                            Assista o vídeo abaixo para entender como ativar seu radar<br>
                         </p>
-                        <div class="card-body">
-                        <img src=https://i.postimg.cc/C5y0f5Cz/Design-sem-nome-2024-02-28-T175742-161.png" alt="Descrição da Imagem" width="560" height="315">
+                    </div>
+                    <div class="d-flex flex-wrap align-items-center justify-content-center"> <!-- Alterado para centralizar a imagem e os botões -->
+                        <img src="https://i.postimg.cc/C5y0f5Cz/Design-sem-nome-2024-02-28-T175742-161.png" alt="Descrição da Imagem" class="video-centered">
                         <div class="w-100 d-flex flex-wrap align-items-center justify-content-center mt-3">
                             <div class="button-container mx-2">
                                 <a href="/shop/radar/buy" class="btn btn-success">Comprar Radar</a>
                             </div>
                             <div class="button-container mx-2">
                                 <a href="/shop/radar/activate" class="btn btn-primary">Ativar Radar</a>
-                            </div>        
+                            </div>
                         </div>
                     </div>
                 </div>

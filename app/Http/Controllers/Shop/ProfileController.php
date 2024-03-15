@@ -17,9 +17,9 @@ class ProfileController extends Controller
 
     public function update(Request $request){
         $shop = Auth::user();
-        $documentCleaned = preg_replace('/\D/', '', $request->input('document'));
+        $documentCleaned = preg_replace('/\D/', '', $request->input('responsible_document'));
 
-        $documentExists = Shops::where('document', $documentCleaned)
+        $documentExists = Shops::where('responsible_document', $documentCleaned)
                            ->where('id', '<>', $shop->id) // Exclui a loja atual da verificação
                            ->exists();
 
@@ -31,7 +31,7 @@ class ProfileController extends Controller
 
         $shop->responsible_name = $request->input('responsible_name');
         $shop->phone = preg_replace('/\D/', '', $request->phone);
-        $shop->document = $documentCleaned;
+        $shop->responsible_document = $documentCleaned;
 
         if ($request->hasFile('img_profile')) {
             $imageName = $shop->id.'_profile_'.time().'.'.$request->img_profile->extension();
