@@ -141,17 +141,6 @@
 <body>
 <div class="tag">
     <div class="first-block">
-        {{--<div class="tag-header">
-            <div class="header-block-1">
-                <img src="{{ asset('assets/img/brand/logo.png') }}" style="max-width:100%; max-height: 100%; align-self: center;">
-            </div>
-            <div class="header-block-2">
-                {!! echo DNS2D::getBarcodeSVG('https://mawapost.com', 'QRCODE', 5.2, 5.2) !!}
-            </div>
-            <div class="header-block-3">
-                <img src="{{ asset('assets/img/brand/logo.png') }}" style="max-width:100%; max-height: 100%; align-self: center;">
-            </div>
-        </div>--}}
         @php
             $order_id = str_pad($supplier_order->id, 8, "0", STR_PAD_LEFT);
         @endphp

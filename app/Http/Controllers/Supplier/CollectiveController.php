@@ -19,7 +19,8 @@ class CollectiveController extends Controller
     public function edit($collective_id)
     {
         $supplier = Auth::user();
-        $collective = CollectiveImport::with('shop.address')->where('id', $collective_id)->first();
+        $collectiveService = new CollectiveService($supplier);
+        $collective = $collectiveService->find($collective_id);
     
         if (!$collective) {
             return redirect()->route('collective.index')->withErrors('Importação coletiva não encontrada.');

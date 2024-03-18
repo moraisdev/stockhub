@@ -6,14 +6,17 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <style>
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,900,700,500,300,100);
-*{
+*, *::before, *::after{
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
   -webkit-print-color-adjust: exact;
 }
-body{
-  background: #E0E0E0;
+body, html {
   font-family: 'Roboto', sans-serif;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 ::selection {background: #f31544; color: #FFF;}
 ::moz-selection {background: #f31544; color: #FFF;}
@@ -24,9 +27,13 @@ body{
 }
 .col-left {
     float: left;
+    width: 50%; /* Ajuste para evitar sobreposição */
+
 }
 .col-right {
     float: right;
+    width: 50%; /* Ajuste para evitar sobreposição */
+
 }
 h1{
   font-size: 1.5em;
@@ -45,7 +52,7 @@ p{
 }
 a {
     text-decoration: none;
-    color: #00a63f;
+    color: #444;
 }
 
 #invoiceholder{
@@ -58,6 +65,7 @@ a {
   margin: 0 auto;
   width: 700px;
   background: #FFF;
+  page-break-inside: avoid
 }
 
 [id*='invoice-']{ /* Targets all id with 'col-' */
@@ -65,9 +73,8 @@ a {
   padding: 20px;
 }
 
-#invoice-top{border-bottom: 2px solid #00a63f;}
+#invoice-top{border-bottom: 2px solid #444;}
 #invoice-mid{min-height: 110px;}
-/*#invoice-bot{ min-height: 240px;}*/
 
 .logo{
     display: inline-block;
@@ -88,6 +95,16 @@ a {
     display: inline-block;
     vertical-align: middle;
   width: 50px;
+}
+.info-fields {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.info-field {
+    flex-basis: 48%;
+    margin-bottom: 10px;
 }
 .clientinfo {
     display: inline-block;
@@ -120,7 +137,6 @@ h2 {
     display: inline-block;
     padding: 7px;
     border-radius: 4px;
-    background: rgb(196, 57, 10);
     margin-right: 10px;
     min-width: 100px;
     text-align: center;
@@ -128,7 +144,7 @@ h2 {
     font-size: 0.75em;
 }
 .cta-group .btn-primary {
-    background: #00a63f;
+    background: #444;
 }
 .cta-group.mobile-btn-group {
     display: none;
@@ -145,7 +161,7 @@ td{
 }
 
 .tabletitle th {
-  text-align: right;
+  text-align: left;
 }
 .tabletitle th:nth-child(3) {
     text-align: left;
@@ -158,7 +174,7 @@ th {
 }
 .item{width: 50%;}
 .list-item td {
-    text-align: right;
+    text-align: left;
 }
 .list-item td:nth-child(3) {
     text-align: left;
@@ -191,10 +207,6 @@ footer {
   width: 50%;
   top: 80%;
   max-width:300px;
-  background: #777;
-  -webkit-box-shadow: 0 15px 10px #777;
-  -moz-box-shadow: 0 15px 10px #777;
-  box-shadow: 0 15px 10px #777;
   -webkit-transform: rotate(-3deg);
   -moz-transform: rotate(-3deg);
   -o-transform: rotate(-3deg);
@@ -257,7 +269,6 @@ footer {
         display: block;
         margin-bottom: 20px;
     }
-     /*==================== Table ====================*/
     .table-main {
         border: 0 none;
     }  
@@ -286,10 +297,6 @@ footer {
         text-align: left;
       }
       .table-main td:before {
-        /*
-        * aria-label has no advantage, it won't be read inside a table
-        content: attr(aria-label);
-        */
         content: attr(data-label);
         position: absolute;
         left: 10px;
@@ -310,128 +317,100 @@ footer {
   <div id="invoice" class="effect2">
     
     <div id="invoice-top">
-      <div class="logo"><img src="https://www.almonature.com/wp-content/uploads/2018/01/logo_footer_v2.png" alt="Logo" /></div>
+      <div class="logo"><img src="assets/img/brand/logo.png?v=2" alt="Logo" /></div>
       <div class="title">
-        <h1>PO #<span class="invoiceVal invoice_num">tst-inv-23</span></h1>
-      </div><!--End Title-->
-    </div><!--End InvoiceTop-->
-
-
-    
+        <h1>ID #<span class="invoiceVal invoice_num">{{ $collectiveImport->id }}</span></h1>
+      </div>
+    </div>
     <div id="invoice-mid">   
       <div id="message">
-        <h2>Hello <span id="user_name">Andrea De Asmundis</span></h2>
-        <p><span id="vandor_name">TESI S.P.A.</span>created an invoice without purchase order. Please create a purchase order for the invoice #<span id="invoice_num"><b>tst-inv-23</b></span></p>
+        <h2>Hello! <span id="user_name"></span></h2>
+        <p><span id="vandor_name">Stockhub</span> created an invoice for a purchase order. Please create a quote for invoice!</span></p>
       </div>
-<!--
-       <div class="cta-group mobile-btn-group">
-            <a href="javascript:void(0);" class="btn-primary">Approve</a>
-            <a href="javascript:void(0);" class="btn-default">Reject</a>
-        </div> 
--->
         <div class="clearfix">
             <div class="col-left">
-                <div class="clientlogo"><img src="https://cdn3.iconfinder.com/data/icons/daily-sales/512/Sale-card-address-512.png" alt="Sup" /></div>
                 <div class="clientinfo">
-                    <h2 id="supplier">TESI S.P.A.</h2>
-                    <p><span id="address">VIA SAVIGLIANO, 48</span><br><span id="city">RORETO DI CHERASCO</span><br><span id="country">IT</span> - <span id="zip">12062</span><br><span id="tax_num">555-555-5555</span><br></p>
+                <h2 id="supplier">{{ $collectiveImport->type_order == 1 ? $collectiveImport->shop->responsible_name : $collectiveImport->shop->corporate_name }}</h2>
+                    <div class="info-fields">
+                        <div class="info-field">
+                            <p><span id="phone">Phone: {{ $collectiveImport->shop->phone }}</span><br></p>
+                        </div>
+                        <div class="info-field">
+                            <p><span id="email">E-mail: {{ $collectiveImport->shop->email }}</span><br></p>
+                        </div>
+                        <div class="info-field">
+                            <p><span id="document">Document: {{ $collectiveImport->type_order == 1 ? $collectiveImport->shop->responsible_document : $collectiveImport->shop->document }}</span><br></p>
+                        </div>
+                        <div class="info-field">
+                            <p><span id="client_id">Cliente ID: {{ $collectiveImport->shop->id }}</span><br></p>
+                        </div>
+                    </div>
                 </div>
+                
             </div>
             <div class="col-right">
                 <table class="table">
                     <thead>
                         <tr>
                             <th>PO Details</th>
-                            <th>Summary</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><span>Creation Date</span><label id="creation_date">08 Mar 2018</label></td>
-                            <td><span>Total</span><label id="po_amount">245.00</label></td>
-                        </tr>
-                        <tr>
-                            <td><span>Status</span><label id="status">Active</label></td>
-                            <td><span>Quantity</span><label id="quantity">6.6</label></td>
-                        </tr>
-                        <tr>
-                            <td><span>Authorization Status</span><label id="authorization_status">Active</label></td>
-                            <td><span>Billed</span><label id="quantity_billed">2</label></td>
-                        </tr>
-                        <tr>
-                            <td><span>Approved Date</span><label id="approved_date">04 Mar 2018</label></td>
-                            <td><span>Received</span><label id="quantity_received">2</label></td>
-                        </tr>
-                        <tr><td colspan="2"><span>Note</span>#<label id="note">None</label></td></tr>
+                        <tr><td colspan="2"><span>Note</span>: <span id="rejection_reason">{{ $collectiveImport->rejection_reason }}</span></td></tr>
+                        <tr><td colspan="2"><span>Product Description</span>: <span id="rejection_reason">{{ $collectiveImport->product_description }}</span></td></tr>
                     </tbody>
                 </table>
             </div>
         </div>       
-    </div><!--End Invoice Mid-->
+    </div>
     
     <div id="invoice-bot">
       
-      <div id="table">
-        <table class="table-main">
-          <thead>    
-              <tr class="tabletitle">
-                <th>Line</th>
-                <th>Item Code</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Unit Price</th>
-                <th>Recieved</th>
-                <th>Billed</th>
-                <th>Amount</th>
-                <th>Total</th>
-              </tr>
-          </thead>
-          <tr class="list-item">
-            <td data-label="Line" class="tableitem" id="line_num">1</td>
-            <td data-label="Item Code" class="tableitem" id="item_code">DP20</td>
-            <td data-label="Description" class="tableitem" id="item_description">Servizio EDI + Traffico mese di novembre 2017</td>
-            <td data-label="Quantity" class="tableitem" id="quantity">46.6</td>
-            <td data-label="Unit Price" class="tableitem" id="unit_price">1</td>
-            <td data-label="Recieved" class="tableitem" id="quantity_received">20</td>
-            <td data-label="Billed" class="tableitem" id="quantity_billed">46.6</td>
-            <td data-label="Amount" class="tableitem" id="amount">20</td>
-            <td data-label="Total" class="tableitem">55.92</td>
-          </tr>
-         <tr class="list-item">
-            <td data-label="Line" class="tableitem" id="line_num">2</td>
-            <td data-label="Item Code" class="tableitem" id="item_code">DP21</td>
-            <td data-label="Description" class="tableitem" id="item_description">Traffico mese di novembre 2017 FRESSNAPF TIERNAHRUNGS GMBH riadd. Almo DE</td>
-            <td data-label="Quantity" class="tableitem" id="quantity">4.4</td>
-            <td data-label="Unit Price" class="tableitem" id="unit_price">1</td>
-            <td data-label="Recieved" class="tableitem" id="quantity_received">12</td>
-            <td data-label="Billed" class="tableitem" id="quantity_billed">13.2</td>
-            <td data-label="Amount" class="tableitem" id="amount">15</td>
-            <td data-label="Total" class="tableitem">55.92</td>
-          </tr>
-            <tr class="list-item total-row">
-                <th colspan="8" class="tableitem">Grand Total</th>
-                <td data-label="Grand Total" class="tableitem">111.84</td>
-            </tr>
-        </table>
-      </div><!--End Table-->
-<!--
-    <div class="cta-group">
-        <a href="javascript:void(0);" class="btn-primary">Approve</a>
-        <a href="javascript:void(0);" class="btn-default">Reject</a>
-    </div> 
--->
-      
-    </div><!--End InvoiceBot-->
+    <div id="table">
+    <table class="table-main">
+        <tr class="list-item">
+            <th>Creation Date:</th>
+            <td>{{ $collectiveImport->created_at }}</td>
+        </tr>
+        <tr class="list-item">
+            <th>Status:</th>
+            <td>{{ $collectiveImport->status }}</td>
+        </tr>
+        <tr class="list-item">
+        <th>Address:</th>
+            <td>
+                {{ $collectiveImport->type_order == 1 
+                    ? $collectiveImport->shop->address->street . ', ' . $collectiveImport->shop->address->number . ' ' . $collectiveImport->shop->address->complement . ', ' . $collectiveImport->shop->address->district . ' ' . $collectiveImport->shop->address->city . ', ' . $collectiveImport->shop->address->state_code . ' - ' . $collectiveImport->shop->address->country . ', ' . $collectiveImport->shop->address->zipcode 
+                    : $collectiveImport->shop->address_business->street_company . ', ' . $collectiveImport->shop->address_business->number_company . ' ' . $collectiveImport->shop->address_business->complement_company . ', ' . $collectiveImport->shop->address_business->district_company . ' ' . $collectiveImport->shop->address_business->city_company . ', ' . $collectiveImport->shop->address_business->state_code_company . ' - ' . $collectiveImport->shop->address_business->country_company . ', ' . $collectiveImport->shop->address_business->zipcode_company 
+                }}
+            </td>
+        </tr>
+        <tr class="list-item">
+            <th>Product Link:</th>
+            <td>{{ $collectiveImport->produto_link }}</td>
+        </tr>
+        <tr class="list-item">
+            <th>Supplier Name:</th>
+            <td>{{ $collectiveImport->china_supplier_name }}</td>
+        </tr>
+        <tr class="list-item">
+            <th>Supplier Contact:</th>
+            <td>{{ $collectiveImport->china_supplier_contact }}</td>
+        </tr>
+        <tr class="list-item">
+            <th>Product HS Code:</th>
+            <td>{{ $collectiveImport->product_hs_code }}</td>
+        </tr>
+    </table>
+</div>
     <footer>
       <div id="legalcopy" class="clearfix">
         <p class="col-right">Our mailing address is:
-            <span class="email"><a href="mailto:supplier.portal@almonature.com">supplier.portal@almonature.com</a></span>
+            <span class="email">arthur@s2m2company.com</span>
         </p>
       </div>
     </footer>
-  </div><!--End Invoice-->
-</div><!-- End Invoice Holder-->
-  
-  
-
+  </div>
+</div>
 </body>
+</html>

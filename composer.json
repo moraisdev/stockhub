@@ -33,6 +33,9 @@
         "phpmailer/phpmailer": "^6.9",
         "rinvex/laravel-bookings": "^3.0",
         "safe2pay/sdk": "dev-main",
+        "setasign/fpdf": "^1.8",
+        "setasign/fpdi": "^2.6",
+        "stripe/stripe-php": "^13.14",
         "yajra/laravel-datatables-oracle": "9.*"
     },
     "require-dev": {
