@@ -59,12 +59,12 @@
                                 <div class="form-group">
                                     <label class="control-label">Tipo de Documento</label>
                                     <select class="form-control" id="document_type">
-                                        <option value="1" {{ strlen($authenticated_user->document) == 11 ? 'selected' : '' }}>CPF</option>
+                                        <option value="1" {{ strlen($authenticated_user->responsible_document) == 11 ? 'selected' : '' }}>CPF</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" id="document_label">CPF</label>
-                                    <input type="text" class="form-control" name="document" id="document" placeholder="Número do Documento" value="{{ $authenticated_user->document }}" required>
+                                    <input type="text" class="form-control" name="responsible_document" id="responsible_document" placeholder="Número do Documento" value="{{ $authenticated_user->responsible_document }}" required>
                                     <small class="field_error text-danger" style="display:none">Documento inválido.</small>
                                 </div>
                             </div>
