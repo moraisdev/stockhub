@@ -34,7 +34,7 @@
                             <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="status">{{ __('Status') }}</label>
-                                        <select class="form-control form-control-alternative" id="status" name="status">
+                                        <select class="form-control form-control-alternative" id="status" name="status" disabled>
                                             <option value="EM ANALISE" {{ $collective->status == 'EM ANALISE' ? 'selected' : '' }}>Em Análise</option>
                                             <option value="REJEITADO" {{ $collective->status == 'REJEITADO' ? 'selected' : '' }}>Rejeitado</option>
                                             <option value="CANCELADO" {{ $collective->status == 'CANCELADO' ? 'selected' : '' }}>Cancelado</option>
@@ -180,13 +180,13 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="product_description">Descrição e Informações</label>
-                                            <input type="text" id="rejection_reason" class="form-control form-control-alternative" name="rejection_reason" placeholder="Descrição e Informações" value="{{ $collective->rejection_reason }}">
+                                            <input type="text" id="rejection_reason" class="form-control form-control-alternative" name="rejection_reason" placeholder="Descrição e Informações" value="{{ $collective->rejection_reason }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="product_ncm">Custo de Importação</label>
-                                            <input type="text" id="cost_price" class="form-control form-control-alternative" name="cost_price" placeholder="Custo de Importação" value="{{ $collective->cost_price }}">
+                                            <input type="text" id="cost_price" class="form-control form-control-alternative" name="cost_price" placeholder="Custo de Importação" value="{{ $collective->cost_price }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -220,9 +220,8 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="float-right form-group">
-                                    <a href="{{ route('supplier.collective.index') }}" class="btn btn-secondary">{{ __('supplier.cancel') }}</a>
+                                    <a href="{{ route('shop.collective.index') }}" class="btn btn-secondary">Voltar</a>
                                     <a href="{{ route('supplier.download.pdfImportCollective', $collective->id) }}" class="btn btn-secondary">{{ __('Gerar PDF da Importação') }}</a>
-                                    <button class="btn btn-primary">{{ __('supplier.save') }}</button>
                                 </div>
                             </div>
                         </div>

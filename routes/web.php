@@ -118,6 +118,7 @@ Route::namespace('Supplier')->as('supplier.')->prefix('supplier')->group(functio
         Route::get('download/invoice/{id}', 'FileController@downloadInvoice')->name('download.invoice');
         Route::get('download/packing-list/{id}', 'FileController@downloadPackingList')->name('download.packingList');
         Route::get('download/pdf-import-collective/{id}', 'FileController@downloadPdfImportCollective')->name('download.pdfImportCollective');
+        Route::get('view/pdf-import-collective/{id}', 'FileController@viewPdfImportCollective')->name('view.pdfImportCollective');      
 
         /* RETURNS */
         Route::get('returns', 'ReturnsController@index')->name('returns.index');
@@ -340,7 +341,13 @@ Route::namespace('Shop')->as('shop.')->prefix('shop')->group(function () {
         Route::get('collective', 'CollectiveController@index')->name('collective.index');
         Route::get('collective/new', 'CollectiveController@new')->name('collective.new');
         Route::post('collective/store', 'CollectiveController@store')->name('collective.store');
-
+        Route::get('collective/tabelas', 'CollectiveController@tabelas')->name('collective.tabelas');
+        Route::get('collective/show/{id}', 'CollectiveController@show')->name('collective.show');
+        Route::get('collective/buy/{id}', 'CollectiveController@buy')->name('collective.buy');
+        Route::post('/stripe/webhook', 'StripeWebhookController@handleWebhook');
+        Route::get('collective/success/{collective_id}', 'CollectiveController@success')->name('collective.success');
+        Route::get('collective/cancel/{collective_id}', 'CollectiveController@cancel')->name('collective.cancel');
+        
         /* SIMULADOR DE FRETE */
         Route::get('freight-simulator', 'FreightSimulatorController@index')->name('freight-simulator.index');
         Route::get('freight-simulator/simulate', 'MelhorEnvioController@simulate')->name('freight-simulator.simulate');

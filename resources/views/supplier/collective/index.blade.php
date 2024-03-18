@@ -9,7 +9,6 @@
             font-size: 0.8rem;
             width: 2.0rem !important;
             height: 2.0rem !important;
-
         }
 
         .current {
@@ -18,10 +17,7 @@
     </style>
 @endsection
 
-@section('content')
-    <!-- Header -->
-       
-
+@section('content')       
     <div class="header {{env('PAINELCOR')}} pb-8 pt-5 pt-md-8">
         <div class="container-fluid">
             <div class="header-body">
@@ -100,6 +96,25 @@
 
     </div>
 
+        <!-- Modal para visualização do PDF -->
+        <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="pdfModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pdfModalLabel">Visualização do PDF</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdfIframe" src="" style="width:100%; height:500px;" frameborder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+            </div>
+        </div>
+        </div>
 
 @endsection
 @section('scripts')
@@ -139,6 +154,14 @@ $(document).ready(function() {
                             return '<span class="badge badge-info">Pagamento Pendente</span>';
                         case 'PAGO':
                             return '<span class="badge badge-success">Pago</span>';
+                        case 'RECEBIDO NO ARMAZEM CHINA':
+                            return '<span class="badge badge-success">Recebido no Armazém China</span>';
+                        case 'EM PROCESSO DE EMBARQUE':
+                            return '<span class="badge badge-success">Em Processo de Embarque</span>';
+                        case 'EM ROTA MARITIMA':
+                            return '<span class="badge badge-success">Em Rota Marítima</span>';
+                        case 'DESPACHO E LIBERAÇÃO NO PORTO BRASIL':
+                            return '<span class="badge badge-success">⁠Em Processo de Despacho e Liberação no Porto Brasil</span>';
                         case 'ENVIADO':
                             return '<span class="badge badge-primary">Enviado</span>';
                         case 'ENTREGUE':
@@ -165,13 +188,16 @@ $(document).ready(function() {
     });
 });
 
-function show(id)
-{
-    let url = "{{ route('supplier.products.show', ':id') }}";
+function show(id) {
+    let url = "{{ route('supplier.view.pdfImportCollective', ':id') }}";
     url = url.replace(':id', id);
-    document.location.href=url;
-   // location.replace("{{ route('supplier.products.show',".id." )}}") ;
+    // Define o src do iframe dentro do modal para a URL do PDF
+    document.getElementById('pdfIframe').src = url;
+    // Mostra o modal
+    $('#pdfModal').modal('show');
 }
+
+
 
 function edit(id)
 {

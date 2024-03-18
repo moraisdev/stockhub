@@ -51,9 +51,26 @@
                                     <label class="control-label">Link do Produto</label>
                                     <input type="text" class="form-control" name="produto_link" placeholder="https://www.alibaba.com/product-detail"required>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label">Nome do Fornecedor</label>
+                                    <input type="text" class="form-control" name="china_supplier_name" placeholder="Nome do Fornecedor"required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Contato do Fornecedor</label>
+                                    <input type="text" class="form-control" name="china_supplier_contact" placeholder="Contato do Fornecedor"required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">HS Code do Produto</label>
+                                    <input type="text" class="form-control" name="product_hs_code" placeholder="HS Code do Produto: Solicite ao fornecedor."required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Descrição do Produto</label>
+                                    <input type="text" class="form-control" name="product_description" placeholder="Descrição do Produto"required>
+                                </div>
                                 </div>
                         </div>
                 <div class="form-group text-right mt-2">
+                    <a href="{{ route('shop.collective.index') }}" class="btn btn-lg btn-secondary">{{ __('supplier.cancel') }}</a>
                     <button class="btn btn-lg btn-primary">Enviar Pedido</button>
                 </div>
             </form>

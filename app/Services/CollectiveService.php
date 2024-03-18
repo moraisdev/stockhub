@@ -21,7 +21,7 @@ class CollectiveService
 
     public function find(int $id)
     {
-        $collectiveImport = CollectiveImport::with('shop.address')->where('shop_id', $this->supplier->id)->find($id);
+        $collectiveImport = CollectiveImport::with(['shop', 'shop.address', 'shop.address_business'])->where('shop_id', $this->supplier->id)->find($id);
         
         if (!$collectiveImport) {
             throw new CustomException("Importação coletiva não encontrada.", 404);

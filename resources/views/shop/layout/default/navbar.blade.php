@@ -1,4 +1,3 @@
-
 <style>
 .icon-size {
     width: 12px;
@@ -49,18 +48,6 @@
     box-shadow: 5px 5px 10px #c8c8c8, -5px -5px 10px #ffffff; /* Inset shadow for the "lifted" effect */
 }
 
-
-.navbar-vertical {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 250px;
-  height: 100%;
-  background-color: #fff;
-  padding-top: 20px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Adjusted for a subtle shadow */
-  border-radius: 0; /* Remove border-radius for square edges */
-}
 </style>
 
 <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
@@ -101,33 +88,33 @@
             @endphp
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class=" nav-link {{ ($uri_1 == 'catalog') ? 'active' : '' }}" href="{{ route('shop.catalog.index') }}">
+                <a class=" nav-link {{ ($uri_1 == 'catalog') ? 'active' : '' }}" href="{{ route('shop.catalog.index') }}">
                         <div class="icon-box icon-size icon-shape icon-sm shadow border-box-md bg text-center me-2 d-flex align-items-center justify-content-center">
-                            <img src="{{ asset('assets/img/bag-shopping.svg') }}" width="12px" height="12px">
+                            <img src="{{ asset('assets/img/bag-shopping.svg') }}" width="18px" height="18px">
                         </div>
                         <span class="nav-link-text ms-1"> Loja de Importação</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class=" nav-link {{ ($uri_1 == 'collective') ? 'active' : '' }}" href="{{ route('shop.collective.index') }}">
+                <a class=" nav-link {{ ($uri_1 == 'collective') ? 'active' : '' }}" href="{{ route('shop.collective.index') }}">
                         <div class="icon-box icon-size icon-shape icon-sm shadow border-box-md bg text-center me-2 d-flex align-items-center justify-content-center">
-                            <img src="{{ asset('assets/img/handshake.svg') }}" width="12px" height="12px">
+                            <img src="{{ asset('assets/img/handshake.svg') }}" width="18px" height="18px">
                         </div>
                         <span class="nav-link-text ms-1"> Importação Coletiva</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class=" nav-link {{ ($uri_1 == 'private') ? 'active' : '' }}" href="{{ route('shop.private.index') }}">
+                <a class=" nav-link {{ ($uri_1 == 'private') ? 'active' : '' }}" href="{{ route('shop.private.index') }}">
                     <div class="icon-box icon-size icon-shape icon-sm shadow border-box-md bg text-center me-2 d-flex align-items-center justify-content-center">
-                        <img src="{{ asset('assets/img/ship.svg') }}" width="12px" height="12px">
+                        <img src="{{ asset('assets/img/ship.svg') }}" width="18px" height="18px">
                     </div>
                     <span class="nav-link-text ms-1"> Container Privado</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class=" nav-link {{ ($uri_1 == 'radar') ? 'active' : '' }}" href="{{ route('shop.radar.index') }}">
+                <a class=" nav-link {{ ($uri_1 == 'radar') ? 'active' : '' }}" href="{{ route('shop.radar.index') }}">
                     <div class="icon-box icon-size icon-shape icon-sm shadow border-box-md bg text-center me-2 d-flex align-items-center justify-content-center">
-                        <img src="{{ asset('assets/img/radar.svg') }}" width="12px" height="12px">
+                        <img src="{{ asset('assets/img/radar.svg') }}" width="18px" height="18px">
                     </div>
                     <span class="nav-link-text ms-1"> Radar Siscomex</span>
                     </a>
@@ -135,7 +122,7 @@
                 <li class="nav-item coming-soon" data-toggle="tooltip" data-placement="right" title="Em Breve">
                     <a class="nav-link">
                     <div class="icon-box icon-size icon-shape icon-sm shadow border-box-md bg text-center me-2 d-flex align-items-center justify-content-center">
-                        <img src="{{ asset('assets/img/users.svg') }}" width="12px" height="12px">
+                        <img src="{{ asset('assets/img/users.svg') }}" width="18px" height="18px">
                     </div>
                     <span class="nav-link-text ms-1"> Compra Coletiva</span>
                     </a>
@@ -143,7 +130,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ ($uri_1 == 'orders' && $uri_2 != 'history') ? 'active' : '' }}" href="#orders-dropdown" data-toggle="collapse" data-target="#orders-dropdown" aria-controls="orders-dropdown" aria-expanded="true">
                     <div class="icon-box icon-size icon-shape icon-sm shadow border-box-md bg text-center me-2 d-flex align-items-center justify-content-center">
-                        <img src="{{ asset('assets/img/basket-shopping.svg') }}" width="12px" height="12px">
+                        <img src="{{ asset('assets/img/basket-shopping.svg') }}" width="18px" height="18px">
                     </div>
                     <span class="nav-link-text ms-1"> Pedidos</span>
                     </a>
@@ -180,7 +167,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#returns-dropdown" data-toggle="collapse" data-target="#returns-dropdown" aria-controls="returns-dropdown" aria-expanded="{{ ($uri_1 == 'returns') ? 'true' : 'false' }}">
                     <div class="icon-box icon-size icon-shape icon-sm shadow border-box-md bg text-center me-2 d-flex align-items-center justify-content-center">    
-                        <img src="{{ asset('assets/img/arrow-rotate-left.svg') }}" width="12px" height="12px">
+                        <img src="{{ asset('assets/img/arrow-rotate-left.svg') }}" width="18px" height="18px">
                     </div>
                     <span class="nav-link-text ms-1"> Reembolsos {!! ($pending_return_messages_count > 0) ? '<span class="badge badge-warning ml-1">'.$pending_return_messages_count.'</span>' : '' !!}</span>
                     </a>
@@ -200,30 +187,30 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ ($uri_1 == '' || $uri_1 == 'profile') ? 'active' : '' }}" href="#config-dropdown" data-toggle="collapse" data-target="#config-dropdown" aria-controls="config-dropdown" aria-expanded="{{ ($uri_1 == 'configuracoes' || $uri_1 == 'profile') ? 'true' : 'false' }}">
+                <a class="nav-link {{ ($uri_1 == '' || $uri_1 == 'profile') ? 'active' : '' }}" href="#config-dropdown" data-toggle="collapse" data-target="#config-dropdown" aria-controls="config-dropdown" aria-expanded="{{ ($uri_1 == 'configuracoes' || $uri_1 == 'profile') ? 'true' : 'false' }}">
                     <div class="icon-box icon-size icon-shape icon-sm shadow border-box-md bg text-center me-2 d-flex align-items-center justify-content-center">    
-                        <img src="{{ asset('assets/img/gear.svg') }}" width="12px" height="12px">
+                        <img src="{{ asset('assets/img/gear.svg') }}" width="18px" height="18px">
                     </div>
                     <span class="nav-link-text ms-1"> Configurações</span>
                     </a>
                     <div class="collapse {{ ($uri_1 == 'profile' || $uri_1 == 'settings') ? 'show' : '' }}" id="config-dropdown">
                         <ul class="flex-column nav">
                             <li class="nav-item">
-                                <a class="nav-link py-1 {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.profile') }}">
+                            <a class="nav-link py-1 {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.profile') }}">
                                     <img src="{{ asset('assets/img/user-gear.svg') }}" class="subicon-size"> Perfil
                                 </a>
                             </li>
                         </ul>
                         <ul class="flex-column nav">
                             <li class="nav-item">
-                                <a class="nav-link py-1 {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.profile.business') }}">
+                            <a class="nav-link py-1 {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.profile.business') }}">
                                     <img src="{{ asset('assets/img/briefcase.svg') }}" class="subicon-size"> Negócios
                                 </a>
                             </li>
                         </ul>
                         <ul class="flex-column nav">
                             <li class="nav-item">
-                                <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.settings.index') }}">
+                            <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.settings.index') }}">
                                     <img src="{{ asset('assets/img/code-fork.svg') }}" class="subicon-size"> Integrações
                                 </a>
                             </li>
@@ -237,10 +224,18 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item coming-soon" data-toggle="tooltip" data-placement="right" title="Em Breve">
+                    <a class="nav-link">
+                    <div class="icon-box icon-size icon-shape icon-sm shadow border-box-md bg text-center me-2 d-flex align-items-center justify-content-center">
+                        <img src="{{ asset('assets/img/user.svg') }}" width="18px" height="18px">
+                    </div>
+                    <span class="nav-link-text ms-1"> Comunidade</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class=" nav-link {{ ($uri_1 == 'tutorials') ? 'active' : '' }}" href="{{ route('shop.tutorials.index') }}">
                     <div class="icon-box icon-size icon-shape icon-sm shadow border-box-md bg text-center me-2 d-flex align-items-center justify-content-center">
-                        <img src="{{ asset('assets/img/chalkboard-user.svg') }}" width="12px" height="12px">
+                        <img src="{{ asset('assets/img/chalkboard-user.svg') }}" width="18px" height="18px">
                     </div>
                     <span class="nav-link-text ms-1"> Tutoriais</span>
                     </a>
