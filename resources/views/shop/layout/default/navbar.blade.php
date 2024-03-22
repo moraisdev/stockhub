@@ -19,7 +19,7 @@
 }
 
 .navbar-brand-imag-intern {
-    margin-left: 32vw;
+    margin-left: 28vw;
     margin-bottom: -35px;
     height: 65px;
     display: block;
