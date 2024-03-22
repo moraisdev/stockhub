@@ -3,11 +3,7 @@
 namespace App\Http\Controllers\Shop;
 
 use Auth;
-use MPSdk;
-use MPItem;
-use MPPreference;
 use App\Models\Orders;
-use App\Models\Returns;
 use App\Models\Receipts;
 use App\Models\Customers;
 use App\Models\CustomerAddresses;
@@ -16,33 +12,25 @@ use App\Models\Suppliers;
 use App\Models\OrderItems;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Imports\OrdersImport;
 use App\Models\ReceiptOrders;
-use App\Models\ReturnMessages;
 use App\Models\SupplierOrders;
-use App\Models\PaymentGateways;
 use App\Models\ProductVariants;
 use App\Services\CurrencyService;
-use App\Services\PaymentsService;
 use App\Services\Shop\CsvService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
-use App\Imports\OrdersItemsImport;
 use App\Models\SupplierOrderGroup;
 use App\Models\CouponOrderReturned;
 
 use App\Models\OrderGroupPayments;
-use App\Models\SupplierOrderItems;
 use App\Exceptions\CustomException;
 
 use App\Services\Shop\CartxService;
 use App\Services\Shop\YampiService;
-use App\Services\MercadoPagoService;
 use App\Services\Shop\OrdersService;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Services\Shop\ShopifyService;
-use App\Models\SupplierOrderShippings;
 use App\Models\OrderShippings;
-use App\Services\Shop\ProductsService;
 use App\Models\SupplierOrdersDiscounts;
 
 use App\Services\Gerencianetpay;
@@ -59,15 +47,15 @@ use App\Services\TotalExpressService;
 use App\Services\MelhorEnvioService;
 use App\Services\ChinaShippingService;
 use Illuminate\Support\Facades\Log;
-use Safe2Pay\Models\Payment\Pix;
 use App\Models\Admins;
 use App\Services\Shop\MercadolivreService;
 use App\Models\Mercadolivreapi;
 use App\Models\Products;
 use App\Models\ShopProducts;
-use Dsc\MercadoLivre\Resources\Order\Order;
 
 use App\Services\CitelService;
+use Stripe\Stripe;
+use Stripe\Checkout\Session as StripeSession;
 
 class OrdersController extends Controller
 {
@@ -84,10 +72,6 @@ class OrdersController extends Controller
         $mercadolivre = self::importOrderMercadolivre2();
         $apimercadolivreapi = Mercadolivreapi::where('shop_id' , $shop->id )->first();
        
-        //carrega o valor do dólar
-//        $dolar_price = CurrencyService::getDollarPrice();
-
-        //quantidade total de pedidos pendentes
         $countOrders = $ordersService->getTotalCountPendingOrders();
         return view('shop.orders.index', compact('orders', 'countOrders', 'apimercadolivreapi' ));
     }
@@ -102,6 +86,119 @@ class OrdersController extends Controller
             return redirect()->back()->with('success', 'Fatura '.$request->group_id.' excluída com sucesso.');
         }
         return redirect()->back()->with('error', 'Erro ao excluir fatura '.$request->group_id.'.');
+    }
+
+
+    public function createOrder(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'product_hash' => 'required|string',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $shop = Auth::guard('shop')->user();
+        
+            $product = Products::where('hash', $request->product_hash)->first();
+        
+            if (!$product) {
+                throw new CustomException('Product not found', 404);
+            }
+        
+            $variants = ProductVariants::where('product_id', $product->id)->get();
+        
+            if ($variants->isEmpty()) {
+                throw new CustomException('No variants found for this product', 404);
+            }
+        
+            foreach ($variants as $variant) {
+                $totalAmount = $variant->price * $request->quantity;
+                
+                $order = Orders::create([
+                    'shop_id' => $shop->id,
+                    'customer_id' => $shop->id,
+                    'external_service' => null,
+                    'external_id' => Str::random(10),
+                    'name' => $shop->name,
+                    'email' => $shop->email,
+                    'items_amount' => $totalAmount,
+                    'shipping_amount' => 0,
+                    'amount' => $totalAmount,
+                    'external_price' => $totalAmount,
+                    'status' => 'pending',
+                    'external_created_at' => now(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+        
+                OrderItems::create([
+                    'order_id' => $order->id,
+                    'product_variant_id' => $variant->id,
+                    'external_service' => null,
+                    'sku' => $variant->sku,
+                    'title' => $variant->title,
+                    'quantity' => $request->quantity,
+                    'amount' => $totalAmount,
+                    'external_price' => $variant->price,
+                    'charge' => 1,
+                ]);
+            }
+        
+            DB::commit();
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+            $lineItems = [];
+            foreach ($order->items as $item) {
+                $lineItems[] = [
+                    'price_data' => [
+                        'currency' => 'brl',
+                        'product_data' => [
+                            'name' => $item->title, // Nome do produto do item do pedido
+                        ],
+                        'unit_amount' => (int) round($item->price * 100), // Preço do item em centavos
+                    ],
+                    'quantity' => $item->quantity, // Quantidade do item
+                ];
+            }
+        
+            // Criação da sessão de checkout da Stripe
+            $session = StripeSession::create([
+                'payment_method_types' => ['card'],
+                'line_items' => $lineItems,
+                'mode' => 'payment',
+                'success_url' => route('shop.orders.success', ['orderId' => $order->id]),
+                'cancel_url' => route('shop.orders.cancel', ['orderId' => $order->id]),
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao processar o pagamento: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function paymentSuccess(Request $request, $orderId)
+    {
+        $order = Orders::find($orderId);
+        if ($order) {
+            $order->status = 'paid';
+            $order->save();
+
+            return redirect()->route('shop.catalog.index')->with('success', 'Pagamento concluído com sucesso.');
+        }
+    }
+
+    public function paymentCancel(Request $request, $orderId)
+    {
+        $order = Orders::find($orderId);
+        if ($order) {
+            $order->delete();
+
+            return redirect()->route('shop.catalog.index')->with('error', 'Pagamento foi cancelado.');
+        }
     }
 
     public function deleteOrderInGroup(Request $request){ 

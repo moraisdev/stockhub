@@ -2,10 +2,7 @@
 
 namespace App\Services\Shop;
 
-use App\Mail\ReceiptMail;
-use App\Mail\ProcessedOrder;
-use App\Mail\NewOrderRequest;
-use App\Models\Discounts;
+
 use App\Models\Shops;
 use App\Models\Orders;
 use App\Models\SupplierOrderGroup;
@@ -17,12 +14,9 @@ use App\Models\FreteMelhorEnvio;
 use App\Models\ProductVariants;
 use App\Models\Products;
 use App\Models\OrderReturned;
-use App\Services\CorreiosService;
 use App\Services\PaymentsService;
-use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 use App\Services\CurrencyService;
 use App\Services\MelhorEnvioService;
@@ -555,37 +549,13 @@ class OrdersService{
                 $total_amount = 0;
 
                 foreach($items as $item){
-                    //$discount = Discounts::where('variant_id', $item->product_variant_id)->first();
-                    //$discount = false;
 
                     $new_item = new SupplierOrderItems();
                     $new_item->supplier_order_id = $new_order->id;
                     $new_item->product_variant_id = $item->product_variant_id;
 
-                    //antes de atribuir o preço do item, verificar se a variant ta em dólar
-                    //precisa realizar a cotação e multiplicar
+
                     if($item->variant && $item->variant->product){
-                        // if($item->variant->product->currency == 'US$'){
-
-                        //     if(isset($dolar_price['price'])){
-                        //         $amount = $item->amount * $dolar_price['price'];
-                        //     }else{
-                        //         $amount = $item->amount * 1000;
-                        //     }
-                        // }else{
-                        //     $amount = $item->amount;
-                        // }
-
-                        // if($discount){
-                        //     $new_item->amount = $amount - ($amount * ($discount->percentage/100));
-                        // }else{
-                        //     $new_item->amount = $amount;
-                        // }
-
-                        // //caso seja um produto da s2m2, ainda tem q multiplicar por 1.05 para adicionar mais 5% de mão de obra no item
-                        // if($item->variant->product->supplier->id == 56){
-                        //     $new_item->amount = $new_item->amount * 1.05;
-                        // }
 
                         $new_item->amount = 0;
                         $new_item->quantity = $item->quantity;
@@ -601,27 +571,6 @@ class OrdersService{
                             $product = Products::withTrashed()->find($variant->product_id);
 
                             if($product){
-                                // if($product->currency == 'US$'){
-
-                                //     if(isset($dolar_price['price'])){
-                                //         $amount = $item->amount * $dolar_price['price'];
-                                //     }else{
-                                //         $amount = $item->amount * 1000;
-                                //     }
-                                // }else{
-                                //     $amount = $item->amount;
-                                // }
-
-                                // if($discount){
-                                //     $new_item->amount = $amount - ($amount * ($discount->percentage/100));
-                                // }else{
-                                //     $new_item->amount = $amount;
-                                // }
-
-                                // //caso seja um produto da s2m2, ainda tem q multiplicar por 1.05 para adicionar mais 5% de mão de obra no item
-                                // if($product->supplier->id == 56){
-                                //     $new_item->amount = $new_item->amount * 1.05;
-                                // }
 
                                 $new_item->amount = 0;
 
@@ -636,10 +585,7 @@ class OrdersService{
 
                 }
 
-                //$total_measurement - 100
-                //$centimeters_supplier - X
-                //$total * x = $cent_suplier * 100
-                //x = $cent_suplier * 100 / $total
+
 
                 $new_order->amount = $total_amount;
                 $new_order->total_amount = $total_amount + $total_shipping;
@@ -677,7 +623,6 @@ class OrdersService{
     }
 
     public static function sendReceiptToCustomer($order, $receipt){
-        //Mail::to($order->customer->email)->send(new ReceiptMail($order, $receipt));
     }
 
     public static function paymentReceived($group){
@@ -698,14 +643,12 @@ class OrdersService{
                                                             ->first();
 
                     if($s->supplier->shipping_method == 'melhor_envio' && !$verifyFreteMelhorEnvio){
-                        //como a ordem foi de fato paga, realiza a compra do frete na melhor envio (adiciona no carrinho)
                         $melhorEnvioService = new MelhorEnvioService();
                         $melhorEnvioService->setFromZipcode($s->supplier->address->zipcode);
                         $melhorEnvioService->setToZipcode($s->order->customer->address->zipcode);
                         $melhorEnvioService->prepareOrderProducts($s->order->items);
                         $responseMelhorEnvio = $melhorEnvioService->quoteBuyFreight($s->supplier, $s->order->shop, $s->order->customer, $s->order);
-                        //dd($responseMelhorEnvio);
-                        //salva o id vindo da melhor envio
+
                         if($s->supplier->shipping_method == 'melhor_envio' && $responseMelhorEnvio && $responseMelhorEnvio->freteId != ''){
                             $freteMelhorEnvio = FreteMelhorEnvio::firstOrCreate([
                                 'order_id' => $s->order->id,
@@ -713,43 +656,15 @@ class OrdersService{
                                 'supplier_order_id' => $s->id
                             ]);
 
-                            $freteMelhorEnvio->amount = $responseMelhorEnvio->valor; //valor do frete
-                            $freteMelhorEnvio->service_id = $responseMelhorEnvio->serviceId; //id to tipo de serviço 1 - PAC, 2 - SEDEX, 3 - Mini Envios
+                            $freteMelhorEnvio->amount = $responseMelhorEnvio->valor;
+                            $freteMelhorEnvio->service_id = $responseMelhorEnvio->serviceId;
                             $freteMelhorEnvio->status = $responseMelhorEnvio->status;
-                            $freteMelhorEnvio->melhor_envio_id = $responseMelhorEnvio->freteId; //id do frete adicionado ao carrinho da melhor envio
-                            $freteMelhorEnvio->protocol = $responseMelhorEnvio->protocol; //salva o protocolo
+                            $freteMelhorEnvio->melhor_envio_id = $responseMelhorEnvio->freteId;
+                            $freteMelhorEnvio->protocol = $responseMelhorEnvio->protocol;
                             $freteMelhorEnvio->save();
                         }
-
-                        // legacy
-                        // $freteMelhorEnvio = FreteMelhorEnvio::where('order_id', $s->order->id)
-                        //                                     ->where('supplier_id', $s->supplier->id)
-                        //                                     ->first();
-                        // if($freteMelhorEnvio){
-                        //     $freteMelhorEnvio->supplier_order_id = $s->id; //salva o id da SupplierOrder na instância da melhor envio
-
-                        //     //realiza a compra do frete na melhor envio usando o saldo do fornecedor (gateway de pagamento será inserido no futuro)
-                        //     $melhorEnvioService = new MelhorEnvioService($s->supplier->melhor_envio_settings);
-                        //     $responseCart = $melhorEnvioService->payCartFreight($freteMelhorEnvio);
-
-                        //     //dd($responseCart);
-
-                        //     if($responseCart && $responseCart->tracking && $responseCart->status){
-                        //         $freteMelhorEnvio->status = $responseCart->status;
-                        //         $freteMelhorEnvio->tracking = $responseCart->tracking;
-                        //         $freteMelhorEnvio->tag_url = $responseCart->tag_url;
-                        //         $freteMelhorEnvio->save();
-
-                        //         //já aproveita e atualiza o código de rastreio oficial
-                        //         $s->shipping->tracking_number = $responseCart->tracking;
-                        //         $s->shipping->company = $responseCart->company;
-                        //         $s->shipping->tracking_url = $responseCart->link;
-                        //         $s->shipping->save();
-                        //     }
-                        // }
                     }
-                    //self::updateShopifyMawaDesc($s);
-                //}
+
             }
         } catch (\Exception $e) {
             Log::error('paymentReceived error.', [$e]);
@@ -758,9 +673,6 @@ class OrdersService{
     }
 
     public static function updateShopifyMawaDesc($supplier_order){
-        //atualiza o pedido com o id gerado na mawa (assim como os Dsers)
-
-        //primeiro carrega os dados da ordem e verifica senão tem o id de outro fornecedor la, que é o caso de uma ordem com produtos de fornecedores diferentes
         $client = new \GuzzleHttp\Client();
 
         $shop = $supplier_order->order->shop; // SupplierOrder
@@ -774,12 +686,10 @@ class OrdersService{
             $shopify_order = json_decode($response->getBody())->order;
         }
 
-        if(!$shopify_order->fulfillment_status || $shopify_order->fulfillment_status != 'fulfilled'){ //caso não tenha sido processada ainda
-            //atualiza a ordem na shopify com os ids da Mawa
+        if(!$shopify_order->fulfillment_status || $shopify_order->fulfillment_status != 'fulfilled'){
 
-            $note_attributes = $shopify_order->note_attributes ? $shopify_order->note_attributes : []; //pega os atributos anteriores caso existam
+            $note_attributes = $shopify_order->note_attributes ? $shopify_order->note_attributes : [];
 
-            //adiciona os novos atributos
             array_push($note_attributes, (object)[
                 "name" => config('app.name')." ID".(count($note_attributes) > 0 ? '('.count($note_attributes).')' : ''),
                 "value" => $supplier_order->f_display_id ]);
@@ -791,7 +701,6 @@ class OrdersService{
                 ]
             ];
 
-            //salva os dados na shopify
             $response = ShopifyService::GuzzleCalls($shop,'PUT','orders/'.$shopify_order_id.'.json',false,false, $data);
        }
     }

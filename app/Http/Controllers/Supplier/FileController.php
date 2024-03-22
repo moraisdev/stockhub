@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Supplier;
 
 use App\Models\CollectiveImport;
+use App\Models\ShopRadar;
 use Response;
 use Storage;
 use App\Http\Controllers\Controller;
@@ -26,6 +27,22 @@ class FileController extends Controller
         ]);
     }
 
+    public function downloadAllRadar($id)
+    {
+        $radar = ShopRadar::findOrFail($id);
+    
+        if ($radar->radar_qualification && Storage::disk('public')->exists($radar->radar_qualification)) {
+            $path = $radar->radar_qualification;
+            $fileContent = Storage::disk('public')->get($path);
+            $mimeType = Storage::disk('public')->mimeType($path);
+    
+            return response($fileContent, 200)->header('Content-Type', $mimeType)
+                                               ->header('Content-Disposition', 'attachment; filename="'.basename($path).'"');
+        } else {
+            return response()->json(['message' => 'File not found.'], 404);
+        }
+    }
+    
     public function downloadPdfImportCollective($id)
     {
         $collectiveImport = CollectiveImport::with('shop.address')->findOrFail($id);
