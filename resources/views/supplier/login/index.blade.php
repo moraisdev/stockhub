@@ -133,10 +133,7 @@
                         <a href="{{ route('supplier.login.forgot_password') }}" class="text-light"><small
                                 class='text-login-bold-white'>Esqueci minha senha</small></a>
                     </div>                  
-                    <div class="col-6 text-right">
-                        <a href="{{ route('supplier.login.register') }}" class="text-light"><small
-                                class='text-login-bold-white'>Criar nova conta</small></a>
-                    </div>
+
                 </div>
             </div>
         </div>

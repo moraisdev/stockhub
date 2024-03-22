@@ -71,7 +71,7 @@ class CollectiveController extends Controller
                 ->make(true);
         }
 
-  return view('supplier.products.index');
+  return view('supplier.collective.index');
 }
     public function update(Request $request, $collective_id)
     {

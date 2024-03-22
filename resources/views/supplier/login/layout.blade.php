@@ -59,26 +59,6 @@
                     </div>
                     <!-- Navbar items -->
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-icon"
-                                href="https://api.whatsapp.com/send?phone={{ env('SUPPORT_WHATSAPP') }}&text=Ola%2C%20vim%20do%20SAC%20e%20gostaria%20de%20falar%20com%20a%20equipe%20de%20assist%C3%AAncia%20a%20Lojistas"
-                                target="_blank">
-                                <i class="fa fa-whatsapp"></i>
-                                <span class="nav-link-inner--text">Suporte</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-icon" href="{{ route('supplier.login.register') }}">
-                                <i class="ni ni-circle-08"></i>
-                                <span class="nav-link-inner--text">Criar nova conta</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-icon" href="{{ route('supplier.login') }}">
-                                <i class="ni ni-key-25"></i>
-                                <span class="nav-link-inner--text">Login</span>
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </div>

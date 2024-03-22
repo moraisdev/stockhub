@@ -329,15 +329,13 @@
             buyNow();
         });
 
-        // Buy now function
         function buyNow() {
             var productData = {
                 product_hash: '{{ $product->hash }}',
                 quantity: document.getElementById('quantity-input').value,
-                // Additional data can be added here if necessary
             };
 
-            fetch('{{ route('shop.orders.create') }}', {
+            fetch('{{ route('shop.orders.buy') }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -347,41 +345,12 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Handle the response
+                // Handle the response                 
                 console.log(data);
                 // Redirect or show success message
             })
             .catch(error => console.error('Error:', error));
         }
-
-        // "Adicionar ao Carrinho" button click event
-        function addToCart() {
-            var productData = {
-                productId: '{{ $product->id }}',
-                variantId: document.querySelector('.form-select').value,
-                quantity: document.getElementById('quantity-input').value
-                // Additional data can be added here if necessary
-            };
-
-            fetch('/shop/add-to-cart', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify(productData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response
-                console.log(data);
-            })
-            .catch(error => {
-                console.error('Error adding to cart:', error);
-            });
-        }
-
-        document.querySelector('.add-to-cart-btn').addEventListener('click', addToCart);
     });
 </script>
 @endsection

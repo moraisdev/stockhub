@@ -61,7 +61,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('shop.catalog.index') }}">
+                    <a class=" nav-link {{ ($uri_1 == '') ? 'active' : '' }}" href="{{ route('supplier.radar.index') }}">
                         <img src="{{ asset('assets/img/radar.svg') }}" class="icon-size"> Radar Siscomex
                     </a>
                 </li>

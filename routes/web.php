@@ -159,6 +159,13 @@ Route::namespace('Supplier')->as('supplier.')->prefix('supplier')->group(functio
         Route::get('plans', 'PlansController@index')->name('plans.indexplan');
         /* TUTORIALS */
         Route::get('tutorials', 'TutorialsController@index')->name('tutorials.index');
+
+        Route::get('radar', 'RadarController@index')->name('radar.index');
+        Route::get('radar/tabelas', 'RadarController@tabelas')->name('radar.tabelas');
+        Route::get('radar/tabelas', 'RadarController@tabelas')->name('radar.tabelas');
+        Route::get('radar/edit/{radar_id}', 'RadarController@edit')->name('radar.edit');
+        Route::get('radar/update/{radar_id}', 'RadarController@update')->name('radar.update');
+        Route::get('download/documents/{id}', 'FileController@downloadAllRadar')->name('download.documents');
     });
 });
 
@@ -222,7 +229,9 @@ Route::namespace('Shop')->as('shop.')->prefix('shop')->group(function () {
         Route::get('orders/import-cartx', 'OrdersController@importCartx')->name('orders.import_cartx');
         Route::get('orders/import-yampi', 'OrdersController@importYampi')->name('orders.import_yampi');
 
-        Route::post('orders/create', 'OrdersController@createOrder')->name('orders.create');
+        Route::post('orders/buy', 'OrdersController@createOrder')->name('orders.buy');
+        Route::post('orders/success/{order_id}', 'OrdersController@paymentSuccess')->name('orders.success');
+        Route::post('orders/cancel/{order_id}', 'OrdersController@paymentCancel')->name('orders.cancel');
         
         Route::get('orders/history', 'OrdersController@history')->name('orders.history');
         Route::get('orders/sent', 'OrdersController@sent')->name('orders.sent');
@@ -269,14 +278,6 @@ Route::namespace('Shop')->as('shop.')->prefix('shop')->group(function () {
         Route::get('orders/returns/{order_id}', 'ReturnsController@ask_return')->name('orders.ask_return');
         Route::post('orders/returns/messages/new', 'ReturnsController@returnNewMessage')->name('orders.return.new_essage');
       
-        
-
-    
-      
-      
-        /* PAYMENTS */
-        //Route::get('payments/group/{id}', 'PaymentsController@group')->name('shop.orders.group');
-
         /* PRODUCTS */
         Route::get('products', 'ProductsController@index')->name('products.index');
         Route::get('products/details/{hash}', 'ProductsController@details')->name('products.details');
@@ -333,7 +334,12 @@ Route::namespace('Shop')->as('shop.')->prefix('shop')->group(function () {
         Route::get('radar', 'RadarController@index')->name('radar.index');
         Route::get('radar/buy', 'RadarController@buy')->name('radar.buy');
         Route::get('radar/activate', 'RadarController@activate')->name('radar.activate');
-
+        Route::post('radar/update', 'RadarController@update')->name('radar.update');
+        Route::post('radar/update_buy', 'RadarController@update_buy')->name('radar.update_buy');
+        Route::post('/stripe/webhook', 'StripeWebhookController@handleWebhook');
+        Route::get('radar/success/{radar_id}', 'RadarController@success')->name('radar.success');
+        Route::get('radar/cancel/{radar_id}', 'RadarController@cancel')->name('radar.cancel');
+        
         /* CONTAINTER PRIVADO */
         Route::get('private', 'ContainerPrivateController@index')->name('private.index');
 
