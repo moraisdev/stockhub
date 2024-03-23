@@ -18,6 +18,17 @@
     height: 100%;
 }
 
+@media (max-width: 767px) {
+    .navbar-brand-img {
+        width: auto; /* Ajuste a largura conforme necessário */
+        height: 100%; /* Ajuste a altura conforme necessário */
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+}
+
+
 .navbar {
     font-family: 'Poppins', sans-serif;
     background-color: #fff;
@@ -57,7 +68,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-            <img src="{{ asset('assets/img/brand/logo.png?v=2') }}" class="navbar-brand-img" alt="...">
+            <img src="{{ asset('assets/img/brand/logo.png?v=2') }}" class="navbar-brand-img" alt="..."> <!-- AQUI logo menu -->
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
             @include('shop.layout.default.header-menu')
