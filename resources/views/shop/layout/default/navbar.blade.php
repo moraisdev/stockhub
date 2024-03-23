@@ -11,12 +11,36 @@
     margin-right: 8px;
 }
 
-.navbar-brand-img {
+.navbar-brand-imag {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: -40px;
-    height: 100%;
+    height: 45px;
 }
+
+.navbar-brand-imag-intern {
+    margin-left: 28vw;
+    margin-bottom: -35px;
+    height: 65px;
+    display: block;
+    position: relative;
+}
+
+@media (max-width: 767px) {
+    .navbar-brand-imag {
+        height: 65px;
+        margin-top: 10px; /* ajuste conforme necessário */
+        margin-bottom: 10px; /* ajuste conforme necessário */
+        display: block;
+        position: relative;
+        top: 50%;
+        transform: translateY(-1%);
+        transform: translateX(-17%);
+    }
+}
+
+
+
 
 .navbar {
     font-family: 'Poppins', sans-serif;
@@ -57,7 +81,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-            <img src="{{ asset('assets/img/brand/logo.png?v=2') }}" class="navbar-brand-img" alt="...">
+            <img src="{{ asset('assets/img/brand/logo.png?v=2') }}" class="navbar-brand-imag"> <!-- AQUI logo menu -->
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
             @include('shop.layout.default.header-menu')
@@ -67,9 +91,9 @@
             <!-- Collapse header -->
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
-                    <div class="col-6 collapse-brand">
-                        <a href="{{ route('shop.dashboard') }}">
-                            <img src="{{ asset('assets/img/brand/logo.png?v=2') }}">
+                    <div class="col-6 ">
+                        <a href="{{ route('shop.catalog.index') }}">
+                            <img src="{{ asset('assets/img/brand/logo.png?v=2') }}"  class="navbar-brand-imag-intern" >
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -81,6 +105,7 @@
                 </div>
             </div>
             <br/>
+
             <hr class="horizontal dark mt-0">
             @php
                 $uri_1 = request()->segment(2);
