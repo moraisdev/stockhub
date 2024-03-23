@@ -33,10 +33,10 @@
     <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets_site/icon/apple-icon-144x144.png') }}">
     <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets_site/icon/apple-icon-152x152.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets_site/icon/apple-icon-180x180.png') }}">
-
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/brand/favicon_v3.png') }}">
-
-
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('assets_site/icon/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets_site/icon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets_site/icon/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets_site/icon/favicon-16x16.png') }}">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
