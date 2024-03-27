@@ -109,12 +109,7 @@ class Shops extends Authenticatable
     {
         return $this->hasMany(Rating::class);
     }
-    public function getImgProfileAttribute($value)
-    {
-        if (strpos($value, ';base64,') !== false) {
-            return 'data:image/jpeg;base64,' . $value;
-        }
-    }
+
 
     function mask($mask, $str)
     {
