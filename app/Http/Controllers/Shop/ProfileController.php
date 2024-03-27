@@ -34,10 +34,19 @@ class ProfileController extends Controller
         $shop->responsible_document = $documentCleaned;
 
         if ($request->hasFile('img_profile')) {
-            $imageName = $shop->id.'_profile_'.time().'.'.$request->img_profile->extension();
-            $request->img_profile->storeAs('profiles', $imageName, 'public');
-            $shop->img_profile = $imageName;
+            // Get the image file
+            $imageFile = $request->file('img_profile');
+        
+            // Get the file contents
+            $imageData = file_get_contents($imageFile->getRealPath());
+        
+            // Encode the image data as base64
+            $base64Image = base64_encode($imageData);
+        
+            // Save the base64 encoded image string in the database
+            $shop->img_profile = $base64Image;
         }
+        
 
         $shop->save();
 
